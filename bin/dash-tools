@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+import argparse
+from dash_tools.cli import cli
+from dash_tools.version import __version__
+import os
+
+parser = argparse.ArgumentParser(
+    description='The dash-tools cli for Plotly Dash.')
+
+parser.add_argument(
+    '--version',
+    action='version',
+    version=__version__)
+
+parser.add_argument(
+    '-i',
+    '--init',
+    help='create a new app',
+    nargs=1)
+
+parser.add_argument(
+    '-r',
+    '--run',
+    help='run the dash app in non-debug/dev mode',
+    action='store_true'
+)
+
+parser.add_argument(
+    '-d',
+    '--dev',
+    help='run the dash app in debug/dev mode',
+    action='store_true'
+)
+
+
+parser.add_argument(
+    '--use-stack',
+    help='add a stack framework',
+    nargs=1)
+
+cli.main(parser=parser, cwd=os.getcwd())
