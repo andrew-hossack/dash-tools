@@ -1,0 +1,78 @@
+# Created on {createTime}
+
+import dash_bootstrap_components as dbc
+from components.forms import \
+    generate_divs_and_callbacks_upload_form as upload_forms
+from dash import html, Dash
+
+
+def home_page(app: Dash):
+    """
+    Main landing page for {appName}
+    """
+
+    return html.Div([
+
+        html.Div([
+            html.Div([
+                # Text and Titles
+                html.H3(
+                    "{appName}",
+                    style={
+                        'padding-top': '10px'},
+                ),
+                html.H5([
+                    "Call Details"
+                ], style={'margin-bottom': '0px'}),
+                html.Hr(style={'color': 'black',
+                               'margin-top': '0px', 'margin-bottom': '30px'}),
+                # Forms
+                upload_forms(),
+
+                html.Div(id='call-status-text'),
+                html.Div([
+                    dbc.Button(
+                        [
+                            html.P("Send Call", style={
+                                   'display': 'inline-block', 'height': '0px'}),
+                            html.Img(
+                                src=app.get_asset_url(
+                                    'img/phone-call.png'),
+                                style={
+                                    'display': 'inline-block',
+                                    'height': '20px',
+                                    'margin-left': '15px',
+                                    'filter': 'invert(1)',
+                                    'margin-bottom': '2px'})
+                        ],
+                        id='send-call-button',
+                        className="uploadButton",
+                        type="button",
+                    ),
+                ], style={
+                    'width': '100%',
+                    'display': 'flex',
+                    'justify-content': 'center',
+                    'margin-top': '30px',
+                },
+                    id="upload-button-container"),
+            ],
+                style={
+                    'min-width': '400px',
+                    'margin-bottom': '10px',
+                    'color': '#444',
+                    'padding-bottom': '100px'
+            }),
+        ],
+            style={
+                'width': '70%',
+        },
+            className='center'
+        ),
+    ],
+        style={
+            'padding-top': '10px',
+            'margin-bottom': '60px',
+            'min-height': '100vh',
+    },
+    )

@@ -15,10 +15,7 @@ global-include *.so
 global-include *.map
 global-include *.js
 global-include *.ts
-
-graft NRCCallApp/dashboard/assets
-graft NRCCallApp/dashboard/assets/font
-graft NRCCallApp/dashboard/assets/img
-graft NRCCallApp/dashboard/assets/vid
+global-include *.template
 
 graft bin
+graft dash_tools/templating/templates

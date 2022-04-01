@@ -16,7 +16,8 @@ pip install dash-tools
 
 ### Project Templating
 
-- **`--init, -i` (STRING) :** Creates a Plotly Dash app with the given name in the current working directory.
+- **`--init, -i` Args: (`project name`) :** Creates a Plotly Dash app with the given name in the current working directory.
+- **`--use_stack` Args: (`heroku`) :** Add stack to current project. Currently only supports Heroku.
 
 ### Debug and Run
 
