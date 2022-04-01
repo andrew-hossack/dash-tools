@@ -4,7 +4,7 @@
 '''
 import os
 import argparse
-from dash_tools.templating import build_template
+from dash_tools.templating import buildTemplate
 
 
 def main(parser: argparse.ArgumentParser = None, cwd: os.PathLike = None):
@@ -16,7 +16,7 @@ def main(parser: argparse.ArgumentParser = None, cwd: os.PathLike = None):
 
     if args.init:
         print(f'dash-tools: init: creating new app {args.init[0]} at {cwd}')
-        build_template.create_app(base_dir=cwd, app_name=args.init[0])
+        buildTemplate.create_app(base_dir=cwd, app_name=args.init[0])
 
     if args.run:
         print(f'dash-tools: run: running app in normal mode')
