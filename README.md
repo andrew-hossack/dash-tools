@@ -23,3 +23,13 @@ pip install dash-tools
 
 - **`--run, -r`:** Run the current project in non-debug mode.
 - **`--dev, -d`:** Run the current project in debug/dev mode.
+
+## Development
+
+### Creating Templates
+
+Templates go in the `dash_tools/templating/templates` directory, and follow the naming convention `<name>.<extension>.template`
+
+When installed through `buildTemplate:create_app`, templates are written to the user's file system after being run through a formatter.
+
+Formatting in templates is simple. In `fileUtils:format_file_stream`, placeholders such as `{appName}` can be replaces with variables during runtime.

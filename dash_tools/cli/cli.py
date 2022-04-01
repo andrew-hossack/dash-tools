@@ -7,7 +7,14 @@ import argparse
 from dash_tools.templating import buildTemplate
 
 
-def main(parser: argparse.ArgumentParser = None, cwd: os.PathLike = None):
+def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike = None):
+    """
+    dash-tools CLI entry point.
+
+    Args:
+        parser: The parser to use.
+        invoke_directory: The directory command was invoked from.
+    """
     args = parser.parse_args()
 
     if not (args.init or args.run or args.dev or args.use_stack):
@@ -15,8 +22,12 @@ def main(parser: argparse.ArgumentParser = None, cwd: os.PathLike = None):
         exit('\ndash-tools: error: too few arguments')
 
     if args.init:
-        print(f'dash-tools: init: creating new app {args.init[0]} at {cwd}')
-        buildTemplate.create_app(base_dir=cwd, app_name=args.init[0])
+        print(
+            f'dash-tools: init: creating new app {args.init[0]} at {invoke_directory}')
+        buildTemplate.create_app(
+            base_dir=invoke_directory, app_name=args.init[0])
+        print(
+            f'\ndash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
 
     if args.run:
         print(f'dash-tools: run: running app in normal mode')

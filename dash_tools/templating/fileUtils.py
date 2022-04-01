@@ -12,12 +12,13 @@ def _get_data_path(data_dir: os.PathLike) -> os.PathLike:
     return resource_filename(__name__, data_dir)
 
 
-def _format_file_stream(t: IO, app_name: str) -> str:
+def format_file_stream(t: IO, app_name: str) -> str:
     """
     Format the template file with given variables.
     """
     w = t.read().replace(r'{appName}', app_name)
     w = w.replace(r'{createTime}', str(datetime.datetime.now()))
+    # w = w.replace(r'{foo}', 'bar')
     return w
 
 

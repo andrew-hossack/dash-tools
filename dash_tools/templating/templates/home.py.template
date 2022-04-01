@@ -1,8 +1,6 @@
 # Created on {createTime}
 
 import dash_bootstrap_components as dbc
-from components.forms import \
-    generate_divs_and_callbacks_upload_form as upload_forms
 from dash import html, Dash
 
 
@@ -26,8 +24,6 @@ def home_page(app: Dash):
                 ], style={'margin-bottom': '0px'}),
                 html.Hr(style={'color': 'black',
                                'margin-top': '0px', 'margin-bottom': '30px'}),
-                # Forms
-                upload_forms(),
 
                 html.Div(id='call-status-text'),
                 html.Div([

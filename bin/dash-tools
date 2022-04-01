@@ -32,10 +32,9 @@ parser.add_argument(
     action='store_true'
 )
 
-
 parser.add_argument(
     '--use-stack',
     help='add a stack framework',
     nargs=1)
 
-cli.main(parser=parser, cwd=os.getcwd())
+cli.main(parser=parser, invoke_directory=os.getcwd())
