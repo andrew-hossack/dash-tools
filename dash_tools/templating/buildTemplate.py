@@ -7,10 +7,11 @@
 import datetime
 import os
 import shutil
-from .fileUtils import _get_data_path
+import datetime
+from .templateUtils import _get_data_path, Templates
 
 
-def create_app(base_dir: os.PathLike, app_name: str, template: str = 'default'):
+def create_app(base_dir: os.PathLike, app_name: str, use_template: Templates = Templates.DEFAULT):
     '''
     Create a new app in the target directory.
 
@@ -22,7 +23,7 @@ def create_app(base_dir: os.PathLike, app_name: str, template: str = 'default'):
         exit(f'dash-tools: init: App {app_dir} already exists! Aborting.')
 
     # Copy files from template directory
-    template = os.path.join('templates', template)
+    template = os.path.join('templates', use_template.value)
     for path, _, files in os.walk(_get_data_path(template)):
         for name in files:
             # Skip non .template files
