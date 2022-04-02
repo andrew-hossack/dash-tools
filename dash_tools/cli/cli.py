@@ -38,12 +38,5 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
         print(
             f'dash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
 
-    if args.run:
-        print(f'dash-tools: run. Not implemented yet.')
-
-    if args.dev:
-        print(f'dash-tools: run: running app in dev mode. Not implemented yet.')
-
     if args.add_stack:
-        print(
-            f'dash-tools: use-stack: adding stack framework {args.add_stack[0]}. Not implemented yet.')
+        print('dash-tools: use-stack: Not implemented yet.')

@@ -51,11 +51,6 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--use_stack` Args: (`heroku`) :** Add stack to current project. Currently only supports Heroku. CURRENTLY UNDER DEVELOPMENT.
 
-### Debug and Run
-
-- **`--run, -r`:** Run the current project in non-debug mode. CURRENTLY UNDER DEVELOPMENT.
-- **`--dev, -d`:** Run the current project in debug/dev mode. CURRENTLY UNDER DEVELOPMENT.
-
 ### Other
 
 - **`--help, -h`:** Display CLI helpful hints

@@ -19,22 +19,8 @@ parser.add_argument(
     nargs='+')
 
 parser.add_argument(
-    '-r',
-    '--run',
-    help='run the dash app in non-debug/dev mode.',
-    action='store_true',
-)
-
-parser.add_argument(
-    '-d',
-    '--dev',
-    help='run the dash app in debug/dev mode',
-    action='store_true'
-)
-
-parser.add_argument(
     '--add-stack',
-    help='add a stack framework. Args: REQUIRED: <stack name>',
+    help='add a stack framework. Args: REQUIRED: <stack name>.',
     nargs=1,
     choices=['heroku'])
 
