@@ -38,7 +38,7 @@ dash-tools --init MyDashApp minimal
 
 Listed below are available project template templates. Please see the above example on how to use templates.
 
-- **default** - the default multi-page theme. Includes examples of ClientsideCallbacks, multi-page routing, and external stylesheets.
+- **default** - the default multi-page theme. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
 - **minimal** - for the minimalists. Not much here but the bare bones.
 
@@ -48,7 +48,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ### Project Build Commands
 
-- **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates. Available templates available are `default` and `minimal`.
+- **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--use_stack` Args: (`heroku`) :** Add stack to current project. Currently only supports Heroku. CURRENTLY UNDER DEVELOPMENT.
 
 ### Debug and Run
@@ -70,3 +70,7 @@ Templates go in the `dash_tools/templating/templates` directory. The entire dire
 Adding a new template to the templates directory also requires adding the new template to the Enum list in `buildTemplate:Templates` Enum. Template name must match Enum value!
 
 Any file name or file containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time.
+
+## License
+
+MIT License. See LICENSE.txt file.

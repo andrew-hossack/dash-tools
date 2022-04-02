@@ -5,7 +5,7 @@ from dash_tools.version import __version__
 import os
 
 parser = argparse.ArgumentParser(
-    description='The dash-tools cli for Plotly Dash.')
+    description='The dash-tools CLI for Plotly Dash.')
 
 parser.add_argument(
     '--version',
@@ -15,14 +15,14 @@ parser.add_argument(
 parser.add_argument(
     '-i',
     '--init',
-    help='Create a new Dash app. Args: REQUIRED: [app name] OPTIONAL: [template].',
+    help='Create a new Dash app. Args: REQUIRED: <app name> OPTIONAL: <template> (Default: "default").',
     nargs='+')
 
 parser.add_argument(
     '-r',
     '--run',
-    help='run the dash app in non-debug/dev mode',
-    action='store_true'
+    help='run the dash app in non-debug/dev mode.',
+    action='store_true',
 )
 
 parser.add_argument(
@@ -33,8 +33,9 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--use-stack',
-    help='add a stack framework',
-    nargs=1)
+    '--add-stack',
+    help='add a stack framework. Args: REQUIRED: <stack name>',
+    nargs=1,
+    choices=['heroku'])
 
 cli.main(parser=parser, invoke_directory=os.getcwd())
