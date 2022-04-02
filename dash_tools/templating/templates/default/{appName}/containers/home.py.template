@@ -16,8 +16,7 @@ def home_page(app: Dash):
                 # Text and Titles
                 html.H3(
                     "{appName}",
-                    style={
-                        'padding-top': '10px'},
+                    style={'padding-top': '10px'},
                 ),
                 html.H5([
                     "Call Details"
@@ -31,15 +30,6 @@ def home_page(app: Dash):
                         [
                             html.P("Send Call", style={
                                    'display': 'inline-block', 'height': '0px'}),
-                            html.Img(
-                                src=app.get_asset_url(
-                                    'img/phone-call.png'),
-                                style={
-                                    'display': 'inline-block',
-                                    'height': '20px',
-                                    'margin-left': '15px',
-                                    'filter': 'invert(1)',
-                                    'margin-bottom': '2px'})
                         ],
                         id='send-call-button',
                         className="uploadButton",

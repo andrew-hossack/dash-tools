@@ -1,0 +1,19 @@
+# Dash Fun App Template: {appName}
+
+Created on {createTime}
+
+Welcome to your [Plotly Dash](https://plotly.com/dash/) App! This is a template for your {appName} app.
+
+## Running the App
+
+Run `{appName}/app.py` and navigate to http://127.0.0.1:8050/ in your browser, or use the command line interface.
+
+```bash
+# Run in normal mode
+dash-tools --run
+
+# Run in debug mode
+dash-tools --debug
+```
+
+

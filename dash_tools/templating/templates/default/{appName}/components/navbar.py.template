@@ -19,7 +19,7 @@ def home_header():
                         dcc.Link([
                             html.Img(
                                 src=app.get_asset_url(
-                                    'img/NRC-logo.png'),
+                                    'img/banner.png'),
                                 style={
                                     "height": "42px",
                                     "width": "auto",
@@ -41,9 +41,9 @@ def home_header():
                 html.Div(
                     [
                         html.A(
-                            dbc.Button(html.Div(["{appName}"], style={
+                            dbc.Button(html.Div(["Plotly Dash"], style={
                                 'color': 'black', 'font-size': '15px', 'font-style': 'italic'}), color='white'),
-                            href="https://nrchealth.com/",
+                            href="https://plotly.com/",
                         ),
 
                     ],
