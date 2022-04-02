@@ -28,8 +28,9 @@ class Templates(Enum):
     Enum of templates to be used in the app.
     Values must match the file name in the templates directory.
     """
-    DEFAULT = 'default'
-    MINIMAL = 'minimal'
+    DEFAULT = 'default'  # Default template multipage app.
+    MINIMAL = 'minimal'  # Minial template for a simple app.
+    HEROKU = 'heroku'  # Includes Heroku files.
 
 
 def _convert_to_template_or_error(value) -> Templates:

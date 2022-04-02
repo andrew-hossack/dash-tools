@@ -41,6 +41,7 @@ Listed below are available project template templates. Please see the above exam
 - **default** - the default multi-page theme. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
 - **minimal** - for the minimalists. Not much here but the bare bones.
+  ![](docs/minimal_theme.png)
 
 If you would like to develop templates, please read the _Creating Templates_ section below.
 

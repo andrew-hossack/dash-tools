@@ -1,0 +1,1 @@
+web: gunicorn --timeout 600 --chdir {appName} app:server

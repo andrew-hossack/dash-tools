@@ -24,19 +24,21 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
         exit('\ndash-tools: error: too few arguments')
 
     if args.init:
+
         possible_template = args.init[1] if len(
             args.init) > 1 else templateUtils.Templates.DEFAULT
+
         print('dash-tools: init')
+
         buildTemplate.create_app(
             base_dir=invoke_directory,
             app_name=args.init[0],
             use_template=possible_template)
+
         metaDataUtils.add_project_metadata(
             invoke_directory,
             args.init[0],
             possible_template)
-        print(
-            f'dash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
 
-    if args.add_stack:
-        print('dash-tools: use-stack: Not implemented yet.')
+        print(
+            f'dash-tools: init: finished')
