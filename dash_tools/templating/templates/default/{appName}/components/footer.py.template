@@ -13,7 +13,7 @@ def footer():
         dbc.CardFooter(
             [
                 dcc.Markdown(
-                    "{appName} - All Rights Reserved",
+                    "{appName} - My Plotly Dash Application - Footer",
                     style={
                         "display": "inline-block",
                         'font-size': '15px'}),

@@ -380,7 +380,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .btn {
 
 .uploadButton, .uploadButton:hover, .uploadButton:active, .uploadButton:visited, .uploadButton:focus {
     width: 200px;
-    background-color: #EC8300 !important; 
+    background-color: #119dff !important; 
     border-radius: 5px;
     border-color: transparent !important;
     color: white !important;
