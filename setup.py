@@ -15,7 +15,7 @@ setuptools.setup(
     author="Andrew Hossack",
     author_email="andrew_hossack@outlook.com",
     description="Plotly Dash Template Generator and Tools",
-    download_url='https://github.com/andrew-hossack/dash-tools/archive/refs/tags/V0.1.tar.gz',
+    download_url='https://github.com/andrew-hossack/dash-tools/archive/refs/tags/V0.2.tar.gz',
     scripts=["bin/dash-tools"],
     long_description=long_description,
     long_description_content_type="text/markdown",
