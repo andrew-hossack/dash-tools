@@ -28,8 +28,6 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
         possible_template = args.init[1] if len(
             args.init) > 1 else templateUtils.Templates.DEFAULT
 
-        print('dash-tools: init')
-
         buildTemplate.create_app(
             base_dir=invoke_directory,
             app_name=args.init[0],

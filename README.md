@@ -12,11 +12,13 @@ With user and developer-friendly templates, generating a new app only takes senc
 
 ## Installation
 
-`dash-tools` is available through pip.
+Installation is easy with pip:
 
 ```bash
 pip install dash-tools
 ```
+
+Find [dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 ## Examples
 
@@ -32,6 +34,18 @@ Templates are also available using the optional template argument after --init:
 ```bash
 # Create a new Dash app called MyDashApp using 'minimal' theme
 dash-tools --init MyDashApp minimal
+```
+
+To list out available templates, use the --templates command:
+
+```bash
+# Display available templates
+dash-tools --templates
+
+>>> dash-tools: templates: List of available templates:
+>>> default
+>>> minimal
+>>> heroku
 ```
 
 ## Templates
@@ -68,12 +82,12 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
    ```python
    class Templates(Enum):
-   DEFAULT = 'default'
-   MINIMAL = 'minimal'
-   <NEWTEMPLATE> = '<newtemplate>'
+      DEFAULT = 'default'
+      MINIMAL = 'minimal'
+      NEWTEMPLATE = 'newtemplate'
    ```
 
-3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `# Created on {createTime}` will copy to the user's filesystem as `# Creaded on 2022-03-30 22:06:07`
+3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `# Created on {createTime}` will copy to the user's filesystem as _README.md_: `# Creaded on 2022-03-30 22:06:07`
 4. All template files must end in `.template`
 
 ## License
