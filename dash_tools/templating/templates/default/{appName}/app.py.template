@@ -18,7 +18,7 @@ app = Dash(
     external_stylesheets=[dbc.themes.FLATLY],
     external_scripts=[
         "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"],
-    title="MyApp",
+    title={appName},
     update_title=None,
     prevent_initial_callbacks=True,
     suppress_callback_exceptions=True,

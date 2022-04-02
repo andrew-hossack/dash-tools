@@ -23,7 +23,7 @@ def add_project_metadata(base_dir: str, app_name: str, template: templateUtils.T
         f.write(json.dumps({
             'app_name': app_name,
             'base_dir': app_path,
-            'template': template.value,
+            'template': template,
             'create_time': str(datetime.datetime.now()),
             'last_update': str(datetime.datetime.now())
         }))
