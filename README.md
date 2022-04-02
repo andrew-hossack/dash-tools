@@ -65,11 +65,18 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ### Creating Templates
 
-Templates go in the `dash_tools/templating/templates` directory. The entire directory structure will be copied to the users source directory if they choose the correct Templates Enum.
+1. Templates are found here: `dash_tools/templating/templates/<Template Name>`. When a user uses CLI to choose a template with the name `<Template Name>` the template will be copied to their system.
+2. Adding a new template to the templates directory requires adding the new template to the Enum list in `templating.templateUtils:Templates` Enum. Template name must match Enum value, eg.
 
-Adding a new template to the templates directory also requires adding the new template to the Enum list in `buildTemplate:Templates` Enum. Template name must match Enum value!
+   ```python
+   class Templates(Enum):
+   DEFAULT = 'default'
+   MINIMAL = 'minimal'
+   <NEWTEMPLATE> = '<newtemplate>'
+   ```
 
-Any file name or file containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time.
+3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `{# Created on {createTime}` will copy to the user's filesystem as `# Creaded on 2022-03-30 22:06:07`
+4. All template files must end in `.template`
 
 ## License
 
