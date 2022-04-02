@@ -42,7 +42,7 @@ Listed below are available project template templates. Please see the above exam
   ![](docs/default_theme.png)
 - **minimal** - for the minimalists. Not much here but the bare bones.
   ![](docs/minimal_theme.png)
-- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Build on the minimal template.
+- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template.
   ![](docs/heroku_theme.png)
 
 If you would like to develop templates, please read the _Creating Templates_ section below.
@@ -73,7 +73,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
    <NEWTEMPLATE> = '<newtemplate>'
    ```
 
-3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `{# Created on {createTime}` will copy to the user's filesystem as `# Creaded on 2022-03-30 22:06:07`
+3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `# Created on {createTime}` will copy to the user's filesystem as `# Creaded on 2022-03-30 22:06:07`
 4. All template files must end in `.template`
 
 ## License
