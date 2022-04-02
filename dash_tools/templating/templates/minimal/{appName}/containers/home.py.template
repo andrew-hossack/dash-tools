@@ -53,25 +53,6 @@ def home_page(app: Dash):
                     ],
                     id='app-details',
                 ),
-
-                html.Div(id='call-status-text'),
-                html.Div([
-                    dbc.Button(
-                        [
-                            html.P("Amazing Button", style={
-                                   'display': 'inline-block', 'height': '0px'}),
-                        ],
-                        id='send-call-button',
-                        className="uploadButton",
-                        type="button",
-                    ),
-                ], style={
-                    'width': '100%',
-                    'display': 'flex',
-                    'justify-content': 'center',
-                    'margin-top': '30px',
-                },
-                    id="upload-button-container"),
             ],
                 style={
                     'min-width': '400px',
