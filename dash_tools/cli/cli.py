@@ -6,7 +6,6 @@ import os
 import argparse
 from dash_tools.templating import buildTemplate
 from dash_tools.templating import templateUtils
-from dash_tools.runtime import appRunner
 from dash_tools.meta import metaDataUtils
 
 
@@ -40,12 +39,11 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
             f'dash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
 
     if args.run:
-        print(f'dash-tools: run')
-        appRunner.start_app('app', invoke_directory)
+        print(f'dash-tools: run. Not implemented yet.')
 
     if args.dev:
-        print(f'dash-tools: run: running app in dev mode')
+        print(f'dash-tools: run: running app in dev mode. Not implemented yet.')
 
     if args.add_stack:
         print(
-            f'dash-tools: use-stack: adding stack framework {args.add_stack[0]}')
+            f'dash-tools: use-stack: adding stack framework {args.add_stack[0]}. Not implemented yet.')
