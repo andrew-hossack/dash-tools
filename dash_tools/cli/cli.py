@@ -19,7 +19,7 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
     """
     args = parser.parse_args()
 
-    if not (args.init or args.run or args.dev or args.add_stack):
+    if not (args.init or args.templates):
         parser.print_help()
         exit('\ndash-tools: error: too few arguments')
 
@@ -42,3 +42,9 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
 
         print(
             f'dash-tools: init: finished')
+
+    if args.templates:
+        print('dash-tools: templates: List of available templates:')
+
+        for template in templateUtils.Templates:
+            print(f'{template.name}')

@@ -9,7 +9,7 @@ from containers.home import home_page
 # global app definition
 app = Dash(
     __name__,
-    title={appName},
+    title="{appName}",
     update_title=None,
     prevent_initial_callbacks=True,
     suppress_callback_exceptions=True,

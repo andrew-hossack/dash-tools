@@ -51,12 +51,11 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templat
             # Copy the file
             shutil.copyfile(src, dest)
 
-            # Replace {appName} and {createTime} in .py and .md files
-            if('.py' in name or '.md' in name):
-                with open(dest, 'r') as f:
-                    content = f.read()
-                    content = content.replace(r'{appName}', app_name)
-                    content = content.replace(
-                        r'{createTime}', str(datetime.datetime.now()))
-                    with open(dest, 'w') as f:
-                        f.write(content)
+            # Replace {appName} and {createTime} in all files
+            with open(dest, 'r') as f:
+                content = f.read()
+                content = content.replace(r'{appName}', app_name)
+                content = content.replace(
+                    r'{createTime}', str(datetime.datetime.now()))
+                with open(dest, 'w') as f:
+                    f.write(content)

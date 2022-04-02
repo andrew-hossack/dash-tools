@@ -13,7 +13,7 @@ load_dotenv(override=True, verbose=True)
 # global app definition
 app = Dash(
     __name__,
-    title={appName},
+    title="{appName} Heroku Dash App",
     update_title=None,
     prevent_initial_callbacks=True,
     suppress_callback_exceptions=True,

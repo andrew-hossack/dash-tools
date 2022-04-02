@@ -17,7 +17,7 @@ def home_page(app: Dash):
             html.Div([
                 # Text and Titles
                 html.H3(
-                    "{appName}",
+                    "{appName} Minimal Dash App",
                     style={'padding-top': '10px'},
                 ),
                 html.H5([

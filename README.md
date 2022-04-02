@@ -38,10 +38,12 @@ dash-tools --init MyDashApp minimal
 
 Listed below are available project template templates. Please see the above example on how to use templates.
 
-- **default** - the default multi-page theme. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
+- **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
 - **minimal** - for the minimalists. Not much here but the bare bones.
   ![](docs/minimal_theme.png)
+- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Build on the minimal template.
+  ![](docs/heroku_theme.png)
 
 If you would like to develop templates, please read the _Creating Templates_ section below.
 
@@ -50,7 +52,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 ### Project Build Commands
 
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
-- **`--use_stack` Args: (`heroku`) :** Add stack to current project. Currently only supports Heroku. CURRENTLY UNDER DEVELOPMENT.
+- **`--templates` :** List available templates.
 
 ### Other
 
