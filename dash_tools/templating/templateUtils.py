@@ -38,7 +38,7 @@ def _convert_to_template_or_error(value) -> Templates:
     Convert the string passed to the init command to a template.
     """
     try:
-        return Templates(value.lower())
+        return Templates(value)
     except ValueError:
         exit(
             f'dash-tools: init: Template "{value}" is not valid. Aborting.')

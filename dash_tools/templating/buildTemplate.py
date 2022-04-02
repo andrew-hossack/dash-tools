@@ -12,6 +12,25 @@ from typing import Union
 from .templateUtils import _check_create_app_args, _convert_to_template_or_error, _get_templates_data_path, Templates
 
 
+def format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
+    """
+    Look for files ending in .py, .md, Procfile, and format them
+
+    Change {appName} to the app name
+    Change {createTime} to the current time
+
+    Modifies the user's file in place
+    """
+    if('.py' in name or '.md' in name or 'Procfile' in name):
+        with open(dest, 'r') as f:
+            content = f.read()
+            content = content.replace(r'{appName}', app_name)
+            content = content.replace(
+                r'{createTime}', str(datetime.datetime.now()))
+            with open(dest, 'w') as f:
+                f.write(content)
+
+
 def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templates, str]):
     '''
     Create a new app in the target directory.
@@ -51,11 +70,5 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templat
             # Copy the file
             shutil.copyfile(src, dest)
 
-            # Replace {appName} and {createTime} in all files
-            with open(dest, 'r') as f:
-                content = f.read()
-                content = content.replace(r'{appName}', app_name)
-                content = content.replace(
-                    r'{createTime}', str(datetime.datetime.now()))
-                with open(dest, 'w') as f:
-                    f.write(content)
+            # Format the file
+            format_file(name, app_name, dest)

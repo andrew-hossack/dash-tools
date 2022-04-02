@@ -47,4 +47,4 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
         print('dash-tools: templates: List of available templates:')
 
         for template in templateUtils.Templates:
-            print(f'{template.name}')
+            print(f'{template.value}')
