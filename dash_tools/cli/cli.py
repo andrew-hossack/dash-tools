@@ -5,6 +5,7 @@
 import os
 import argparse
 from dash_tools.templating import buildTemplate
+from dash_tools.templating.templateUtils import Templates
 
 
 def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike = None):
@@ -22,12 +23,15 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
         exit('\ndash-tools: error: too few arguments')
 
     if args.init:
-        print(
-            f'dash-tools: init: creating new app {args.init[0]} at {invoke_directory}')
+        possible_template = args.init[1] if len(
+            args.init) > 1 else Templates.DEFAULT
+        print('dash-tools: init')
         buildTemplate.create_app(
-            base_dir=invoke_directory, app_name=args.init[0])
+            base_dir=invoke_directory,
+            app_name=args.init[0],
+            use_template=possible_template)
         print(
-            f'\ndash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
+            f'dash-tools: init: finished creating new app {args.init[0]} at {invoke_directory}')
 
     if args.run:
         print(f'dash-tools: run: running app in normal mode')

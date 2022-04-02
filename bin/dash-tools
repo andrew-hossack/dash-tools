@@ -15,8 +15,8 @@ parser.add_argument(
 parser.add_argument(
     '-i',
     '--init',
-    help='create a new app',
-    nargs=1)
+    help='Create a new Dash app. Args: REQUIRED: [app name] OPTIONAL: [template].',
+    nargs='+')
 
 parser.add_argument(
     '-r',

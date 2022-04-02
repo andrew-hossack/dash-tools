@@ -8,19 +8,22 @@ import datetime
 import os
 import shutil
 import datetime
-from .templateUtils import _get_data_path, Templates
+from typing import Union
+from .templateUtils import _check_args, _convert_to_template_or_error, _get_data_path, Templates
 
 
-def create_app(base_dir: os.PathLike, app_name: str, use_template: Templates = Templates.DEFAULT):
+def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templates, str]):
     '''
     Create a new app in the target directory.
 
     Looks for files in the /template directory
     '''
-    # Check if the app already exists
-    app_dir = os.path.join(base_dir, app_name)
-    if os.path.exists(app_dir):
-        exit(f'dash-tools: init: App {app_dir} already exists! Aborting.')
+    # Check arguments
+    _check_args(base_dir, app_name)
+    use_template = _convert_to_template_or_error(use_template)
+
+    print(
+        f'init: creating new app {app_name} at {base_dir} with template {use_template}')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
