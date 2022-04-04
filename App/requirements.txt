@@ -1,7 +1,0 @@
-dash==2.0.0
-dash-bootstrap-components==1.0.0
-Flask==2.0.1
-gunicorn==20.1.0
-packaging==21.0
-python-dotenv==0.19.2
-setuptools==47.1.0

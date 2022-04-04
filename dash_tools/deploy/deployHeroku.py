@@ -152,4 +152,4 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
 
     # Push to Heroku
     print(f'dash-tools: deploy-heroku: Pushing to Heroku...')
-    os.system(f'git push {heroku_remote_name} {git_remote_url}')
+    os.system(f'git push {heroku_remote_name} main')
