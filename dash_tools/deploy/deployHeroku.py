@@ -52,6 +52,22 @@ def _check_file_exists(root_path: os.PathLike, file_name: str):
         exit(1)
 
 
+def _is_git_initialized() -> bool:
+    """
+    Check that the current location is a git repository or not
+    """
+    regex = r'fatal: not a git repository'
+    isGitInitialized = True
+    try:
+        git_command_output = subprocess.check_output(
+            'git remote -v', shell=True)
+        if re.search(regex, git_command_output.decode('utf-8')):
+            isGitInitialized = False
+    except subprocess.CalledProcessError:
+        isGitInitialized = False
+    return isGitInitialized
+
+
 def _login_heroku_successful() -> bool:
     """
     Try to log into Heroku
@@ -137,6 +153,14 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
     print(f'dash-tools: deploy-heroku: Adding python buildpack...')
     os.system(f'heroku buildpacks:add heroku/python -a {app_name}')
 
+    # Check that git is initialized in the current repo
+    if not _is_git_initialized():
+        print(f'dash-tools: deploy-heroku: Initializing git...')
+        # Initialize git
+        os.system(f'git init')
+        # Create branch
+        os.system(f'git checkout -b main')
+
     # Create a commit to push to Heroku
     print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku...')
     os.system(f'git add .')
@@ -153,3 +177,11 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
     # Push to Heroku
     print(f'dash-tools: deploy-heroku: Pushing to Heroku...')
     os.system(f'git push {heroku_remote_name} main')
+
+    print(
+        f'dash-tools: deploy-heroku: Published to Heroku remote: {heroku_remote_name} on branch main')
+    print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
+    print(
+        f'dash-tools: deploy-heroku: Management Page https://dash.herokuapp.com/apps/{app_name}')
+    print(
+        f'dash-tools: deploy-heroku: Deployed To https://{app_name}.herokuapp.com/')
