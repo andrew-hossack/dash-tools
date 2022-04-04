@@ -48,6 +48,19 @@ dash-tools --templates
 >>> heroku
 ```
 
+To create a project and deploy to heroku, it is quite simple. You can even use the heroku template:
+
+```bash
+# Create the heroku template app
+dash-tools --init MyGreatHerokuApp heroku
+cd MyGreatHerokuApp/
+
+# Using the following command will start the deploy process
+# Follow the instructions in the console to log into heroku
+# Both the Heroku CLI and Git are needed - see Commands section below
+dash-tools --deploy-heroku my-great-heroku-app
+```
+
 ## Templates
 
 Listed below are available project template templates. Please see the above example on how to use templates.
@@ -65,7 +78,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ### Project Commands
 
-- **`--deploy-heroku` :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) from the project root directory. Looks for project configuration in `Procfile`
+- **`--deploy-heroku` Args: REQUIRED (`project name`) :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) and git [Git](https://git-scm.com/downloads) from the project root directory
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--templates, -t` :** List available templates.
 

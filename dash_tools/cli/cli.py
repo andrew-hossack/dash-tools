@@ -38,9 +38,8 @@ def main():
 
     parser.add_argument(
         '--deploy-heroku',
-        help='Deploys the current project to Heroku. Run command from the root of the project. Looks for server configuration in Procfile.',
-        action='store_true',
-        default=False)
+        help='Deploys the current project <app name> to Heroku. Run command from the root of the project. Requires Heroku CLI and Git CLI. Args: REQUIRED: <app name>',
+        nargs=1)
 
     handle_args(parser)
 
@@ -68,4 +67,4 @@ def handle_args(parser: argparse.ArgumentParser):
         templateUtils.print_templates()
 
     if args.deploy_heroku:
-        deployHeroku.deploy_app_to_heroku(os.getcwd())
+        deployHeroku.deploy_app_to_heroku(os.getcwd(), args.deploy_heroku[0])
