@@ -9,7 +9,7 @@ import os
 import shutil
 import datetime
 from typing import Union
-from .templateUtils import _check_create_app_args, _convert_to_template_or_error, _get_templates_data_path, Templates
+from dash_tools.templating import templateUtils
 
 
 def format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
@@ -31,22 +31,22 @@ def format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
-def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templates, str]):
+def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templateUtils.Template, str]):
     '''
     Create a new app in the target directory.
 
     Looks for files in the /template directory
     '''
     # Check arguments
-    _check_create_app_args(base_dir, app_name)
-    use_template = _convert_to_template_or_error(use_template)
+    templateUtils.check_create_app_args(base_dir, app_name)
+    use_template = templateUtils.convert_to_template_or_error(use_template)
 
     print(
         f'dash-tools: init: creating new app {app_name} at {base_dir} with template {use_template}')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
-    for path, _, files in os.walk(_get_templates_data_path(template)):
+    for path, _, files in os.walk(templateUtils.get_templates_data_path(template)):
         for name in files:
             # Skip non .template files
             if('.template' not in name):
@@ -54,7 +54,7 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[Templat
 
             # Get the relative path to the file
             relative_path = os.path.relpath(
-                path, _get_templates_data_path(template))
+                path, templateUtils.get_templates_data_path(template))
             src = os.path.join(path, name)
 
             # Get the destination path
