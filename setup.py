@@ -9,6 +9,9 @@ meta = {}
 with open('./dash_tools/version.py') as f:
     exec(f.read(), meta)
 
+with open('requirements.txt') as f:
+    requirements = f.readlines()
+
 setuptools.setup(
     name="dash-tools",
     version=meta['__version__'],
@@ -16,7 +19,11 @@ setuptools.setup(
     author_email="andrew_hossack@outlook.com",
     description="Plotly Dash Template Generator and Tools",
     download_url='https://github.com/andrew-hossack/dash-tools/archive/refs/tags/V0.4.tar.gz',
-    scripts=["bin/dash-tools"],
+    entry_points={
+        'console_scripts': [
+                'dash-tools = dash_tools.cli.cli:main'
+        ]
+    },
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/andrew-hossack/dash-tools",
@@ -28,12 +35,5 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     python_requires=">=3.6",
     include_package_data=True,
-    install_requires=[
-        "dash==2.0.0",
-        "dash-bootstrap-components==1.0.0",
-        "packaging==21.0",
-        "python-dotenv==0.19.2",
-        "Flask==2.0.1",
-        "gunicorn==20.1.0",
-    ],
+    install_requires=requirements,
 )

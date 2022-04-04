@@ -63,7 +63,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ## Commands
 
-### Project Build Commands
+### Project Commands
 
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--templates` :** List available templates.

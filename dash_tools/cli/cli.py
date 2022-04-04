@@ -6,15 +6,12 @@ import os
 import argparse
 from dash_tools.templating import buildTemplate
 from dash_tools.templating import templateUtils
+from dash_tools.version import __version__
 
 
-def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike = None):
+def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
     """
-    dash-tools CLI entry point.
-
-    Args:
-        parser: The parser to use.
-        invoke_directory: The directory command was invoked from.
+    Handles the arguments passed to the CLI.
     """
     args = parser.parse_args()
 
@@ -32,11 +29,39 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
             app_name=args.init[0],
             use_template=possible_template)
 
-        print(
-            f'dash-tools: init: finished')
+        print(f'dash-tools: init: finished')
 
     if args.templates:
         print('dash-tools: templates: List of available templates:')
 
         for template in templateUtils.Templates:
             print(f'{template.value}')
+
+
+def main():
+    """
+    dash-tools CLI entry point.
+    """
+    invoke_directory = os.getcwd()
+
+    parser = argparse.ArgumentParser(
+        description='The dash-tools CLI for Plotly Dash.')
+
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=__version__)
+
+    parser.add_argument(
+        '-i',
+        '--init',
+        help='Create a new Dash app. Args: REQUIRED: <app name> OPTIONAL: <template> (Default: "default").',
+        nargs='+')
+
+    parser.add_argument(
+        '--templates',
+        help='List available templates.',
+        default=False,
+        action='store_true')
+
+    handle_args(parser, invoke_directory)
