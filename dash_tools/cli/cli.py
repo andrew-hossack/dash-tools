@@ -6,7 +6,6 @@ import os
 import argparse
 from dash_tools.templating import buildTemplate
 from dash_tools.templating import templateUtils
-from dash_tools.meta import metaDataUtils
 
 
 def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike = None):
@@ -32,11 +31,6 @@ def main(parser: argparse.ArgumentParser = None, invoke_directory: os.PathLike =
             base_dir=invoke_directory,
             app_name=args.init[0],
             use_template=possible_template)
-
-        metaDataUtils.add_project_metadata(
-            invoke_directory,
-            args.init[0],
-            possible_template)
 
         print(
             f'dash-tools: init: finished')
