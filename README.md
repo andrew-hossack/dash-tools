@@ -25,15 +25,15 @@ Find [dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 Below are common usage examples. See _Commands_ section for more details.
 
 ```bash
-# Create a new Dash app called MyDashApp
+# Create a new Dash app called "MyDashApp"
 dash-tools --init MyDashApp
 ```
 
 Templates are also available using the optional template argument after --init:
 
 ```bash
-# Create a new Dash app called MyDashApp using 'minimal' theme
-dash-tools --init MyDashApp minimal
+# Create a new Dash app called "MyWonderfulApp" using 'minimal' theme
+dash-tools --init MyWonderfulApp minimal
 ```
 
 To list out available templates, use the --templates command:

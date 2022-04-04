@@ -39,7 +39,8 @@ def main():
     parser.add_argument(
         '--deploy-heroku',
         help='Deploys the current project to Heroku. Run command from the root of the project. Looks for server configuration in Procfile.',
-        nargs=1)
+        action='store_true',
+        default=False)
 
     handle_args(parser)
 
@@ -67,5 +68,4 @@ def handle_args(parser: argparse.ArgumentParser):
         templateUtils.print_templates()
 
     if args.deploy_heroku:
-        print(f'dash-tools: deploy-heroku: Deploying to Heroku. Must be invoked from the root of the project.')
         deployHeroku.deploy_app_to_heroku(os.getcwd())

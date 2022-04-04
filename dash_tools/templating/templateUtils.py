@@ -49,5 +49,7 @@ def convert_to_template_or_error(value) -> Template:
     try:
         return Template(value)
     except ValueError:
-        exit(
-            f'dash-tools: init: Template "{value}" is not valid. Aborting.')
+        print(f'dash-tools: init: Template "{value}" is not a valid template.')
+        print('Valid templates are:')
+        print_templates()
+        exit(1)
