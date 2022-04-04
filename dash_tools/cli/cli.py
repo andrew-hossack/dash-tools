@@ -6,7 +6,6 @@ import os
 import argparse
 from dash_tools.templating import buildTemplate
 from dash_tools.templating import templateUtils
-from dash_tools.deploy import deployHeroku
 from dash_tools.version import __version__
 
 
@@ -37,11 +36,6 @@ def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
 
         for template in templateUtils.Templates:
             print(f'{template.value}')
-
-    if args.deploy_heroku:
-        print('dash-tools: deploy-heroku: Deploying to Heroku...')
-
-        deployHeroku.deploy_to_heroku(invoke_directory)
 
 
 def main():
