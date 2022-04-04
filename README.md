@@ -65,8 +65,9 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ### Project Commands
 
+- **`--deploy-heroku` :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) from the project root directory. Looks for project configuration in `Procfile`
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
-- **`--templates` :** List available templates.
+- **`--templates, -t` :** List available templates.
 
 ### Other
 
@@ -78,7 +79,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 ### Creating Templates
 
 1. Templates are found here: `dash_tools/templating/templates/<Template Name>`. When a user uses CLI to choose a template with the name `<Template Name>` the template will be copied to their system.
-2. Adding a new template to the templates directory requires adding the new template to the Enum list in `templating.templateUtils:Templates` Enum. Template name must match Enum value, eg.
+2. Adding a new template to the templates directory requires adding the new template to the Enum list in `templating.Templates` Enum. Template name must match Enum value, eg.
 
    ```python
    class Templates(Enum):

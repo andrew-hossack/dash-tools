@@ -5,8 +5,7 @@
 import os
 import argparse
 from dash_tools.deploy import deployHeroku
-from dash_tools.templating import buildTemplate
-from dash_tools.templating import templateUtils
+from dash_tools.templating import buildTemplate, templateUtils
 from dash_tools.version import __version__
 
 
@@ -14,12 +13,12 @@ def main():
     """
     dash-tools CLI entry point.
     """
-    invoke_directory = os.getcwd()
 
     parser = argparse.ArgumentParser(
         description='The dash-tools CLI for Plotly Dash.')
 
     parser.add_argument(
+        '-v',
         '--version',
         action='version',
         version=__version__)
@@ -31,6 +30,7 @@ def main():
         nargs='+')
 
     parser.add_argument(
+        '-t',
         '--templates',
         help='List available templates.',
         default=False,
@@ -38,45 +38,33 @@ def main():
 
     parser.add_argument(
         '--deploy-heroku',
-        help='Deploys the current project to Heroku. Run command from the root of the project. Args: REQUIRED: <app name> (Must match the name of the app directory).',
+        help='Deploys the current project to Heroku. Run command from the root of the project. Looks for server configuration in Procfile.',
         nargs=1)
 
-    handle_args(parser, invoke_directory)
+    handle_args(parser)
 
 
-def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
+def handle_args(parser: argparse.ArgumentParser):
     """
     Handles the arguments passed to the CLI.
     """
     args = parser.parse_args()
 
-    # List of available arguments for the user
-    REQUIRED_ARGS = [
-        args.init,
-        args.templates,
-        args.deploy_heroku]
-
-    if not True in REQUIRED_ARGS:
+    # Check that there is at least one argument passed to the CLI
+    if (not args.init and not args.templates and not args.deploy_heroku):
         parser.print_help()
         exit('\ndash-tools: error: too few arguments')
 
     if args.init:
-
-        possible_template = args.init[1] if len(
-            args.init) > 1 else templateUtils.Templates.DEFAULT
-
         buildTemplate.create_app(
-            base_dir=invoke_directory,
+            base_dir=os.getcwd(),
             app_name=args.init[0],
-            use_template=possible_template)
-
+            use_template=templateUtils.get_template_from_args(args))
         print(f'dash-tools: init: finished')
 
     if args.templates:
         print('dash-tools: templates: List of available templates:')
-
-        for template in templateUtils.Templates:
-            print(f'{template.value}')
+        templateUtils.print_templates()
 
     if args.deploy_heroku:
         print(f'dash-tools: deploy-heroku: Deploying to Heroku. Must be invoked from the root of the project.')

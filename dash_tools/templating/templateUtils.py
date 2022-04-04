@@ -2,12 +2,21 @@
  # @ Author: Andrew Hossack
  # @ Create Time: 2022-04-01 19:12:04
  '''
-from enum import Enum
+import argparse
 from pkg_resources import resource_filename
 import os
+from dash_tools.templating.Templates import Template
 
 
-def _check_create_app_args(base_dir, app_name):
+def print_templates():
+    """
+    Print the available templates.
+    """
+    for template in Template:
+        print(f'\t> {template.value}')
+
+
+def check_create_app_args(base_dir, app_name):
     """
     Check the arguments passed to the init command.
     """
@@ -16,29 +25,29 @@ def _check_create_app_args(base_dir, app_name):
         exit(f'dash-tools: init: App {app_dir} already exists. Aborting.')
 
 
-def _get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:
+def get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:
     """
     Get the path to the data directory.
     """
     return resource_filename(__name__, data_dir)
 
 
-class Templates(Enum):
+def get_template_from_args(args: argparse.Namespace) -> Template:
     """
-    Enum of templates to be used in the app.
-    Values must match the file name in the templates directory.
+    Get the template to use based on the arguments passed to the CLI.
+
+    If the user passed in a template, use that, otherwise use the `default`.
     """
-    DEFAULT = 'default'  # Default template multipage app.
-    MINIMAL = 'minimal'  # Minial template for a simple app.
-    HEROKU = 'heroku'  # Includes Heroku files.
+    return args.init[1] if len(
+        args.init) > 1 else Template.DEFAULT
 
 
-def _convert_to_template_or_error(value) -> Templates:
+def convert_to_template_or_error(value) -> Template:
     """
     Convert the string passed to the init command to a template.
     """
     try:
-        return Templates(value)
+        return Template(value)
     except ValueError:
         exit(
             f'dash-tools: init: Template "{value}" is not valid. Aborting.')
