@@ -15,7 +15,7 @@ def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
     """
     args = parser.parse_args()
 
-    if not (args.init or args.templates or args.deploy_heroku):
+    if not (args.init or args.templates):
         parser.print_help()
         exit('\ndash-tools: error: too few arguments')
 

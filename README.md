@@ -8,7 +8,7 @@ Create a templated multi-page [Plotly Dash](https://plotly.com/dash/) app with C
 
 [dash-tools](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications will never be quicker.
 
-With user and developer-friendly templates, generating a new app only takes senconds. In fact, it will take longer to install this tool than it will to use it!
+With user and developer-friendly templates, generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it!
 
 ## Installation
 
