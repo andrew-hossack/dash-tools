@@ -63,8 +63,9 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ## Commands
 
-### Project Build Commands
+### Project Commands
 
+- **`--deploy-heroku` :** Deploys project to Heroku. The [Heroku CLI](https://devcenter.heroku.com/categories/command-line) must be installed manually for this command to work. This command must be invoked from the project root.
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--templates` :** List available templates.
 
