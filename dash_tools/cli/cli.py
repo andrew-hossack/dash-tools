@@ -4,38 +4,10 @@
 '''
 import os
 import argparse
+from dash_tools.deploy import deployHeroku
 from dash_tools.templating import buildTemplate
 from dash_tools.templating import templateUtils
 from dash_tools.version import __version__
-
-
-def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
-    """
-    Handles the arguments passed to the CLI.
-    """
-    args = parser.parse_args()
-
-    if not (args.init or args.templates):
-        parser.print_help()
-        exit('\ndash-tools: error: too few arguments')
-
-    if args.init:
-
-        possible_template = args.init[1] if len(
-            args.init) > 1 else templateUtils.Templates.DEFAULT
-
-        buildTemplate.create_app(
-            base_dir=invoke_directory,
-            app_name=args.init[0],
-            use_template=possible_template)
-
-        print(f'dash-tools: init: finished')
-
-    if args.templates:
-        print('dash-tools: templates: List of available templates:')
-
-        for template in templateUtils.Templates:
-            print(f'{template.value}')
 
 
 def main():
@@ -70,3 +42,42 @@ def main():
         nargs=1)
 
     handle_args(parser, invoke_directory)
+
+
+def handle_args(parser: argparse.ArgumentParser, invoke_directory: os.PathLike):
+    """
+    Handles the arguments passed to the CLI.
+    """
+    args = parser.parse_args()
+
+    # List of available arguments for the user
+    REQUIRED_ARGS = [
+        args.init,
+        args.templates,
+        args.deploy_heroku]
+
+    if not True in REQUIRED_ARGS:
+        parser.print_help()
+        exit('\ndash-tools: error: too few arguments')
+
+    if args.init:
+
+        possible_template = args.init[1] if len(
+            args.init) > 1 else templateUtils.Templates.DEFAULT
+
+        buildTemplate.create_app(
+            base_dir=invoke_directory,
+            app_name=args.init[0],
+            use_template=possible_template)
+
+        print(f'dash-tools: init: finished')
+
+    if args.templates:
+        print('dash-tools: templates: List of available templates:')
+
+        for template in templateUtils.Templates:
+            print(f'{template.value}')
+
+    if args.deploy_heroku:
+        print(f'dash-tools: deploy-heroku: Deploying to Heroku. Must be invoked from the root of the project.')
+        deployHeroku.deploy_app_to_heroku(os.getcwd())
