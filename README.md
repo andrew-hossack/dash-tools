@@ -71,7 +71,7 @@ cd MyGreatHerokuApp/
 # dash-tools --deploy-heroku <heroku-app-name>
 # Follow the instructions in the console to log into heroku
 # Both the Heroku CLI and Git are needed - see Commands section below
-dash-tools --deploy-heroku my-great-heroku-app
+dash-tools --deploy-heroku any-unique-heroku-name-you-want
 
 # And that's really it! A new heroku app and git remote will be created
 # Automatic deployment? Worth it. 
