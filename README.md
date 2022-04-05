@@ -61,7 +61,9 @@ dash-tools --templates
 To create a project and deploy to Heroku, it is quite simple. You can even create a project using the _heroku_ template to speed things up:
 
 ```bash
-# Create the heroku template app
+# Create a new app called MyGreatHerokuApp. The heroku template 
+# includes Procfile, requirements.txt, runtime.txt
+# which are all necessary to deploy to heroku 
 dash-tools --init MyGreatHerokuApp heroku
 cd MyGreatHerokuApp/
 
@@ -72,7 +74,7 @@ cd MyGreatHerokuApp/
 dash-tools --deploy-heroku my-great-heroku-app
 
 # And that's really it! A new heroku app and git remote will be created
-# Automatic deployment? Yes! 
+# Automatic deployment? Worth it. 
 ```
 
 ## **Templates**
