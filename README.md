@@ -39,7 +39,7 @@ cd MyDashApp/
 Templates are also available using the optional template argument after --init:
 
 ```bash
-# Create a new Dash app called "MyWonderfulApp" using 'minimal' theme
+# Create a new Dash app called "MyWonderfulApp" using 'minimal' template
 dash-tools --init MyWonderfulApp minimal
 cd MyWonderfulApp/
 ```
