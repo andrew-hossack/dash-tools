@@ -47,7 +47,9 @@ cd MyWonderfulApp/
 To list out available templates, use the --templates command:
 
 ```bash
-# Display available templates
+# Display available templates. You can use these
+# templates to create new apps. See the Readme section
+# below for available templates 
 dash-tools --templates
 
 >>> dash-tools: templates: List of available templates:
