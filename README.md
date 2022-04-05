@@ -79,7 +79,7 @@ dash-tools --deploy-heroku my-great-heroku-app
 
 ## **Templates**
 
-Listed below are available project template templates. Please see the above example on how to use templates.
+Listed below are available project templates. Please see the above example on how to use templates.
 
 - **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
