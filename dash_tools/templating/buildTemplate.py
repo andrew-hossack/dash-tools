@@ -40,9 +40,8 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
     # Check arguments
     templateUtils.check_create_app_args(base_dir, app_name)
     use_template = templateUtils.convert_to_template_or_error(use_template)
-
     print(
-        f'dash-tools: init: creating new app {app_name} at {base_dir} with template {use_template}')
+        f'dash-tools: init: creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)

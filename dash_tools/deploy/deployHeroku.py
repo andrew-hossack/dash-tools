@@ -11,7 +11,7 @@ import uuid
 def _heroku_is_installed() -> bool:
     """
     Check that heroku CLI is installed on the system
-    Looks for "heroku/X.Y.Z ..." in the output of "heroku --version"
+    Looks for "heroku/X.Y.Z " in the output of "heroku --version"
     """
     regex = r'heroku/[0-9]+\.[0-9]+\.[0-9]+ [a-zA-Z]+'
     isInstalled = True
@@ -82,7 +82,8 @@ def _check_file_exists(root_path: os.PathLike, file_name: str):
     if not os.path.exists(path):
         print(
             f'dash-tools: deploy-heroku: {file_name} not found in {root_path} - is the project configured for Heroku?')
-        exit(1)
+        print('dash-tools: deploy-heroku: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        exit('dash-tools: deploy-heroku: Failed')
 
 
 def _create_app_on_heroku(app_name: str) -> list or None:
@@ -92,7 +93,7 @@ def _create_app_on_heroku(app_name: str) -> list or None:
     Returns:
         list: [git_remote_url, heroku_command_output]
     """
-    print(f'dash-tools: deploy-heroku: Creating {app_name} on Heroku...')
+    print(f'dash-tools: deploy-heroku: Creating {app_name} on Heroku')
     heroku_command_output = subprocess.check_output(
         f'heroku create {app_name}', shell=True)
     regex = 'https:\/\/git\.heroku\.com\/[a-zA-Z0-9-_]*\.git'
@@ -105,13 +106,13 @@ def _create_app_on_heroku(app_name: str) -> list or None:
     return git_remote_url, heroku_command_output
 
 
-def _user_confirmed_deployment(app_name: str, git_remote_name: str) -> bool:
+def _user_confirmed_deployment(app_name: str) -> bool:
     """
     Ask the user if they want to deploy to Heroku
     """
     print(
-        f'dash-tools: deploy-heroku: Please confirm creating app "{app_name}" on Heroku and git remote "{git_remote_name}"...')
-    user_input = input('dash-tools: deploy-heroku: Continue? (y/n)\n> ')
+        f'dash-tools: deploy-heroku: Please confirm creating app "{app_name}" on Heroku and adding git remote "heroku".')
+    user_input = input('dash-tools: deploy-heroku: Confirm? (y/n)\n> ')
     if user_input == 'y' or user_input == 'Y':
         return True
     else:
@@ -138,24 +139,24 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
     # Check if heroku CLI is installed
     if not _heroku_is_installed():
         print(f'dash-tools: deploy-heroku: Heroku CLI not installed!')
-        print(f'dash-tools: See https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli')
+        print(f'dash-tools: deploy-heroku: See https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli')
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check if git is installed
     if not _git_is_installed():
         print(f'dash-tools: deploy-heroku: Git not installed!')
-        print(f'dash-tools: See https://git-scm.com/downloads')
+        print(f'dash-tools: deploy-heroku: See https://git-scm.com/downloads')
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that git is initialized in the current repo
     if not _is_git_repository():
-        print(f'dash-tools: deploy-heroku: Current directory is not a git repository! Please initialize git first.')
+        print(f'dash-tools: deploy-heroku: Current directory is not a git repository!')
         print(
-            f'dash-tools: See https://git-scm.com/docs/git-init')
+            f'dash-tools: deploy-heroku: Did you forget to "git init"? See https://git-scm.com/docs/git-init')
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that the project has necessary files
-    print(f'dash-tools: deploy-heroku: Checking for Procfile, runtime.txt, and requirements.txt...')
+    print(f'dash-tools: deploy-heroku: Checking for Procfile, runtime.txt, and requirements.txt')
     _check_file_exists(project_root_dir, 'Procfile')
     _check_file_exists(project_root_dir, 'runtime.txt')
     _check_file_exists(project_root_dir, 'requirements.txt')
@@ -171,11 +172,10 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
             f'dash-tools: deploy-heroku: {app_name} is already on Heroku. Please choose a unique name.')
         exit('dash-tools: deploy-heroku: Failed')
 
-    # Create remote Heroku repository with the git remote URL and 4 digit uuid
-    heroku_remote_name = f'heroku-{uuid.uuid4().hex[:4]}'
+    print(f'dash-tools: deploy-heroku: Name {app_name} is available!')
 
     # Confirm deployment settings and create the project on Heroku if the user confirms
-    if not _user_confirmed_deployment(app_name, heroku_remote_name):
+    if not _user_confirmed_deployment(app_name):
         exit('dash-tools: deploy-heroku: Aborted')
 
     # Create the project on Heroku and capture the git remote URL
@@ -187,27 +187,22 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
         exit('dash-tools: deploy-heroku: Failed')
 
     # Add python buildpack
-    print(f'dash-tools: deploy-heroku: Adding python buildpack...')
+    print(f'dash-tools: deploy-heroku: Adding python buildpack')
     os.system(f'heroku buildpacks:add heroku/python -a {app_name}')
 
     # Create a commit to push to Heroku
-    print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku...')
+    print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku')
     os.system(f'git add .')
-    os.system(f'git commit -m "Initial deploy to Heroku for {app_name}"')
-
-    # Add git heroku remote
-    print(
-        f'dash-tools: deploy-heroku: Adding git remote "{heroku_remote_name}" to git...')
-    os.system(f'git remote add {heroku_remote_name} {git_remote_url}')
+    os.system(f'git commit -m "Initial deploy to heroku for {app_name}"')
 
     # Push to Heroku
-    print(f'dash-tools: deploy-heroku: Pushing to Heroku...')
-    os.system(f'git push {heroku_remote_name} main')
+    print(f'dash-tools: deploy-heroku: Pushing to Heroku')
+    os.system(f'git push heroku master')
 
     print(
-        f'dash-tools: deploy-heroku: Published to git remote: "{heroku_remote_name}" on branch main')
+        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master"')
     print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
     print(
-        f'dash-tools: deploy-heroku: Management Page https://dash.herokuapp.com/apps/{app_name}')
+        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{app_name}')
     print(
         f'dash-tools: deploy-heroku: Deployed To https://{app_name}.herokuapp.com/')
