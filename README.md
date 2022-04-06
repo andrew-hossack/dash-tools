@@ -26,30 +26,33 @@ Find [dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 ## **Usage Examples**
 
-Below are common usage examples. See _Commands_ section for more details.
+Below are common usage examples. See [_Commands_](#commands) section for more details.
+
+### **Creating New Projects**
+
+Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp" from where the command is invoked:
 
 ```bash
-# Create a new Dash app called "MyDashApp"
-# The new app is created in the directory where the command
-# is invoked from
+# Create the app "MyDashApp"
 dash-tools --init MyDashApp
+
+# Check out your new project!
 cd MyDashApp/
 ```
 
-Templates are also available using the optional template argument after --init:
+### **Using Templates**
+
+Templates offer different project styles and include different boilerplate code samples. Creating a new app with templates is easy, just use the optional template argument after --init. If you do not specify a template, '_default_' will be used. See the [_Templates_](#templates) section below for more details.
 
 ```bash
 # Create a new Dash app called "MyWonderfulApp" using 'minimal' template
 dash-tools --init MyWonderfulApp minimal
-cd MyWonderfulApp/
 ```
 
-To list out available templates, use the --templates command:
+To list out available templates, use the `--templates` command:
 
 ```bash
-# Display available templates. You can use these
-# templates to create new apps. See the Readme section
-# below for available templates 
+# Display available templates
 dash-tools --templates
 
 >>> dash-tools: templates: List of available templates:
@@ -58,28 +61,31 @@ dash-tools --templates
 >>>   heroku
 ```
 
-To create a project and deploy to Heroku, it is quite simple. You can even create a project using the _heroku_ template to speed things up:
+### **Deploying with Heroku**
+
+To create a project and deploy to [Heroku](https://www.heroku.com/), it is quite simple. You can even create a project using the '_heroku_' template which includes `Procfile`, `requirements.txt`, and `runtime.txt`.
+
+Using the `--deploy-heroku` command in the project root directory will look for the above files. The directory needs to be a git repository. The [Heroku CLI](https://devcenter.heroku.com/categories/command-line) must also be installed.
+
+The command takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
 
 ```bash
-# Create a new app called MyGreatHerokuApp. The heroku template 
-# includes Procfile, requirements.txt, runtime.txt
-# which are all necessary to deploy to heroku 
+# Create a new app "MyGreatHerokuApp" with the 'heroku' template
 dash-tools --init MyGreatHerokuApp heroku
+
+# Change current directory to your new project root directory
 cd MyGreatHerokuApp/
 
 # Using the following command will start the deploy process
-# dash-tools --deploy-heroku <heroku-app-name>
-# Follow the instructions in the console to log into heroku
-# Both the Heroku CLI and Git are needed - see Commands section below
-dash-tools --deploy-heroku any-unique-heroku-name-you-want
-
-# And that's really it! A new heroku app and git remote will be created
-# Automatic deployment? Worth it. 
+# Follow the instructions in the console to deploy your app
+dash-tools --deploy-heroku your-unique-app-name
 ```
+
+And that's really it! A new heroku app and git remote will be created, and all project code will be deployed.
 
 ## **Templates**
 
-Listed below are available project templates. Please see the above example on how to use templates.
+Listed below are available project templates. Please see the above [examples](#using-templates) on how to use templates.
 
 - **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
@@ -88,11 +94,11 @@ Listed below are available project templates. Please see the above example on ho
 - **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template.
   ![](docs/heroku_theme.png)
 
-If you would like to develop templates, please read the _Creating Templates_ section below.
+If you would like to develop templates, please read the [_Creating Templates_](#creating-templates) section below.
 
 ## **Commands**
 
-### Project Commands
+### **Project Commands**
 
 - **`--deploy-heroku` Args: REQUIRED (`unique heroku project name`) :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) and [Git](https://git-scm.com/downloads). Invoke from the project root directory.
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
@@ -105,7 +111,7 @@ If you would like to develop templates, please read the _Creating Templates_ sec
 
 ## **Development**
 
-### Creating Templates
+### **Creating Templates**
 
 1. Templates are found here: `dash_tools/templating/templates/<Template Name>`. When a user uses CLI to choose a template with the name `<Template Name>` the template will be copied to their system.
 2. Adding a new template to the templates directory requires adding the new template to the Enum list in `templating.Templates` Enum. Template name must match Enum value, eg.
