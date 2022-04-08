@@ -89,6 +89,9 @@ def _create_requirements_txt(root_path: os.PathLike):
     """
     print('dash-tools: deploy-heroku: Creating requirements.txt')
     os.system(f'pipreqs {root_path}')
+    # Append gunicorn to requirements.txt
+    with open(os.path.join(root_path, 'requirements.txt'), 'a') as requirements_file:
+        requirements_file.write('gunicorn')
 
 
 def _create_runtime_txt(root_path: os.PathLike):
@@ -129,7 +132,7 @@ def _prompt_user_choice(message: str) -> bool:
         return _prompt_user_choice(message)
 
 
-def _check_required_files(root_path: os.PathLike, app_name: str) -> bool:
+def _check_required_files(root_path: os.PathLike) -> bool:
     """
     Check for Procfile, runtime.txt, requirements.txt
     """
@@ -138,9 +141,14 @@ def _check_required_files(root_path: os.PathLike, app_name: str) -> bool:
     if not _check_file_exists(root_path, 'Procfile'):
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file Procfile not found. Create one automatically?'):
+            # HOTFIX / TODO / TEMP
+            # We will infer the name of the directory that the app.py file is located.
+            # Assume that the project is <MyApp>/<MyApp>/app.py. Since we only know the top-level
+            # directory as root_path (<MyApp>/.../app.py), we will infer that app.py is in root_path/root_path/app.py
+            app_dir = os.path.basename(root_path)
             if _prompt_user_choice(
-                    f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in {app_name}/app.py! See https://devcenter.heroku.com/articles/procfile'):
-                _create_procfile(root_path, app_name)
+                    f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in {app_dir}/app.py! See https://devcenter.heroku.com/articles/procfile'):
+                _create_procfile(root_path, app_dir)
             else:
                 deploy_should_continue = False
         else:
@@ -160,40 +168,31 @@ def _check_required_files(root_path: os.PathLike, app_name: str) -> bool:
     return deploy_should_continue
 
 
-def _create_app_on_heroku(app_name: str) -> list or None:
+def _create_app_on_heroku(app_name: str) -> bool:
     """
     Create the project on Heroku and return the git remote URL
 
     Returns:
-        list: [git_remote_url, heroku_command_output]
+        Success of the operation (True/False)
     """
     print(f'dash-tools: deploy-heroku: Creating {app_name} on Heroku')
-    heroku_command_output = subprocess.check_output(
-        f'heroku create {app_name}', shell=True)
-    regex = 'https:\/\/git\.heroku\.com\/[a-zA-Z0-9-_]*\.git'
-    git_remote_url = re.search(
-        regex, heroku_command_output.decode('utf-8'))
+    url_regex = r'https:\/\/git\.heroku\.com\/[a-zA-Z0-9-_]*\.git'
     try:
-        git_remote_url = git_remote_url.group(0)
-    except AttributeError:
-        git_remote_url = None
-    return git_remote_url, heroku_command_output
-
-
-def _app_is_not_on_heroku(app_name: str) -> bool:
-    """
-    Check that the app is not already on Heroku
-    """
-    print(
-        f'dash-tools: deploy-heroku: Checking if {app_name} is already on Heroku...')
-    heroku_command_output = subprocess.check_output(
-        f'heroku apps', shell=True)
-    if app_name in heroku_command_output.decode('utf-8'):
+        heroku_command_output = subprocess.check_output(
+            f'heroku create {app_name}', shell=True)
+        git_remote_url = re.search(
+            url_regex, heroku_command_output.decode('utf-8'))
+        try:
+            git_remote_url.group(0)
+        except AttributeError:
+            # No url found. Something is wrong
+            return False
+    except subprocess.CalledProcessError:
         return False
     return True
 
 
-def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
+def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
     """
     Uses the Heroku CLI to deploy the current project
     """
@@ -217,7 +216,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that the project has necessary files
-    if not _check_required_files(project_root_dir, app_name):
+    if not _check_required_files(project_root_dir):
         print('dash-tools: deploy-heroku: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
         exit('dash-tools: deploy-heroku: Aborted')
 
@@ -226,34 +225,24 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
         print(f'dash-tools: deploy-heroku: Failed to log into Heroku!')
         exit('dash-tools: deploy-heroku: Failed')
 
-    # Check that the project is not already on Heroku
-    if not _app_is_not_on_heroku(app_name):
-        print(
-            f'dash-tools: deploy-heroku: {app_name} is already on Heroku. Please choose a unique name.')
-        exit('dash-tools: deploy-heroku: Failed')
-
-    print(f'dash-tools: deploy-heroku: Name {app_name} is available!')
-
     # Confirm deployment settings and create the project on Heroku if the user confirms
-    if not _prompt_user_choice(f'dash-tools: deploy-heroku: Please confirm creating app "{app_name}" on Heroku and adding git remote "heroku".'):
+    if not _prompt_user_choice(f'dash-tools: deploy-heroku: Please confirm creating app "{heroku_app_name}" on Heroku and adding git remote "heroku".'):
         exit('dash-tools: deploy-heroku: Aborted')
 
     # Create the project on Heroku and capture the git remote URL
-    git_remote_url, heroku_output = _create_app_on_heroku(app_name)
-    if not git_remote_url:
-        print(heroku_output.decode('utf-8'))
-        print(
-            f'dash-tools: deploy-heroku: Failed to create {app_name} on Heroku!')
-        exit('dash-tools: deploy-heroku: Failed')
+    if not _create_app_on_heroku(heroku_app_name):
+        exit(
+            f'dash-tools: deploy-heroku: Deploying app {heroku_app_name} to Heroku failed. Check that the app name is valid.')
 
     # Add python buildpack
     print(f'dash-tools: deploy-heroku: Adding python buildpack')
-    os.system(f'heroku buildpacks:add heroku/python -a {app_name}')
+    os.system(f'heroku buildpacks:add heroku/python -a {heroku_app_name}')
 
     # Create a commit to push to Heroku
     print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku')
     os.system(f'git add .')
-    os.system(f'git commit -m "Initial deploy to heroku for {app_name}"')
+    os.system(
+        f'git commit -m "Initial deploy to heroku for {heroku_app_name}"')
 
     # Push to Heroku
     print(f'dash-tools: deploy-heroku: Pushing to Heroku')
@@ -263,7 +252,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
         f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master". Push changes to this branch!')
     print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
     print(
-        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{app_name}')
+        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{heroku_app_name}')
     print(
-        f'dash-tools: deploy-heroku: Deployed to https://{app_name}.herokuapp.com/')
+        f'dash-tools: deploy-heroku: Deployed to https://{heroku_app_name}.herokuapp.com/')
     print(f'dash-tools: deploy-heroku: Finished!')
