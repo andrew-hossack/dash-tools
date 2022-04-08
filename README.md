@@ -55,10 +55,14 @@ To list out available templates, use the `--templates` command:
 # Display available templates
 dash-tools --templates
 
+# Note: To see details on each template, check out the 'Templates'
+# section below in the docs
 >>> dash-tools: templates: List of available templates:
->>>   default
->>>   minimal
->>>   heroku
+>>>         > default
+>>>         > heroku
+>>>         > tabs
+>>>         > sidebar
+>>>         > iris
 ```
 
 ### **Deploying with Heroku**
@@ -70,14 +74,16 @@ Using the `--deploy-heroku` command in the project root directory will look for 
 The command takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote called 'heroku' with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
 
 ```bash
-# Create a new app "MyGreatHerokuApp" with the 'heroku' template
+# 1. Create a new app "MyGreatHerokuApp" with the 'heroku' template
 dash-tools --init MyGreatHerokuApp heroku
 
-# Change current directory to your new project root directory
+# 2. Change current directory to your new project root directory
 cd MyGreatHerokuApp/
 
-# Using the following command will start the deploy process
-# Follow the instructions in the console to deploy your app
+# 2.5 Feel free to make changes to your project at this step!
+
+# 3. Using the following command will start the deploy process
+#    Follow the instructions in the console to deploy your app
 dash-tools --deploy-heroku your-unique-app-name
 ```
 
@@ -85,16 +91,18 @@ And that's really it! A new heroku app and git remote will be created, and all p
 
 ## **Templates**
 
-Listed below are available project templates. Please see the above [examples](#using-templates) on how to use templates.
+Listed below are available project templates. Please see the above [_Using Templates_](#using-templates) section on how to use templates. If you would like to develop templates, please read the [_Creating Templates_](#creating-templates) section below.
 
 - **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
-- **minimal** - for the minimalists. Not much here but the bare bones.
-  ![](docs/minimal_theme.png)
 - **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template. Includes: `Procfile`, `requirements.txt`, `runtime.txt`
   ![](docs/heroku_theme.png)
-
-If you would like to develop templates, please read the [_Creating Templates_](#creating-templates) section below.
+- **iris** - Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
+  ![](docs/iris_theme.png)
+- **sidebar** - Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
+  ![](docs/sidebar_theme.png)
+- **tabs** - Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
+  ![](docs/tabs_theme.png)
 
 ## **Commands**
 

@@ -8,15 +8,7 @@ This template includes files to deploy with [Heroku](https://heroku.com/) and is
 
 ## Running the App
 
-Run `{appName}/app.py` and navigate to http://127.0.0.1:8050/ in your browser, or use the command line interface.
-
-```bash
-# Run in normal mode
-dash-tools --run
-
-# Run in debug mode
-dash-tools --debug
-```
+Run `{appName}/app.py` and navigate to http://127.0.0.1:8050/ in your browser.
 
 ## Heroku
 
