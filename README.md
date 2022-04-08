@@ -74,7 +74,10 @@ Using the `--deploy-heroku` command in the project root directory will look for 
 The command takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote called 'heroku' with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
 
 ```bash
-# 1. Create a new app "MyGreatHerokuApp" with the 'heroku' template
+# 1. Create a new app "MyGreatHerokuApp" with the 'heroku' template.
+#    You can also create an app using any other template, but you will
+#    need to follow the on-screen instructions to create your Procfile,
+#    requirements.txt, and runtime.txt heroku files automatically.
 dash-tools --init MyGreatHerokuApp heroku
 
 # 2. Change current directory to your new project root directory

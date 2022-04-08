@@ -16,6 +16,4 @@ global-include *.map
 global-include *.js
 global-include *.ts
 global-include *.template
-
-graft bin
 graft dash_tools/templating/templates
