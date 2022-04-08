@@ -45,7 +45,8 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
-    for path, _, files in os.walk(templateUtils.get_templates_data_path(template)):
+    template_base_path = templateUtils.get_templates_data_path(template)
+    for path, _, files in os.walk(template_base_path):
         for name in files:
             # Skip non .template files
             if('.template' not in name):
@@ -53,7 +54,7 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
 
             # Get the relative path to the file
             relative_path = os.path.relpath(
-                path, templateUtils.get_templates_data_path(template))
+                path, template_base_path)
             src = os.path.join(path, name)
 
             # Get the destination path

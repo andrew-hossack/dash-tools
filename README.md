@@ -91,7 +91,7 @@ Listed below are available project templates. Please see the above [examples](#u
   ![](docs/default_theme.png)
 - **minimal** - for the minimalists. Not much here but the bare bones.
   ![](docs/minimal_theme.png)
-- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template.
+- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template. Includes: `Procfile`, `requirements.txt`, `runtime.txt`
   ![](docs/heroku_theme.png)
 
 If you would like to develop templates, please read the [_Creating Templates_](#creating-templates) section below.

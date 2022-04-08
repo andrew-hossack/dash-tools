@@ -5,7 +5,6 @@
 import os
 import re
 import subprocess
-import uuid
 
 
 def _heroku_is_installed() -> bool:
@@ -200,9 +199,10 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, app_name: str):
     os.system(f'git push heroku master')
 
     print(
-        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master"')
+        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master". Push changes to this branch!')
     print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
     print(
         f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{app_name}')
     print(
-        f'dash-tools: deploy-heroku: Deployed To https://{app_name}.herokuapp.com/')
+        f'dash-tools: deploy-heroku: Deployed to https://{app_name}.herokuapp.com/')
+    print(f'dash-tools: deploy-heroku: Finished!')
