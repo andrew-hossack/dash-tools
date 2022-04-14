@@ -18,12 +18,13 @@ from sklearn.cluster import KMeans
 iris_raw = datasets.load_iris()
 iris = pd.DataFrame(iris_raw["data"], columns=iris_raw["feature_names"])
 
-
 app = dash.Dash(
     title="{appName}",
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     )
 
+# Declare server for Heroku deplpoyment. Needed for Procfile.
+server = app.server
 
 controls = dbc.Card(
     [

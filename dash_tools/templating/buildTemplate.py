@@ -12,7 +12,7 @@ from typing import Union
 from dash_tools.templating import templateUtils
 
 
-def format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
+def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
     """
     Look for files ending in .py, .md, Procfile, and format them
 
@@ -31,6 +31,16 @@ def format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
+def _check_write_permission(path: os.PathLike) -> bool:
+    """
+    Check for write permission in directory/
+
+    Returns:
+        True if write access else allowed False
+    """
+    return os.access(path, os.W_OK)
+
+
 def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templateUtils.Template, str]):
     '''
     Create a new app in the target directory.
@@ -42,6 +52,12 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
     use_template = templateUtils.convert_to_template_or_error(use_template)
     print(
         f'dash-tools: init: creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
+
+    # Check for file write permissions in the base directory (command invoke directory)
+    if not _check_write_permission(base_dir):
+        print(
+            f'dash-tools: init: No write permissions for {base_dir}')
+        exit(f'dash-tools: init: Failed')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
@@ -71,4 +87,4 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
             shutil.copyfile(src, dest)
 
             # Format the file
-            format_file(name, app_name, dest)
+            _format_file(name, app_name, dest)

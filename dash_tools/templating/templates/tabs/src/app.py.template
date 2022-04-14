@@ -21,6 +21,9 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     )
 
+# Declare server for Heroku deplpoyment. Needed for Procfile.
+server = app.server
+
 app.layout = dbc.Container(
     [
         dcc.Store(id="store"),

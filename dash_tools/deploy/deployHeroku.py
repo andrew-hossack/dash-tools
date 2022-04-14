@@ -104,13 +104,13 @@ def _create_runtime_txt(root_path: os.PathLike):
     print('dash-tools: deploy-heroku: Created runtime.txt using python-3.8.10')
 
 
-def _create_procfile(root_path: os.PathLike, app_name: str):
+def _create_procfile(root_path: os.PathLike):
     """
     Create a procfile but prompt the user to verify it before continuing.
     """
     with open(os.path.join(root_path, 'Procfile'), 'w') as procfile:
         procfile.write(
-            f'web: gunicorn --timeout 600 --chdir {app_name} app:server')
+            f'web: gunicorn --timeout 600 --chdir src app:server')
     print(f'dash-tools: deploy-heroku: Created Procfile')
 
 
@@ -141,14 +141,9 @@ def _check_required_files(root_path: os.PathLike) -> bool:
     if not _check_file_exists(root_path, 'Procfile'):
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file Procfile not found. Create one automatically?'):
-            # HOTFIX / TODO / TEMP
-            # We will infer the name of the directory that the app.py file is located.
-            # Assume that the project is <MyApp>/<MyApp>/app.py. Since we only know the top-level
-            # directory as root_path (<MyApp>/.../app.py), we will infer that app.py is in root_path/root_path/app.py
-            app_dir = os.path.basename(root_path)
             if _prompt_user_choice(
-                    f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in {app_dir}/app.py! See https://devcenter.heroku.com/articles/procfile'):
-                _create_procfile(root_path, app_dir)
+                    f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in src/app.py! See https://devcenter.heroku.com/articles/procfile'):
+                _create_procfile(root_path)
             else:
                 deploy_should_continue = False
         else:

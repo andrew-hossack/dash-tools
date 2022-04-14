@@ -61,6 +61,7 @@ def handle_args(parser: argparse.ArgumentParser):
             app_name=args.init[0],
             use_template=templateUtils.get_template_from_args(args))
         print(f'dash-tools: init: finished')
+        print(f'dash-tools: Want to learn more about creating Dash apps? See https://github.com/andrew-hossack/dash-tools for more details.')
 
     if args.templates:
         print('dash-tools: templates: List of available templates:')

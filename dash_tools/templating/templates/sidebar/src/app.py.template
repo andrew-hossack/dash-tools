@@ -21,6 +21,9 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     )
 
+# Declare server for Heroku deplpoyment. Needed for Procfile.
+server = app.server
+
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
     "position": "fixed",

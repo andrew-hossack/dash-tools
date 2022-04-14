@@ -12,7 +12,6 @@ class Template(Enum):
     Values must match the file name in the templating/templates/ directory.
     """
     DEFAULT = 'default'   # Default template multipage app
-    HEROKU = 'heroku'     # Heroku template - Includes Heroku files: Procfile, requirements.txt, runtime.txt
     TABS = 'tabs'         # Tabs template from faculty.ai
     SIDEBAR = 'sidebar'   # Sidebar template from faculty.ai
     IRIS = 'iris'         # Iris K-Means Cluster - Interactively cluster the Iris dataset

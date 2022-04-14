@@ -59,7 +59,6 @@ dash-tools --templates
 # section below in the docs
 >>> dash-tools: templates: List of available templates:
 >>>         > default
->>>         > heroku
 >>>         > tabs
 >>>         > sidebar
 >>>         > iris
@@ -98,8 +97,6 @@ Listed below are available project templates. Please see the above [_Using Templ
 
 - **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
   ![](docs/default_theme.png)
-- **heroku** - Build for deployment with Heroku. Includes necessary deploy files. Built on the minimal template. Includes: `Procfile`, `requirements.txt`, `runtime.txt`
-  ![](docs/heroku_theme.png)
 - **iris** - Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
   ![](docs/iris_theme.png)
 - **sidebar** - Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
