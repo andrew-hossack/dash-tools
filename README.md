@@ -26,23 +26,31 @@ Find [dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 ## **Usage Examples**
 
-Below are common usage examples. See [_Commands_](#commands) section for more details.
+Below are common usage examples. For a more in-depth tutorial on writing apps for Plotly Dash, see the [Plotly Dash Documentation](https://dash.plotly.com/layout). For information about dash-tools commands, read the [_Commands_](#commands) section.
 
-### **Creating New Projects**
+### **Creating A New Project**
 
 Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp" from where the command is invoked:
 
 ```bash
-# Create the app "MyDashApp"
+# This command will create the app "MyDashApp" in your current directory.
+# MyDashApp will contain all necessary files to make your project
+# run, as well as files for deploying to Heroku - see Deploying
+# with Heroku in the README below.
 dash-tools --init MyDashApp
 
-# Check out your new project!
-cd MyDashApp/
+# You can make changes to your app in the src/app.py file!
+# See https://dash.plotly.com/layout
+# When you are ready to test it locally you can also run the
+# app.py file from terminal:
+python MyDashApp/src/app.py
+
+# You can now view the app at http://127.0.0.1:8050/ in your browser.
 ```
 
 ### **Using Templates**
 
-Templates offer different project styles and include different boilerplate code samples. Creating a new app with templates is easy, just use the optional template argument after --init. If you do not specify a template, '_default_' will be used. See the [_Templates_](#templates) section below for more details.
+Templates offer different project styles and include different boilerplate code samples. Creating a new app with a template is easy. Just use the optional template argument after `--init`. If you do not specify a template, '_default_' will be used. See the [_Templates_](#templates) section below for more details.
 
 ```bash
 # Create a new Dash app called "MyWonderfulApp" using 'minimal' template
@@ -56,7 +64,7 @@ To list out available templates, use the `--templates` command:
 dash-tools --templates
 
 # Note: To see details on each template, check out the 'Templates'
-# section below in the docs
+# section in README below.
 >>> dash-tools: templates: List of available templates:
 >>>         > default
 >>>         > tabs
@@ -66,30 +74,43 @@ dash-tools --templates
 
 ### **Deploying with Heroku**
 
-To create a project and deploy to [Heroku](https://www.heroku.com/), it is quite simple. You can even create a project using the '_heroku_' template which includes `Procfile`, `requirements.txt`, and `runtime.txt`.
+To create a project and deploy to [Heroku](https://www.heroku.com/), it is quite simple. Using the `--deploy-heroku` command in the project root directory will look for the above files. The directory needs to be a git repository, and the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) must be installed.
 
-Using the `--deploy-heroku` command in the project root directory will look for the above files. The directory needs to be a git repository. The [Heroku CLI](https://devcenter.heroku.com/categories/command-line) must also be installed.
-
-The command takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote called 'heroku' with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
+The command `--deploy-heroku` takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote called 'heroku' with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
 
 ```bash
-# 1. Create a new app "MyGreatHerokuApp" with the 'heroku' template.
-#    You can also create an app using any other template, but you will
-#    need to follow the on-screen instructions to create your Procfile,
-#    requirements.txt, and runtime.txt heroku files automatically.
-dash-tools --init MyGreatHerokuApp heroku
+# Create a new app "MyGreatHerokuApp". Any template can be used for this step.
+# Procfile and runtime.txt are included with the templates,
+# and requirements.txt file will be generated automatically in the next step.
+# These files are necessary to deploy to heroku.
+dash-tools --init MyGreatHerokuApp
 
-# 2. Change current directory to your new project root directory
+# Change current directory to your new project root directory
 cd MyGreatHerokuApp/
 
-# 2.5 Feel free to make changes to your project at this step!
+# Feel free to make changes to your project at this step!
+# See https://dash.plotly.com/layout
 
-# 3. Using the following command will start the deploy process
-#    Follow the instructions in the console to deploy your app
+# Using the following command will start the deploy process
+# Follow the instructions in the console to deploy your app
 dash-tools --deploy-heroku your-unique-app-name
 ```
 
-And that's really it! A new heroku app and git remote will be created, and all project code will be deployed.
+And that's really it! A new heroku app and git remote will be created, and all project code will be deployed. To push any changes you make after the application is deployed to heroku, create a git commit and push it to the remote heroku branch:
+
+```bash
+# Add changes to git staging from the project's root dirctory
+git add .
+
+# Create a new commit with a message
+git commit -m "Adding some new files"
+
+# Push to the "heroku" remote's "master" branch which was added
+# automatically in the example above.
+# Your changes will now be sent to heroku, and your app will
+# build and be re-deployed automatically.
+git push heroku master
+```
 
 ## **Templates**
 

@@ -88,3 +88,5 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
 
             # Format the file
             _format_file(name, app_name, dest)
+
+    print(f'dash-tools: init: finished')
