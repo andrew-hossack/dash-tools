@@ -114,6 +114,25 @@ def _create_procfile(root_path: os.PathLike):
     print(f'dash-tools: deploy-heroku: Created Procfile')
 
 
+# def _verify_procfile(root_path: os.PathLike) -> bool:
+#     """
+#     Verifies that the Procfile is correct:
+
+#     Ex. If "... src app:server ..." is in Procfile, check that
+#         'server' hook exists in src/app.py
+
+#     Returns:
+#         True (Procfile is correct)
+#         False (Procfile is incorrect)
+#     """
+#     with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
+#         procfile_contents = procfile.read()
+#     if 'web: gunicorn' not in procfile_contents:
+#         return False
+#     return True
+#     # TODO
+
+
 def _prompt_user_choice(message: str) -> bool:
     """
     Prompt the user to continue or not.
@@ -138,22 +157,26 @@ def _check_required_files(root_path: os.PathLike) -> bool:
     """
     print(f'dash-tools: deploy-heroku: Checking for Procfile, runtime.txt, and requirements.txt')
     deploy_should_continue = True
+    # Check for the Procfile
     if not _check_file_exists(root_path, 'Procfile'):
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file Procfile not found. Create one automatically?'):
             if _prompt_user_choice(
                     f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in src/app.py! See https://devcenter.heroku.com/articles/procfile'):
                 _create_procfile(root_path)
+                # _verify_procfile(root_path)
             else:
                 deploy_should_continue = False
         else:
             deploy_should_continue = False
+    # Check for the Runtime file
     if (not _check_file_exists(root_path, 'runtime.txt')) and deploy_should_continue:
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file runtime.txt not found. Create one automatically?'):
             _create_runtime_txt(root_path)
         else:
             deploy_should_continue = False
+    # Check for the Requirements file
     if (not _check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file requirements.txt not found. Create one automatically?'):

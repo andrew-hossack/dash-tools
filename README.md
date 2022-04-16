@@ -70,6 +70,7 @@ dash-tools --templates
 >>>         > tabs
 >>>         > sidebar
 >>>         > iris
+>>>         > multipage
 ```
 
 ### **Deploying with Heroku**
@@ -120,6 +121,8 @@ Listed below are available project templates. Please see the above [_Using Templ
   ![](docs/default_theme.png)
 - **iris** - Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
   ![](docs/iris_theme.png)
+- **multipage** - New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
+  ![](docs/multipage_new_theme.png)
 - **sidebar** - Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
   ![](docs/sidebar_theme.png)
 - **tabs** - Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
