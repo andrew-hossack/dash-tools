@@ -51,7 +51,7 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
     templateUtils.check_create_app_args(base_dir, app_name)
     use_template = templateUtils.convert_to_template_or_error(use_template)
     print(
-        f'dash-tools: init: creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
+        f'dash-tools: init: Creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
 
     # Check for file write permissions in the base directory (command invoke directory)
     if not _check_write_permission(base_dir):
@@ -89,4 +89,4 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
             # Format the file
             _format_file(name, app_name, dest)
 
-    print(f'dash-tools: init: finished')
+    print(f'dash-tools: init: Finished')
