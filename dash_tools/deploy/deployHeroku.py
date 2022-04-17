@@ -203,6 +203,21 @@ def _check_required_files(root_path: os.PathLike) -> bool:
     return deploy_should_continue
 
 
+def _add_changes_and_push_to_heroku(heroku_app_name: str):
+    """
+    Add changes to the repository and push to Heroku
+    """
+    # Create a commit to push to Heroku
+    print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku')
+    os.system(f'git add .')
+    os.system(
+        f'git commit -m "Initial dash-tools deploy to Heroku for app {heroku_app_name}"')
+
+    # Push to Heroku
+    print(f'dash-tools: deploy-heroku: Pushing to Heroku')
+    os.system(f'git push heroku master')
+
+
 def _create_app_on_heroku(app_name: str) -> bool:
     """
     Create the project on Heroku and return the git remote URL
@@ -262,6 +277,23 @@ def _remove_heroku_remote():
         exit('dash-tools: deploy-heroku: Failed to remove heroku remote')
 
 
+def _success_message(heroku_app_name: str):
+    """
+    Print a success message
+    """
+    print(
+        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master". Push changes to this branch!')
+    print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
+    print(
+        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{heroku_app_name}')
+
+    # Prompt user to open the deployed app
+    if _prompt_user_choice(
+        f'dash-tools: deploy-heroku: Deployed to https://{heroku_app_name}.herokuapp.com/',
+            prompt='Open app in browser? (y/n) > '):
+        webbrowser.open(f'https://{heroku_app_name}.herokuapp.com/')
+
+
 def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
     """
     Uses the Heroku CLI to deploy the current project
@@ -288,23 +320,31 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
 
     # Check that heroku remote is not already set
     if _heroku_remote_already_exists():
-        print(f'dash-tools: deploy-heroku: Git "heroku" remote is already set!')
-        if _prompt_user_choice(
-                'dash-tools: deploy-heroku: Remove the existing "heroku" remote and proceed?'):
+        print(f'dash-tools: deploy-heroku: Git remote "heroku" is already set!')
+        print('dash-tools: deploy-heroku: Please choose an option below:')
+        print('\t1. Push to the existing heroku remote')
+        print('\t2. Remove the heroku remote and continue')
+        print('\t3. Abort')
+        response = input('dash-tools: Choice (1, 2, 3) > ')
+        if response == '1':
+            _add_changes_and_push_to_heroku(heroku_app_name)
+            print('dash-tools: deploy-heroku: Changes pushed to heroku remote')
+            exit('dash-tools: deploy-heroku: Success')
+        elif response == '2':
             _remove_heroku_remote()
-        else:
-            exit('dash-tools: deploy-heroku: Failed')
-
-    # Check that the project has necessary files
-    if not _check_required_files(project_root_dir):
-        print('dash-tools: deploy-heroku: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
-        exit('dash-tools: deploy-heroku: Aborted')
+        elif response == '3':
+            exit('dash-tools: deploy-heroku: Aborted')
 
     # Check if the project already exists on Heroku
     if not _check_heroku_app_name_available(heroku_app_name):
         print(
             f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
         exit('dash-tools: deploy-heroku: Failed')
+
+    # Check that the project has necessary files
+    if not _check_required_files(project_root_dir):
+        print('dash-tools: deploy-heroku: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        exit('dash-tools: deploy-heroku: Aborted')
 
     # Log into Heroku
     if not _login_heroku_successful():
@@ -324,24 +364,8 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
     print(f'dash-tools: deploy-heroku: Adding python buildpack')
     os.system(f'heroku buildpacks:add heroku/python -a {heroku_app_name}')
 
-    # Create a commit to push to Heroku
-    print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku')
-    os.system(f'git add .')
-    os.system(
-        f'git commit -m "Initial dash-tools deploy to Heroku for app {heroku_app_name}"')
-
     # Push to Heroku
-    print(f'dash-tools: deploy-heroku: Pushing to Heroku')
-    os.system(f'git push heroku master')
+    _add_changes_and_push_to_heroku(heroku_app_name)
 
-    print(
-        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master". Push changes to this branch!')
-    print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
-    print(
-        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{heroku_app_name}')
-
-    # Prompt user to open the deployed app
-    if _prompt_user_choice(
-        f'dash-tools: deploy-heroku: Deployed to https://{heroku_app_name}.herokuapp.com/',
-            prompt='Open app in browser? (y/n) > '):
-        webbrowser.open(f'https://{heroku_app_name}.herokuapp.com/')
+    # Print success message and exit
+    _success_message(heroku_app_name)
