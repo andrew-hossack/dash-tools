@@ -183,12 +183,14 @@ def _verify_procfile(root_path: os.PathLike) -> bool:
         return False
 
 
-print(_verify_procfile(os.getcwd()))
-
-
-def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ') -> bool:
+def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
     """
     Prompt the user to continue or not.
+
+    Args:
+        message: Message to display to the user
+        prompt: Prompt to display to the user
+        does_repeat: If True, the user will be prompted again if they enter an invalid response
 
     Returns:
         True (y/Y)
@@ -200,8 +202,10 @@ def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ') -> boo
         return True
     elif response.lower() == 'n':
         return False
-    else:
+    elif does_repeat:
         return _prompt_user_choice(message)
+    else:
+        return False
 
 
 def _check_required_files_exist(root_path: os.PathLike) -> bool:
@@ -233,19 +237,26 @@ def _check_required_files_exist(root_path: os.PathLike) -> bool:
     return deploy_should_continue
 
 
-def _add_changes_and_push_to_heroku(heroku_app_name: str):
+def _add_changes_and_push_to_heroku(heroku_app_name: str) -> bool:
     """
     Add changes to the repository and push to Heroku
+
+    Returns:
+        True (Success)
+        False (Failure)
     """
     # Create a commit to push to Heroku
     print(f'dash-tools: deploy-heroku: Creating commit to push to Heroku')
     os.system(f'git add .')
     os.system(
-        f'git commit -m "Initial dash-tools deploy to Heroku for app {heroku_app_name}"')
-
+        f'git commit -m "Deploy to Heroku for app {heroku_app_name} - dash-tools"')
     # Push to Heroku
     print(f'dash-tools: deploy-heroku: Pushing to Heroku')
-    os.system(f'git push heroku master')
+    try:
+        subprocess.check_output(f'git push heroku master', shell=True)
+    except subprocess.CalledProcessError:
+        return False
+    return True
 
 
 def _create_app_on_heroku(app_name: str) -> bool:
@@ -301,6 +312,7 @@ def _remove_heroku_remote():
         True if successful
         False if failed
     """
+    print('dash-tools: deploy-heroku: Removing heroku remote')
     try:
         subprocess.check_output('git remote rm heroku', shell=True)
     except subprocess.CalledProcessError:
@@ -311,16 +323,16 @@ def _success_message(heroku_app_name: str):
     """
     Print a success message
     """
+    print(f'\n\ndash-tools: deploy-heroku: Successfully deployed to Heroku!')
     print(
-        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master". Push changes to this branch!')
-    print(f'dash-tools: deploy-heroku: Successfully deployed to Heroku!')
+        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master"')
     print(
-        f'dash-tools: deploy-heroku: Management Page https://dashboard.heroku.com/apps/{heroku_app_name}')
+        f'dash-tools: deploy-heroku: Management Page: https://dashboard.heroku.com/apps/{heroku_app_name}')
+    print(
+        f'dash-tools: deploy-heroku: Application Page: https://{heroku_app_name}.herokuapp.com/')
 
     # Prompt user to open the deployed app
-    if _prompt_user_choice(
-        f'dash-tools: deploy-heroku: Deployed to https://{heroku_app_name}.herokuapp.com/',
-            prompt='Open app in browser? (y/n) > '):
+    if input('dash-tools: Enter any key to open in browser or q to exit > ') != 'q':
         webbrowser.open(f'https://{heroku_app_name}.herokuapp.com/')
 
 
@@ -355,15 +367,21 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
         print('\t1. Push to the existing heroku remote')
         print('\t2. Remove the heroku remote and continue')
         print('\t3. Abort')
-        response = input('dash-tools: Choice (1, 2, 3) > ')
-        if response == '1':
-            _add_changes_and_push_to_heroku(heroku_app_name)
-            print('dash-tools: deploy-heroku: Changes pushed to heroku remote')
-            exit('dash-tools: deploy-heroku: Success')
-        elif response == '2':
-            _remove_heroku_remote()
-        elif response == '3':
-            exit('dash-tools: deploy-heroku: Aborted')
+        should_continue = False
+        while not should_continue:
+            response = input('dash-tools: Choice (1, 2, 3) > ')
+            if response == '1':
+                if not _add_changes_and_push_to_heroku(heroku_app_name):
+                    exit('dash-tools: deploy-heroku: Failed to push to heroku')
+                print('dash-tools: deploy-heroku: Changes pushed to heroku remote')
+                exit('dash-tools: deploy-heroku: Success')
+            elif response == '2':
+                _remove_heroku_remote()
+                should_continue = True
+            elif response == '3':
+                exit('dash-tools: deploy-heroku: Aborted')
+            else:
+                should_continue = False
 
     # Check if the project already exists on Heroku
     if not _check_heroku_app_name_available(heroku_app_name):
