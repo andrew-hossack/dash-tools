@@ -132,23 +132,58 @@ def _check_heroku_app_name_available(heroku_app_name: str) -> bool:
     return False
 
 
-# def _verify_procfile(root_path: os.PathLike) -> bool:
-#     """
-#     Verifies that the Procfile is correct:
+def _verify_procfile(root_path: os.PathLike) -> bool:
+    """
+    Verifies that the Procfile is correct:
 
-#     Ex. If "... src app:server ..." is in Procfile, check that
-#         'server' hook exists in src/app.py
+    Ex. If "... --chdir src app:server ..." is in Procfile, check that
+        'server' hook exists in src/app.py
 
-#     Returns:
-#         True (Procfile is correct)
-#         False (Procfile is incorrect)
-#     """
-#     with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
-#         procfile_contents = procfile.read()
-#     if 'web: gunicorn' not in procfile_contents:
-#         return False
-#     return True
-#     # TODO
+    Returns:
+        True (Procfile is correct)
+        False (Procfile is incorrect)
+    """
+    with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
+        procfile_contents = procfile.read()
+
+    # Look for --chdir somedir
+    chdir_regex = r"--chdir [a-zA-Z]+"
+    try:
+        chdir = re.search(chdir_regex, procfile_contents).group(0)
+        chdir = chdir.replace('--chdir ', '')
+    except (AttributeError, IndexError):
+        chdir = ''
+
+    # Look for module:hook
+    hook_regex = r"[a-zA-Z]+:[a-zA-Z]+"
+    try:
+        hook = re.search(hook_regex, procfile_contents).group(0)
+        hook_module = hook.split(':')[0] + '.py'
+        hook = hook.split(':')[1]
+    except (AttributeError, IndexError):
+        hook = ''
+        return False
+
+    modpath = os.path.join(root_path, chdir, hook_module)
+
+    # Check that the module exists
+    if not os.path.exists(modpath):
+        return False
+
+    # Check that the hook exists in the module
+    with open(modpath, 'r') as modfile:
+        modfile_contents = modfile.read()
+
+    # Look for the hook "{hook} =" or "{hook}=" with spaces and newlines
+    hook_regex = f"^([\n]+{hook}\s=|[\n]+{hook}=|{hook}=|{hook}\s=)"
+    try:
+        re.search(hook_regex, modfile_contents, re.MULTILINE).group(0)
+        return True
+    except (AttributeError, IndexError) as e:
+        return False
+
+
+print(_verify_procfile(os.getcwd()))
 
 
 def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ') -> bool:
@@ -169,21 +204,16 @@ def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ') -> boo
         return _prompt_user_choice(message)
 
 
-def _check_required_files(root_path: os.PathLike) -> bool:
+def _check_required_files_exist(root_path: os.PathLike) -> bool:
     """
     Check for Procfile, runtime.txt, requirements.txt
     """
     deploy_should_continue = True
-    # Check for the Procfile
+    # Check if procfile exists
     if not _check_file_exists(root_path, 'Procfile'):
         if _prompt_user_choice(
                 'dash-tools: deploy-heroku: Required file Procfile not found. Create one automatically?'):
-            if _prompt_user_choice(
-                    f'dash-tools: deploy-heroku: Verify that "server = app.server" is declared in src/app.py! See https://devcenter.heroku.com/articles/procfile'):
-                _create_procfile(root_path)
-                # _verify_procfile(root_path)
-            else:
-                deploy_should_continue = False
+            _create_procfile(root_path)
         else:
             deploy_should_continue = False
     # Check for the Runtime file
@@ -342,14 +372,22 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that the project has necessary files
-    if not _check_required_files(project_root_dir):
+    if not _check_required_files_exist(project_root_dir):
         print('dash-tools: deploy-heroku: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
-        exit('dash-tools: deploy-heroku: Aborted')
+        exit('dash-tools: deploy-heroku: Failed')
+
+    # Check procfile is correct
+    if not _verify_procfile(project_root_dir):
+        print(
+            'dash-tools: deploy-heroku: Procfile is incorrect. Please fix it and try again.')
+        print(
+            'dash-tools: deploy-heroku: See https://devcenter.heroku.com/articles/procfile')
+        exit('dash-tools: deploy-heroku: Failed')
 
     # Log into Heroku
     if not _login_heroku_successful():
         print(f'dash-tools: deploy-heroku: Heroku login failed.')
-        exit('dash-tools: deploy-heroku: Aborted')
+        exit('dash-tools: deploy-heroku: Failed')
 
     # Confirm deployment settings and create the project on Heroku if the user confirms
     if not _prompt_user_choice(f'dash-tools: deploy-heroku: Please confirm creating app "{heroku_app_name}" on Heroku and adding git remote "heroku".'):
