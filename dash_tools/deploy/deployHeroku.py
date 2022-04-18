@@ -397,7 +397,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
     # Check procfile is correct
     if not _verify_procfile(project_root_dir):
         print(
-            'dash-tools: deploy-heroku: Procfile is incorrect. Please fix it and try again.')
+            'dash-tools: deploy-heroku: Procfile is incorrect. Did you include "server = app.server" in src/app.py?')
         print(
             'dash-tools: deploy-heroku: See https://devcenter.heroku.com/articles/procfile')
         exit('dash-tools: deploy-heroku: Failed')
