@@ -7,9 +7,10 @@ import random
 import re
 import string
 import subprocess
-from typing import Union
-import requests
 import webbrowser
+from typing import Union
+
+import requests
 
 
 def _heroku_is_installed() -> bool:
