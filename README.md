@@ -22,7 +22,7 @@ Ready to use **dash-tools**? Installation is easy with pip:
 pip install dash-tools
 ```
 
-Find [dash-tools on PyPi](https://pypi.org/project/dash-tools/)
+[Find dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 ## **Usage Examples**
 
@@ -30,109 +30,113 @@ Below are common usage examples. For a more in-depth tutorial on writing apps fo
 
 ### **Creating A New Project**
 
-Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp" from where the command is invoked:
+Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp" using the optional "multipage" template. Learn more about [_Templates_](#templates) below.
 
 ```bash
-# This command will create the app "MyDashApp" in your current directory.
-# MyDashApp will contain all necessary files to make your project
-# run, as well as files for deploying to Heroku - see Deploying
-# with Heroku in the README below.
-dash-tools --init MyDashApp
-
-# You can make changes to your app in the src/app.py file!
-# See https://dash.plotly.com/layout
-# When you are ready to test it locally you can also run the
-# app.py file from terminal:
-python MyDashApp/src/app.py
-
-# You can now view the app at http://127.0.0.1:8050/ in your browser.
+dash-tools --init MyDashApp multipage
 ```
 
-### **Using Templates**
-
-Templates offer different project styles and include different boilerplate code samples. Creating a new app with a template is easy. Just use the optional template argument after `--init`. If you do not specify a template, '_default_' will be used. See the [_Templates_](#templates) section below for more details.
+The previous command will create a "MyDashApp" directory. You can see what files are included with your new app:
 
 ```bash
-# Create a new Dash app called "MyWonderfulApp" using 'multipage' template
-dash-tools --init MyWonderfulApp multipage
+cd MyDashApp && ls
 ```
 
-To list out available templates, use the `--templates` command:
+You can make changes to your app in the src/app.py file! See [https://dash.plotly.com/layout](https://dash.plotly.com/layout) for more information.
+
+When you are happy with your changes, run your dash app locally with the following command. You will be able to view your app at http://127.0.0.1:8050/ in your browser:
 
 ```bash
-# Display available templates
-dash-tools --templates
-
-# Note: To see details on each template, check out the 'Templates'
-# section in README below.
->>> dash-tools: templates: List of available templates:
->>>         > default
->>>         > tabs
->>>         > sidebar
->>>         > iris
->>>         > multipage
+python src/app.py
 ```
 
-### **Deploying with Heroku**
+### **Deploying To Heroku**
 
-To create a project and deploy to [Heroku](https://www.heroku.com/), it is quite simple. Using the `--deploy-heroku` command in the project root directory will look for the above files. The directory needs to be a git repository, and the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) must be installed.
-
-The command `--deploy-heroku` takes one argument for the project name, which may only contain lowercase, alphanumeric characters and dashes. It must be unique and not already on Heroku. The process will create a new git remote called 'heroku' with the heroku remote url to push/deploy all project code, and will return a URL of your deployed project with the project name you chose, such as [https://your-unique-app-name.herokuapp.com/](#deploying-with-heroku).
+Deploying your project online to [Heroku](https://www.heroku.com/) is simple. Run the following command from your new project's root directory. Follow the simple on-screen directions and deployment will be handled for you:
 
 ```bash
-# Create a new app "MyGreatHerokuApp". Any template can be used for this step.
-# Procfile and runtime.txt are included with the templates,
-# and requirements.txt file will be generated automatically in the next step.
-# These files are necessary to deploy to heroku.
-dash-tools --init MyGreatHerokuApp
-
-# Change current directory to your new project root directory
-cd MyGreatHerokuApp/
-
-# Feel free to make changes to your project at this step!
-# See https://dash.plotly.com/layout
-
-# Using the following command will start the deploy process
-# Follow the instructions in the console to deploy your app
-dash-tools --deploy-heroku your-unique-app-name
+dash-tools --deploy-heroku
 ```
 
-And that's really it! A new heroku app and git remote will be created, and all project code will be deployed. To push any changes you make after the application is deployed to heroku, create a git commit and push it to the remote heroku branch:
+And that's really it! After following the simple on-screen steps, a new git remote 'heroku' will be created which links your project to Heroku, and your project will be deployed.
+
+To push new changes to your app after it is deployed, create a commit:
 
 ```bash
-# Add changes to git staging from the project's root dirctory
 git add .
-
-# Create a new commit with a message
 git commit -m "Adding some new files"
+```
 
-# Push to the "heroku" remote's "master" branch which was added
-# automatically in the example above.
-# Your changes will now be sent to heroku, and your app will
-# build and be re-deployed automatically.
+...and push to the 'heroku' remote:
+
+```bash
 git push heroku master
 ```
 
 ## **Templates**
 
-Listed below are available project templates. Please see the above [_Using Templates_](#using-templates) section on how to use templates. If you would like to develop templates, please read the [_Creating Templates_](#creating-templates) section below.
+Templates contain boilerplate code for Dash projects, making it much easier to start with useful baseline apps.
 
-- **default** - the default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
-  ![](docs/default_theme.png)
-- **iris** - Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
-  ![](docs/iris_theme.png)
-- **multipage** - New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
-  ![](docs/multipage_new_theme.png)
-- **sidebar** - Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
-  ![](docs/sidebar_theme.png)
-- **tabs** - Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
-  ![](docs/tabs_theme.png)
+### **Using Templates**
+
+Use the optional template argument with the `--init` command.
+
+The following example will create a new app "MyWonderfulApp" (you can name your app anything) using the 'tabs' template (or any other template listed below):
+
+```bash
+dash-tools --init MyWonderfulApp tabs
+```
+
+To list out available templates, use the `--templates` or `-t` command:
+
+```bash
+dash-tools --templates
+```
+
+### **Available Templates**
+
+_Click the dropdowns below to see screenshots!_
+
+<details><summary>Template: 'default'</summary>
+
+The default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
+![](docs/default_theme.png)
+
+</details>
+
+<details><summary>Template: 'iris'</summary>
+
+Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
+![](docs/iris_theme.png)
+
+</details>
+
+<details><summary>Template: 'multipage'</summary>
+
+New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
+![](docs/multipage_new_theme.png)
+
+</details>
+
+<details><summary>Template: 'sidebar'</summary>
+
+Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
+![](docs/sidebar_theme.png)
+
+</details>
+
+<details><summary>Template: 'tabs'</summary>
+
+Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
+![](docs/tabs_theme.png)
+
+</details>
 
 ## **Commands**
 
 ### **Project Commands**
 
-- **`--deploy-heroku` Args: REQUIRED (`unique heroku project name`) :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) and [Git](https://git-scm.com/downloads). Invoke from the project root directory.
+- **`--deploy-heroku` Args: OPTIONAL (`unique heroku project name`) :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) and [Git](https://git-scm.com/downloads). Invoke from the project root directory.
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--templates, -t` :** List available templates.
 
