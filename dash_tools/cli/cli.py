@@ -38,8 +38,12 @@ def main():
 
     parser.add_argument(
         '--deploy-heroku',
-        help='Deploys the current project <app name> to Heroku. Run command from the root of the project. Requires Heroku CLI and Git CLI. Args: REQUIRED: <app name>',
-        nargs=1)
+        help='Deploys the current project <app name> to Heroku. Run command from the root of the project. --deploy-heroku takes either 1 argument: <app name> (e.g. dash-tools --deploy-heroku my-app) or no arguments (e.g. dash-tools --deploy-heroku)',
+        nargs='?',
+        type=str,
+        const="None",
+        dest='deploy_heroku'
+    )
 
     handle_args(parser)
 
@@ -50,11 +54,6 @@ def handle_args(parser: argparse.ArgumentParser):
     """
     args = parser.parse_args()
 
-    # Check that there is at least one argument passed to the CLI
-    if (not args.init and not args.templates and not args.deploy_heroku):
-        parser.print_help()
-        exit('\ndash-tools: error: too few arguments')
-
     if args.init:
         buildTemplate.create_app(
             base_dir=os.getcwd(),
@@ -62,9 +61,17 @@ def handle_args(parser: argparse.ArgumentParser):
             use_template=templateUtils.get_template_from_args(args))
         print(f'dash-tools: For a step-by-step guide on configuring your app, see https://github.com/andrew-hossack/dash-tools/blob/main/README.md#usage-examples')
 
-    if args.templates:
+    elif args.templates:
         print('dash-tools: templates: List of available templates:')
         templateUtils.print_templates()
 
-    if args.deploy_heroku:
-        deployHeroku.deploy_app_to_heroku(os.getcwd(), args.deploy_heroku[0])
+    elif args.deploy_heroku:
+        app_name = args.deploy_heroku
+        if args.deploy_heroku == "None":
+            app_name = None
+        print(f'dash-tools: deploying to Heroku...')
+        deployHeroku.deploy_app_to_heroku(os.getcwd(), app_name)
+
+    else:
+        parser.print_help()
+        exit('\ndash-tools: error: too few arguments')
