@@ -278,7 +278,8 @@ def _add_changes_and_push_to_heroku(heroku_app_name: str) -> bool:
     # Push to Heroku
     print(f'dash-tools: deploy-heroku: Pushing to Heroku')
     try:
-        subprocess.check_output(f'git push heroku master', shell=True)
+        subprocess.check_output(
+            f'git push heroku HEAD:master', shell=True)
     except subprocess.CalledProcessError:
         return False
     return True
@@ -350,14 +351,14 @@ def _success_message(heroku_app_name: str):
     """
     print(f'\n\ndash-tools: deploy-heroku: Successfully deployed to Heroku!')
     print(
-        f'dash-tools: deploy-heroku: Published to git remote: "heroku" on branch "master"')
+        f'dash-tools: deploy-heroku: Published to git remote: "heroku". Make changes with the "git push heroku" command.')
     print(
         f'dash-tools: deploy-heroku: Management Page: https://dashboard.heroku.com/apps/{heroku_app_name}')
     print(
         f'dash-tools: deploy-heroku: Application Page: https://{heroku_app_name}.herokuapp.com/')
 
     # Prompt user to open the deployed app
-    if input('dash-tools: Enter any key to open in browser or q to exit > ') != 'q':
+    if input('dash-tools: deploy-heroku: Enter any key to open in browser or q to exit > ') != 'q':
         webbrowser.open(f'https://{heroku_app_name}.herokuapp.com/')
 
 
@@ -412,6 +413,8 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
     if not _check_heroku_app_name_available(heroku_app_name):
         print(
             f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
+        print(
+            'dash-tools: deploy-heroku: Please choose a unique name that isn\'t already taken.')
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that the project has necessary files
