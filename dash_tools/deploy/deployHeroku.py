@@ -311,7 +311,7 @@ def _create_app_on_heroku(app_name: str) -> bool:
     return True
 
 
-def _heroku_remote_already_exists() -> bool:
+def _check_heroku_remote_already_exists() -> bool:
     """
     Check if the heroku remote is set
 
@@ -374,6 +374,8 @@ def _get_heroku_app_name():
         # Generate a random app name
         app_name = ''.join(random.choices(
             string.ascii_lowercase + string.digits, k=12))
+        # App names must start with letter. Use 'dt-' for dash-tools
+        app_name = ''.join(('dt-', app_name))
     print(f'dash-tools: deploy-heroku: Using app name "{app_name}"')
     return app_name
 
@@ -383,8 +385,6 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
     Uses the Heroku CLI to deploy the current project
     """
     print('dash-tools: deploy-heroku: Starting')
-    if not heroku_app_name:
-        heroku_app_name = _get_heroku_app_name()
 
     # Check if heroku CLI is installed
     if not _heroku_is_installed():
@@ -405,20 +405,12 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
             f'dash-tools: deploy-heroku: Did you forget to "git init"? See https://git-scm.com/docs/git-init')
         exit('dash-tools: deploy-heroku: Failed')
 
-    # Check if the project already exists on Heroku if name is specified
-    if not _check_heroku_app_name_available(heroku_app_name):
-        print(
-            f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
-        print(
-            'dash-tools: deploy-heroku: Please choose a unique name that isn\'t already taken.')
-        exit('dash-tools: deploy-heroku: Failed')
-
     # Check that heroku remote is not already set
-    if _heroku_remote_already_exists():
+    if _check_heroku_remote_already_exists():
         print(f'dash-tools: deploy-heroku: Git remote "heroku" is already set!')
         print('dash-tools: deploy-heroku: Please choose an option below:')
-        print('\t1. Push to the existing heroku remote')
-        print('\t2. Remove the heroku remote and continue')
+        print('\t1. Push to the existing heroku remote (Update Existing App)')
+        print('\t2. Remove the heroku remote and continue (Create New App)')
         print('\t3. Abort')
         should_continue = False
         while not should_continue:
@@ -435,6 +427,18 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
                 exit('dash-tools: deploy-heroku: Aborted')
             else:
                 should_continue = False
+
+    # Generate or let user type in app name if it is not provided
+    if not heroku_app_name:
+        heroku_app_name = _get_heroku_app_name()
+
+    # Check if the project already exists on Heroku if name is specified
+    if not _check_heroku_app_name_available(heroku_app_name):
+        print(
+            f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
+        print(
+            'dash-tools: deploy-heroku: Please choose a unique name that isn\'t already taken.')
+        exit('dash-tools: deploy-heroku: Failed')
 
     # Check that the project has necessary files
     if not _check_required_files_exist(project_root_dir):
