@@ -53,8 +53,8 @@ python MyDashApp/src/app.py
 Templates offer different project styles and include different boilerplate code samples. Creating a new app with a template is easy. Just use the optional template argument after `--init`. If you do not specify a template, '_default_' will be used. See the [_Templates_](#templates) section below for more details.
 
 ```bash
-# Create a new Dash app called "MyWonderfulApp" using 'minimal' template
-dash-tools --init MyWonderfulApp minimal
+# Create a new Dash app called "MyWonderfulApp" using 'multipage' template
+dash-tools --init MyWonderfulApp multipage
 ```
 
 To list out available templates, use the `--templates` command:

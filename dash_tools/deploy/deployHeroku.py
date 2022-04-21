@@ -7,7 +7,7 @@ import random
 import re
 import string
 import subprocess
-from typing import List, Union
+from typing import Union
 import requests
 import webbrowser
 

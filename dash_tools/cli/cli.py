@@ -69,7 +69,6 @@ def handle_args(parser: argparse.ArgumentParser):
         app_name = args.deploy_heroku
         if args.deploy_heroku == "None":
             app_name = None
-        print(f'dash-tools: deploying to Heroku...')
         deployHeroku.deploy_app_to_heroku(os.getcwd(), app_name)
 
     else:
