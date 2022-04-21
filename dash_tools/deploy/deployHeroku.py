@@ -5,6 +5,7 @@
 import os
 import re
 import subprocess
+from typing import List, Union
 import requests
 import webbrowser
 
@@ -132,7 +133,7 @@ def _check_heroku_app_name_available(heroku_app_name: str) -> bool:
     return False
 
 
-def _verify_procfile(root_path: os.PathLike) -> bool:
+def _verify_procfile(root_path: os.PathLike) -> dict:
     """
     Verifies that the Procfile is correct:
 
@@ -140,8 +141,12 @@ def _verify_procfile(root_path: os.PathLike) -> bool:
         'server' hook exists in src/app.py
 
     Returns:
-        True (Procfile is correct)
-        False (Procfile is incorrect)
+        {
+            'valid': True (valid) or False (invalid),
+            'dir': Directory of app,
+            'hook': Hook name
+            'module': Module name
+        }
     """
     with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
         procfile_contents = procfile.read()
@@ -162,13 +167,23 @@ def _verify_procfile(root_path: os.PathLike) -> bool:
         hook = hook.split(':')[1]
     except (AttributeError, IndexError):
         hook = ''
-        return False
+        return {
+            'valid': False,
+            'dir': chdir,
+            'hook': hook,
+            'module': hook_module
+        }
 
     modpath = os.path.join(root_path, chdir, hook_module)
 
     # Check that the module exists
     if not os.path.exists(modpath):
-        return False
+        return {
+            'valid': False,
+            'dir': chdir,
+            'hook': hook,
+            'module': hook_module
+        }
 
     # Check that the hook exists in the module
     with open(modpath, 'r') as modfile:
@@ -178,9 +193,19 @@ def _verify_procfile(root_path: os.PathLike) -> bool:
     hook_regex = f"^([\n]+{hook}\s=|[\n]+{hook}=|{hook}=|{hook}\s=)"
     try:
         re.search(hook_regex, modfile_contents, re.MULTILINE).group(0)
-        return True
+        return {
+            'valid': True,
+            'dir': chdir,
+            'hook': hook,
+            'module': hook_module
+        }
     except (AttributeError, IndexError) as e:
-        return False
+        return {
+            'valid': False,
+            'dir': chdir,
+            'hook': hook,
+            'module': hook_module
+        }
 
 
 def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
@@ -395,9 +420,10 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: str):
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check procfile is correct
-    if not _verify_procfile(project_root_dir):
+    procfile = _verify_procfile(project_root_dir)
+    if not procfile['valid']:
         print(
-            'dash-tools: deploy-heroku: Procfile is incorrect. Did you include "server = app.server" in src/app.py?')
+            f'dash-tools: deploy-heroku: Procfile is incorrect. Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
         print(
             'dash-tools: deploy-heroku: See https://devcenter.heroku.com/articles/procfile')
         exit('dash-tools: deploy-heroku: Failed')
