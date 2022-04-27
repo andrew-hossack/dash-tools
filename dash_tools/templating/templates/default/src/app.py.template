@@ -8,6 +8,9 @@ import pandas as pd
 
 app = Dash(__name__, title="{appName}")
 
+# Declare server for Heroku deplpoyment. Needed for Procfile.
+server = app.server
+
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 df = pd.DataFrame({
