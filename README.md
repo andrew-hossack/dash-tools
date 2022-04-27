@@ -36,6 +36,12 @@ Creating a new Dash project is very simple. The following command will create a 
 dash-tools --init MyDashApp multipage
 ```
 
+Optionally, no template needs to be specified. Instead, the 'default' template will be used:
+
+```bash
+dash-tools --init MyDashApp
+```
+
 The previous command will create a "MyDashApp" directory. You can see what files are included with your new app:
 
 ```bash
@@ -54,7 +60,7 @@ python src/app.py
 
 Deploying your project online to [Heroku](https://www.heroku.com/) is simple. The CLI handles both creating and deploying a new app, as well as updating an existing app.
 
-#### **Creating an App**
+#### **Creating a Heroku App**
 
 To create an app, run the following command from your project's root directory; e.g. _/MyDashApp_ from the example above. Next, follow the simple on-screen directions and deployment will be handled for you:
 
@@ -64,7 +70,7 @@ dash-tools --deploy-heroku
 
 And that's really it! You will be prompted to name the project (or have a name created for you), as well as log into your heroku account. Finally, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
 
-#### **Pushing Changes**
+#### **Pushing Changes to an Existing Heroku App**
 
 To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", your changes will be added and your app will be re-deployed.
 
