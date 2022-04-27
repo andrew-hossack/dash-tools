@@ -1,8 +1,7 @@
 # git tag -a V0.4 -m "Version 0.4"
 
 on: push
-
-name: Publish dash-tools to PyPI on new release
+name: Publish dash-tools to PyPI and TestPyPI
 
 jobs:
   build-n-publish:
@@ -30,20 +29,11 @@ jobs:
           --wheel
           --outdir dist/
 
-      - uses: actions/checkout@v3
-      - name: Create a Release
-        uses: elgohr/Github-Release-Action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Publish distribution to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
         with:
-          title: Automatic Release
-
-      # TODO - need to automate adding a tag 'V0.x' and release
-      # - name: Publish distribution to Test PyPI
-      #   uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #     password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-      #     repository_url: https://test.pypi.org/legacy/
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
 
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@master
@@ -51,3 +41,11 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
+
+
+      # TODO - need to automate adding a tag 'V0.x' and release
+      # - name: Publish distribution to Test PyPI
+      #   uses: pypa/gh-action-pypi-publish@master
+      #   with:
+      #     password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      #     repository_url: https://test.pypi.org/legacy/
