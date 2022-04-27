@@ -53,3 +53,5 @@ __pycache__
 .tox
 *.egg-info
 .pytest_cache
+
+deleteme.py

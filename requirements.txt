@@ -7,3 +7,4 @@ python-dotenv
 setuptools==47.1.0
 pipreqs
 pandas
+dash-mantine-components

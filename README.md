@@ -97,9 +97,16 @@ dash-tools --templates
 
 _Click the dropdowns below to see screenshots!_
 
+<details><summary>Template: 'advanced'</summary>
+
+Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
+![](docs/advanced_theme.png)
+
+</details>
+
 <details><summary>Template: 'default'</summary>
 
-The default multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
+Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 ![](docs/default_theme.png)
 
 </details>
@@ -108,6 +115,13 @@ The default multi-page template. Includes examples of ClientsideCallbacks, multi
 
 Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
 ![](docs/iris_theme.png)
+
+</details>
+
+<details><summary>Template: 'mantine'</summary>
+
+Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.com/)
+![](docs/mantine_theme.png)
 
 </details>
 
