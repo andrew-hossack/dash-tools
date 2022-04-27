@@ -1,4 +1,8 @@
 # This will run every time a commit is pushed to master
+
+# TODO only run this if branch is 'main'
+# TODO - need to automate adding a tag 'V0.x' and release
+
 on: push
 name: Publish dash-tools to PyPI # and TestPyPI
 
@@ -35,7 +39,6 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-      # TODO - need to automate adding a tag 'V0.x' and release
       # - name: Publish distribution to Test PyPI
       #   uses: pypa/gh-action-pypi-publish@master
       #   with:

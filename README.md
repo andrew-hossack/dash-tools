@@ -52,25 +52,24 @@ python src/app.py
 
 ### **Deploying To Heroku**
 
-Deploying your project online to [Heroku](https://www.heroku.com/) is simple. Run the following command from your new project's root directory. Follow the simple on-screen directions and deployment will be handled for you:
+Deploying your project online to [Heroku](https://www.heroku.com/) is simple. The CLI handles both creating and deploying a new app, as well as updating an existing app.
+
+#### **Creating an App**
+
+To create an app, run the following command from your project's root directory; e.g. _/MyDashApp_ from the example above. Next, follow the simple on-screen directions and deployment will be handled for you:
 
 ```bash
 dash-tools --deploy-heroku
 ```
 
-And that's really it! After following the simple on-screen steps, a new git remote 'heroku' will be created which links your project to Heroku, and your project will be deployed.
+And that's really it! You will be prompted to name the project (or have a name created for you), as well as log into your heroku account. Finally, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
 
-To push new changes to your app after it is deployed, create a commit:
+#### **Pushing Changes**
 
-```bash
-git add .
-git commit -m "Adding some new files"
-```
-
-...and push to the 'heroku' remote:
+To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", your changes will be added and your app will be re-deployed.
 
 ```bash
-git push heroku master
+dash-tools --deploy-heroku
 ```
 
 ## **Templates**
