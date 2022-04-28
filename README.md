@@ -1,4 +1,4 @@
-# 🛠️ **dash-tools** - _Easily Create and Deploy your Plotly Dash Apps from CLI (🎉 v1.0)_
+# 🛠️ **dash-tools** - _Easily Create and Deploy your Plotly Dash Apps from CLI (🎉 v1.1)_
 
 <div align="center">
 

@@ -18,3 +18,7 @@ If you are interested in supporting this project, feel free to [Create a PR](htt
 
 3. Any file names or files containing the strings `{appName}` or `{createTime}` will be formatted with the given app name and creation time. Eg. _README.md.template_: `# Created on {createTime}` will copy to the user's filesystem as _README.md_: `# Created on 2022-03-30 22:06:07`
 4. All template files must end in `.template`
+
+## **Testing**
+
+No testing framework is currently used. Please check back for future updates.
