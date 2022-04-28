@@ -30,22 +30,18 @@ Below are common usage examples. For a more in-depth tutorial on writing apps fo
 
 ### **Creating A New Project**
 
-Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp" using the optional "multipage" template. Learn more about [_Templates_](#templates) below.
-
-```bash
-dash-tools --init MyDashApp multipage
-```
-
-Optionally, no template needs to be specified. Instead, the 'default' template will be used:
+Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp":
 
 ```bash
 dash-tools --init MyDashApp
 ```
 
-The previous command will create a "MyDashApp" directory. You can see what files are included with your new app:
+Optionally, templates can be used. Check out [Templates](#templates) for more details.
+
+You can see what files are included with your new app!
 
 ```bash
-cd MyDashApp && ls
+cd MyDashApp
 ```
 
 You can make changes to your app in the src/app.py file! See [https://dash.plotly.com/layout](https://dash.plotly.com/layout) for more information.
