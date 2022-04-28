@@ -22,7 +22,10 @@ def check_create_app_args(base_dir, app_name):
     """
     app_dir = os.path.join(base_dir, app_name)
     if os.path.exists(app_dir):
-        exit(f'dash-tools: init: App {app_dir} already exists. Aborting.')
+        print(f'dash-tools: init: App {app_dir} already exists.')
+        print(
+            f'dash-tools: init: Please change the "{app_dir}" name or delete the {app_dir} directory!')
+        exit(f'dash-tools: init: Failed')
 
 
 def get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:

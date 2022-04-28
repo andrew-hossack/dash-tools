@@ -402,8 +402,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
     # Check that git is initialized in the current repo
     if not _is_git_repository():
         print(f'dash-tools: deploy-heroku: Current directory is not a git repository!')
-        print(
-            f'dash-tools: deploy-heroku: Did you forget to "git init"? See https://git-scm.com/docs/git-init')
+        print('dash-tools: deploy-heroku: To start a git repository, type: git init')
         exit('dash-tools: deploy-heroku: Failed')
 
     # Check that heroku remote is not already set

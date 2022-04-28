@@ -1,8 +1,12 @@
 # 🛠️ **dash-tools** - _Easily Create and Deploy your Plotly Dash Apps from CLI (🎉 V1.0)_
 
-Create a templated multi-page [Plotly Dash](https://plotly.com/dash/) app with CLI in less than 7 seconds.
+<div align="center">
 
-Deploy your app to [Heroku](https://heroku.com/) in under a minute!
+[![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | ![Downloads](https://img.shields.io/pypi/dm/dash-tools?style=flat-square) | ![Build](https://img.shields.io/github/checks-status/andrew-hossack/dash-tools/main?style=flat-square) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
+
+</div>
+
+Create a templated multi-page [Plotly Dash](https://plotly.com/dash/) app with CLI in less than 7 seconds. Deploy your app to [Heroku](https://heroku.com/) in under a minute!
 
 ![](docs/intro_gif.gif)
 
@@ -38,7 +42,7 @@ dash-tools --init MyDashApp
 
 Optionally, templates can be used. Check out [Templates](#templates) for more details.
 
-You can see what files are included with your new app!
+You can see what files are included with your new app:
 
 ```bash
 cd MyDashApp
@@ -66,7 +70,7 @@ dash-tools --deploy-heroku
 
 Optionally, you can specify a heroku app name as an argument. If one is not provided, you will be prompted to enter one or generate one automatically.
 
-_Note that "some-unique-heroku-app-name" in the example below is a name that you should change._
+_Note: "some-unique-heroku-app-name" in the example below is a name that you should change!_
 
 ```bash
 dash-tools --deploy-heroku some-unique-heroku-app-name
@@ -116,12 +120,16 @@ _Click the dropdowns below to see screenshots!_
 
 <details><summary>Template: 'advanced'</summary>
 
+_To use this template, type: `dash-tools --init MyFuturisticApp advanced`_
+
 Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
 ![](docs/advanced_theme.png)
 
 </details>
 
 <details><summary>Template: 'default'</summary>
+
+_To use this template, type: `dash-tools --init MyAmazingApp default`_
 
 Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 ![](docs/default_theme.png)
@@ -130,12 +138,16 @@ Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 
 <details><summary>Template: 'iris'</summary>
 
+_To use this template, type: `dash-tools --init MyFantasticApp iris`_
+
 Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
 ![](docs/iris_theme.png)
 
 </details>
 
 <details><summary>Template: 'mantine'</summary>
+
+_To use this template, type: `dash-tools --init MyGreatApp mantine`_
 
 Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.com/)
 ![](docs/mantine_theme.png)
@@ -144,6 +156,8 @@ Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.c
 
 <details><summary>Template: 'multipage'</summary>
 
+_To use this template, type: `dash-tools --init MyPristineApp multipage`_
+
 New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
 ![](docs/multipage_new_theme.png)
 
@@ -151,12 +165,16 @@ New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/
 
 <details><summary>Template: 'sidebar'</summary>
 
+_To use this template, type: `dash-tools --init MySnazzyApp sidebar`_
+
 Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
 ![](docs/sidebar_theme.png)
 
 </details>
 
 <details><summary>Template: 'tabs'</summary>
+
+_To use this template, type: `dash-tools --init MyBeautifulApp tabs`_
 
 Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
 ![](docs/tabs_theme.png)
