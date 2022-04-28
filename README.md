@@ -48,7 +48,7 @@ You can see what files are included with your new app:
 cd MyDashApp
 ```
 
-You can make changes to your app in the src/app.py file! See [https://dash.plotly.com/layout](https://dash.plotly.com/layout) for more information.
+You can make changes to your app in the `src/app.py` file! See [Plotly Dash Layout Docs](https://dash.plotly.com/layout) for more information, or check out the dash-tools docs on [Configuring Your Dash App](/docs/Configuring-Your-App.md).
 
 When you are happy with your changes, run your dash app locally with the following command. You will be able to view your app at http://127.0.0.1:8050/ in your browser:
 
