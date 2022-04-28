@@ -369,7 +369,7 @@ def _get_heroku_app_name():
     """
     Create or generate app name if one isn't provided
     """
-    print('dash-tools: deploy-heroku: No app name provided. Please type a unique name or press enter to generate one automatically.')
+    print('dash-tools: deploy-heroku: Please type a unique app name or press enter to generate one automatically.')
     app_name = input('dash-tools: App Name (Optional) > ')
     if app_name == '':
         # Generate a random app name
@@ -379,6 +379,49 @@ def _get_heroku_app_name():
         app_name = ''.join(('dt-', app_name))
     print(f'dash-tools: deploy-heroku: Using app name "{app_name}"')
     return app_name
+
+
+def _validate_heroku_app_name(heroku_app_name) -> bool:
+    """
+    Heroku app names must start with a letter, end with a
+    letter or digit, can only contain lowercase letters,
+    numbers, and dashes, and have a minimum length of 3 characters.
+
+    Returns:
+        True if valid
+        False if invalid
+    """
+    regex = r'^[a-z][a-z0-9-]{2,}$'
+    if re.search(regex, heroku_app_name):
+        return True
+    return False
+
+
+def _get_valid_app_name(heroku_app_name: str) -> str:
+    """
+    Returns a unique and valid heroku app name
+    """
+    # Generate or let user type in app name if it is not provided
+    if not heroku_app_name:
+        heroku_app_name = _get_heroku_app_name()
+
+    # Wait for user to input a correct name
+    should_continue = False
+    while not should_continue:
+        # Check if the project already exists on Heroku if name is specified
+        if not _check_heroku_app_name_available(heroku_app_name):
+            print(
+                f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
+            print(
+                'dash-tools: deploy-heroku: Please choose a unique name that isn\'t already taken.')
+            heroku_app_name = _get_heroku_app_name()
+        elif not _validate_heroku_app_name(heroku_app_name):
+            print(
+                f'dash-tools: deploy-heroku: App name "{heroku_app_name}" is not valid!')
+            print('dash-tools: deploy-heroku: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters.')
+            heroku_app_name = _get_heroku_app_name()
+        else:
+            should_continue = True
 
 
 def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[str, None]):
@@ -428,17 +471,8 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
             else:
                 should_continue = False
 
-    # Generate or let user type in app name if it is not provided
-    if not heroku_app_name:
-        heroku_app_name = _get_heroku_app_name()
-
-    # Check if the project already exists on Heroku if name is specified
-    if not _check_heroku_app_name_available(heroku_app_name):
-        print(
-            f'dash-tools: deploy-heroku: App "{heroku_app_name}" already exists on Heroku!')
-        print(
-            'dash-tools: deploy-heroku: Please choose a unique name that isn\'t already taken.')
-        exit('dash-tools: deploy-heroku: Failed')
+    # Get a unique app name
+    heroku_app_name = _get_valid_app_name(heroku_app_name)
 
     # Check that the project has necessary files
     if not _check_required_files_exist(project_root_dir):
