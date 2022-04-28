@@ -59,7 +59,7 @@ def handle_args(parser: argparse.ArgumentParser):
             base_dir=os.getcwd(),
             app_name=args.init[0],
             use_template=templateUtils.get_template_from_args(args))
-        print(f'dash-tools: For a step-by-step guide on configuring your app, see https://github.com/andrew-hossack/dash-tools/blob/main/README.md#usage-examples')
+        print(f'dash-tools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
     elif args.templates:
         print('dash-tools: templates: List of available templates:')

@@ -68,14 +68,30 @@ To create an app, run the following command from your project's root directory; 
 dash-tools --deploy-heroku
 ```
 
-And that's really it! You will be prompted to name the project (or have a name created for you), as well as log into your heroku account. Finally, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
+Optionally, you can specify a heroku app name as an argument. If one is not provided, you will be prompted to enter one or generate one automatically.
+
+_Note that "some-unique-heroku-app-name" in the example below is a name that you should change._
+
+```bash
+dash-tools --deploy-heroku some-unique-heroku-app-name
+```
+
+And that's really it! You will be prompted to log into your heroku account, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
 
 #### **Pushing Changes to an Existing Heroku App**
 
-To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", your changes will be added and your app will be re-deployed.
+To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", all changes will be pushed and your app will be re-deployed:
 
 ```bash
 dash-tools --deploy-heroku
+```
+
+If you would rather add specific files, make a commit and push to the 'heroku' remote manually:
+
+```bash
+git add SomeFileYouModified.txt
+git commit -m "Your Commit Message"
+git push heroku
 ```
 
 ## **Templates**
