@@ -1,8 +1,8 @@
-# 🛠️ **dash-tools** - _Easily Create and Deploy your Plotly Dash Apps from CLI (🎉 V1.0)_
+# 🛠️ **dash-tools** - _Easily Create and Deploy your Plotly Dash Apps from CLI (🎉 v1.0)_
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | ![Downloads](https://img.shields.io/pypi/dm/dash-tools?style=flat-square) | ![Build](https://img.shields.io/github/checks-status/andrew-hossack/dash-tools/main?style=flat-square) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
+[![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | ![Downloads](https://img.shields.io/pypi/dm/dash-tools?style=flat-square) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
 
 </div>
 
@@ -33,6 +33,8 @@ pip install dash-tools
 Below are common usage examples. For a more in-depth tutorial on writing apps for Plotly Dash, see the [Plotly Dash Documentation](https://dash.plotly.com/layout). For information about dash-tools commands, read the [_Commands_](#commands) section.
 
 ### **Creating A New Project**
+
+> _For a more in-depth tutorial on using dash-tools, check out the [Create and Upload Your App](/docs/Configuring-Your-App.md) document!_
 
 Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp":
 
