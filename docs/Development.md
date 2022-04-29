@@ -21,4 +21,8 @@ If you are interested in supporting this project, feel free to [Create a PR](htt
 
 ## **Testing**
 
-No testing framework is currently used. Please check back for future updates.
+Run pre-commit:
+
+```bash
+pre-commit install
+```
