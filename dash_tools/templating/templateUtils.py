@@ -3,6 +3,7 @@
  # @ Create Time: 2022-04-01 19:12:04
  '''
 import argparse
+from typing import Union
 from pkg_resources import resource_filename
 import os
 from dash_tools.templating.Templates import Template
@@ -35,11 +36,13 @@ def get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:
     return resource_filename(__name__, data_dir)
 
 
-def get_template_from_args(args: argparse.Namespace) -> Template:
+def get_template_from_args(args: argparse.Namespace) -> Union[str, Template]:
     """
     Get the template to use based on the arguments passed to the CLI.
 
     If the user passed in a template, use that, otherwise use the `default`.
+
+    # TODO This function could be rolled into convert_to_template_or_error
     """
     return args.init[1] if len(
         args.init) > 1 else Template.DEFAULT

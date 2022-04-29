@@ -113,5 +113,7 @@ def validate_heroku_app_name(heroku_app_name) -> bool:
     """
     regex = r'^[a-z][a-z0-9-]{2,}$'
     if re.search(regex, heroku_app_name):
+        if heroku_app_name[-1] == '-':
+            return False
         return True
     return False
