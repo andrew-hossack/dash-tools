@@ -21,8 +21,11 @@ If you are interested in supporting this project, feel free to [Create a PR](htt
 
 ## **Testing**
 
-Run pre-commit:
+Project uses pre-commit hooks. If this is your first time developing the project, please run:
 
 ```bash
 pre-commit install
+pre-commit run --all-files
 ```
+
+Pytest is also used. Check out the test suite in `tests/`

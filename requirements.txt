@@ -8,5 +8,6 @@ python-dotenv
 setuptools==47.1.0
 pipreqs
 pre-commit
+pytest
 pandas
 dash-mantine-components

@@ -13,8 +13,10 @@ class Template(Enum):
     """
     ADVANCED = 'advanced'               # Advanced template
     DEFAULT = 'default'                 # Default template multipage app
-    IRIS = 'iris'                       # Iris K-Means Cluster - Interactively cluster the Iris dataset
+    # Iris K-Means Cluster - Interactively cluster the Iris dataset
+    IRIS = 'iris'
     MANTINE = 'mantine'                 # Very basic mantine template
-    MULTIPAGE = 'multipage'             # Multipage app template using the multipage plugin.
+    # Multipage app template using the multipage plugin.
+    MULTIPAGE = 'multipage'
     SIDEBAR = 'sidebar'                 # Sidebar template from faculty.ai
     TABS = 'tabs'                       # Tabs template from faculty.ai
