@@ -2,14 +2,14 @@
 default_stages: [commit, push]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.2.0
     hooks:
       - id: check-docstring-first
       - id: check-merge-conflict
       - id: check-yaml
       - id: check-ast
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: ''
+    rev: 'v1.6.0'
     hooks:
       - id: autopep8
   - repo: local
