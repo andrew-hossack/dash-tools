@@ -15,7 +15,7 @@ def main():
     """
 
     parser = argparse.ArgumentParser(
-        description='The dash-tools CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more information.')
+        description=f'The dash-tools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more information.')
 
     parser.add_argument(
         '-v',
