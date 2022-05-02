@@ -28,4 +28,8 @@ pre-commit install
 pre-commit run --all-files
 ```
 
-Pytest is also used. Check out the test suite in `tests/`
+Pytest is also used. Check out the test suite in `tests/`. Make sure to run pytest before pushing changes:
+
+```bash
+pytest
+```
