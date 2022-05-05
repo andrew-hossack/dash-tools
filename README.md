@@ -11,7 +11,6 @@
 <h3>
 <b><i>Create and Deploy Plotly Dash apps to Heroku in less than a minute!</i></b>
 </h3>
-
 </div>
 
 ## **About**
