@@ -3,6 +3,7 @@
  # @ Create Time: 2022-04-28 11:43:00
  # Git util functions
 '''
+import os
 import re
 import subprocess
 
@@ -26,14 +27,9 @@ def git_is_installed() -> bool:
 def is_git_repository() -> bool:
     """
     Check that the current location is a git repository or not
+    by checking .git directory
     """
-    regex = r'fatal: not a git repository'
-    isGitInitialized = True
-    try:
-        git_command_output = subprocess.check_output(
-            'git remote -v', shell=True)
-        if re.search(regex, git_command_output.decode('utf-8')):
-            isGitInitialized = False
-    except subprocess.CalledProcessError:
-        isGitInitialized = False
-    return isGitInitialized
+    isGitRepo = False
+    if os.path.isdir('.git'):
+        isGitRepo = True
+    return isGitRepo
