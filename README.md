@@ -26,6 +26,11 @@ Ready to use **dash-tools**? Installation is easy with pip:
 pip install dash-tools
 ```
 
+Requires:
+
+- **Heroku CLI** which can be downloaded [Here](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli)
+- **Git CLI** which can be downloaded [Here](https://git-scm.com/downloads)
+
 [Find dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 ## **Usage Examples**
@@ -72,7 +77,7 @@ See the [Templates](#templates) section for more details on using templates.
 
 Deploying your project online to [Heroku](https://www.heroku.com/) is simple. The CLI handles both creating and deploying a new app, as well as updating an existing app.
 
-#### **Creating a Heroku App**
+#### **Using dash-tools to Create An App**
 
 To create an app, run the following command from your project's root directory; e.g. _/MyDashApp_ from the example above. Next, follow the simple on-screen directions and deployment will be handled for you:
 
@@ -90,7 +95,18 @@ dash-tools --deploy-heroku some-unique-heroku-app-name
 
 And that's really it! You will be prompted to log into your heroku account, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
 
-#### **Pushing Changes to an Existing Heroku App**
+#### **Uploading Your Existing (non dash-tools) Dash App**
+
+Uploading an existing application without using a dash-tools templated app is easy. You need to make sure of the following:
+
+- Your project contains `src/app.py` application file
+- Your `src/app.py` file contains the `server = app.server` declaration for heroku
+
+Since the deploy command will create your Procfile, runtime.txt and requirements.txt files for you, there is no need to worry about creating them yourself.
+
+To deploy, the next steps will be the same [as above](#using-dash-tools-to-create-an-app).
+
+#### **Pushing Changes to an Existing Heroku Remote**
 
 To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", all changes will be pushed and your app will be re-deployed:
 
@@ -210,10 +226,34 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 - **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
 - **`--templates, -t` :** List available templates.
 
-### Other
+### **Other**
 
 - **`--help, -h`:** Display CLI helpful hints
 - **`--version`:** Display current version.
+
+## **Troubleshooting Common Issues**
+
+Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues).
+
+### **Common `--init` Issues**
+
+<details><summary>No write permission</summary>
+
+_Problem:_ You receive a 'write permission' error while trying to init a new app
+
+_Solution:_ Please check your write permissions for the current directory. Try the init command from a different directory.
+
+</details>
+
+### **Common `--deploy-heroku` Issues**
+
+<details><summary>Error when creating requirements.txt file</summary>
+
+_Problem:_ You encounter an error when generating a requirements.txt file
+
+_Solution:_ Verify that you are running the `dash-tools --deploy-heroku` command from a valid plotly dash app directory. E.g. there is a `src/app.py` file.
+
+</details>
 
 ## **Development**
 
