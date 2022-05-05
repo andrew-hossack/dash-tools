@@ -5,6 +5,7 @@
 '''
 import os
 import re
+import subprocess
 
 
 def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
@@ -22,7 +23,15 @@ def create_requirements_txt(root_path: os.PathLike):
     Creates requirements.txt file using pipreqs
     """
     print('dash-tools: deploy-heroku: Creating requirements.txt')
-    os.system(f'pipreqs {root_path}')
+    try:
+        subprocess.check_output(f'pipreqs {root_path}', shell=True)
+    except subprocess.CalledProcessError:
+        # pipreqs throws a SyntaxError if it encounters a non-ASCII character
+        # One reason may be that the user is not in a valid dash app directory
+        print(
+            f'dash-tools: deploy-heroku: Error creating requirements.txt')
+        print('dash-tools: deploy-heroku: Did you run --deploy-heroku in a valid dash app directory?')
+        exit('dash-tools: deploy-heroku: Failed')
     # Append gunicorn to requirements.txt
     with open(os.path.join(root_path, 'requirements.txt'), 'a') as requirements_file:
         requirements_file.write('gunicorn')

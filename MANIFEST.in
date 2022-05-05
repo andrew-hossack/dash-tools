@@ -2,6 +2,7 @@ global-include *.json
 global-include *.include
 global-include *.html
 global-include *.css
+global-include *.csv
 global-include *.eot
 global-include *.tff
 global-include *.woff
