@@ -198,7 +198,7 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 
 ## **Development**
 
-See the [Developer Guide](/docs/Development.md) for more details.
+See the [Developer Guide](CONTRIBUTING.md) for more details.
 
 ## **License**
 
