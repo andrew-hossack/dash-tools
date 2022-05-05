@@ -7,7 +7,7 @@ from dash import Dash
 
 app = Dash(__name__, title="{appName}")
 
-# Declare server for Heroku deplpoyment. Needed for Procfile.
+# Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 
 app.layout = dmc.Alert(

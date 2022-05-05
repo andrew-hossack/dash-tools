@@ -58,6 +58,16 @@ When you are happy with your changes, run your dash app locally with the followi
 python src/app.py
 ```
 
+#### **Loading CSV Files**
+
+A common use for Dash is to display CSV data. To see an example, use the following command to create a "MyCSVApp" app with the 'csv' template:
+
+```bash
+dash-tools --init MyCSVApp csv
+```
+
+See the [Templates](#templates) section for more details on using templates.
+
 ### **Deploying To Heroku**
 
 Deploying your project online to [Heroku](https://www.heroku.com/) is simple. The CLI handles both creating and deploying a new app, as well as updating an existing app.
@@ -126,6 +136,15 @@ _To use this template, type: `dash-tools --init MyFuturisticApp advanced`_
 
 Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
 ![](docs/advanced_theme.png)
+
+</details>
+
+<details><summary>Template: 'csv'</summary>
+
+_To use this template, type: `dash-tools --init MyCSVLoaderApp csv`_
+
+Example of CSV file loading. Includes the default CSV load example from Plotly.
+![](docs/csv_template.png)
 
 </details>
 

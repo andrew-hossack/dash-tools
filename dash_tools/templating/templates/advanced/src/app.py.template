@@ -25,7 +25,7 @@ app = Dash(
 )
 
 
-# Declare server for Heroku deplpoyment. Needed for Procfile.
+# Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 
 hidden_div = html.Div(id="hidden-div", style={"display": "none"})

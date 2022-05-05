@@ -1,7 +1,7 @@
 '''
  # @ Author: Andrew Hossack
  # @ Create Time: 2022-04-04 13:41:57
- # Templates file
+ # @ Templates file
 '''
 from enum import Enum
 
@@ -9,14 +9,18 @@ from enum import Enum
 class Template(Enum):
     """
     Enum of templates to be used in the app.
-    !!! Values must match the file name in the templating/templates/* directory !!!
+    Values must match the directory name in the templating/templates/ directory
+
+    e.g.
+    -> DEFAULT = 'default'
+    -> Here the template 'DEFAULT' has a template directory named '/default':
+    -> templates/default/
     """
-    ADVANCED = 'advanced'               # Advanced template
-    DEFAULT = 'default'                 # Default template multipage app
-    # Iris K-Means Cluster - Interactively cluster the Iris dataset
+    ADVANCED = 'advanced'
+    CSV = 'csv'
+    DEFAULT = 'default'
     IRIS = 'iris'
-    MANTINE = 'mantine'                 # Very basic mantine template
-    # Multipage app template using the multipage plugin.
+    MANTINE = 'mantine'
     MULTIPAGE = 'multipage'
-    SIDEBAR = 'sidebar'                 # Sidebar template from faculty.ai
-    TABS = 'tabs'                       # Tabs template from faculty.ai
+    SIDEBAR = 'sidebar'
+    TABS = 'tabs'
