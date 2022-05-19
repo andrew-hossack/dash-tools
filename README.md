@@ -20,7 +20,7 @@
 
 ## **About**
 
-[**dash-tools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications has never been quicker.
+[**dash-tools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to the web has never been quicker.
 
 Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it!
 
@@ -43,35 +43,53 @@ pip install dash-tools
 
 ## **Usage Examples**
 
-Below are common usage examples. For a more in-depth tutorial on writing apps for Plotly Dash, see the [Plotly Dash Documentation](https://dash.plotly.com/layout). For information about dash-tools commands, read the [_Commands_](#commands) section.
+### **A. Create an App**
 
-### **Creating A New Project**
-
-> _For a more in-depth tutorial on using dash-tools, check out the [Create and Upload Your App](/docs/Configuring-Your-App.md) document!_
-
-Creating a new Dash project is very simple. The following command will create a new directory called "MyDashApp":
+1. Create a Dash project in a new directory called "MyDashApp" (using your terminal or command prompt):
 
 ```bash
 dash-tools --init MyDashApp
 ```
 
-Optionally, templates can be used. Check out [Templates](#templates) for more details.
+2. Open the default app:
 
-You can see what files are included with your new app:
+```bash
+.\MyDashApp\src\app.py
+```
+
+3. Replace the code in `app.py` with your own app code. Make sure to keep the `server = app.server` right after app instantiation:
+
+![update-app](https://user-images.githubusercontent.com/32049495/169304171-bf23b2d0-26b4-4767-b38f-cd6586ddf56e.gif)
+
+4. View your app to ensure it works:
+
+```bash
+python .\MyDashApp\src\app.py
+```
+
+### Deploy App to Web with Heroku
+
+5. Make sure you are in your project's root directory:
 
 ```bash
 cd MyDashApp
 ```
 
-You can make changes to your app in the `src/app.py` file! See [Plotly Dash Layout Docs](https://dash.plotly.com/layout) for more information, or check out the dash-tools docs on [Configuring Your Dash App](/docs/Configuring-Your-App.md).
-
-When you are happy with your changes, run your dash app locally with the following command. You will be able to view your app at http://127.0.0.1:8050/ in your browser:
+6. Initiate git to allow deployment of app to web:
 
 ```bash
-python src/app.py
+git init
 ```
 
-#### **Loading CSV Files**
+7. Deploy to Heroku:
+
+```bash
+dash-tools --deploy-heroku
+```
+
+![deploy-app](./deploy-app.gif)
+
+### **B. Create an App with Local CSV sheet**
 
 A common use for Dash is to display CSV data. To see an example, use the following command to create a "MyCSVApp" app with the 'csv' template:
 
