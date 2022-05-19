@@ -43,7 +43,7 @@ pip install dash-tools
 
 ## **Usage Examples**
 
-### **A. Create an App**
+### A. Create an App
 
 1. Create a Dash project in a new directory called "MyDashApp" (using your terminal or command prompt):
 
@@ -61,13 +61,13 @@ dash-tools --init MyDashApp
 
 ![update-app](https://user-images.githubusercontent.com/32049495/169304171-bf23b2d0-26b4-4767-b38f-cd6586ddf56e.gif)
 
-4. View your app to ensure it works:
+4. Run your app to ensure it works:
 
 ```bash
 python .\MyDashApp\src\app.py
 ```
 
-### Deploy App to Web with Heroku
+#### Deploy App to Web with Heroku
 
 5. Make sure you are in your project's root directory:
 
@@ -89,64 +89,47 @@ dash-tools --deploy-heroku
 
 ![deploy-app](./deploy-app.gif)
 
-### **B. Create an App with Local CSV sheet**
+### B. Create an App with Local CSV sheet
 
-A common use for Dash is to display CSV data. To see an example, use the following command to create a "MyCSVApp" app with the 'csv' template:
+A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV Dash-tools template to create a project with CSV data.
+
+1. Using App template with CSV
 
 ```bash
 dash-tools --init MyCSVApp csv
 ```
 
-See the [Templates](#templates) section for more details on using templates.
+2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 13, 26, and 27. 
 
-### **Deploying To Heroku**
+3. Replace the default CSV file in the `data` folder with your own CSV file   
 
-Deploying your project online to [Heroku](https://www.heroku.com/) is simple. The CLI handles both creating and deploying a new app, as well as updating an existing app.
+4. Run your app to ensure it works:
 
-#### **Using dash-tools to Create An App**
+```bash
+python .\MyCSVApp\src\app.py
+```
 
-To create an app, run the following command from your project's root directory; e.g. _/MyDashApp_ from the example above. Next, follow the simple on-screen directions and deployment will be handled for you:
+#### Deploy App to Web with Heroku
+
+5. Make sure you are in your project's root directory:
+
+```bash
+cd MyCSVApp
+```
+
+6. Initiate git to allow deployment of app to web:
+
+```bash
+git init
+```
+
+7. Deploy to Heroku:
 
 ```bash
 dash-tools --deploy-heroku
 ```
 
-Optionally, you can specify a heroku app name as an argument. If one is not provided, you will be prompted to enter one or generate one automatically.
-
-_Note: "some-unique-heroku-app-name" in the example below is a name that you should change!_
-
-```bash
-dash-tools --deploy-heroku some-unique-heroku-app-name
-```
-
-And that's really it! You will be prompted to log into your heroku account, a git remote 'heroku' will be created and changes will be pushed and deployed automatically.
-
-#### **Uploading Your Existing (non dash-tools) Dash App**
-
-Uploading an existing application without using a dash-tools templated app is easy. You need to make sure of the following:
-
-- Your project contains `src/app.py` application file
-- Your `src/app.py` file contains the `server = app.server` declaration for heroku
-
-Since the deploy command will create your Procfile, runtime.txt and requirements.txt files for you, there is no need to worry about creating them yourself.
-
-To deploy, the next steps will be the same [as above](#using-dash-tools-to-create-an-app).
-
-#### **Pushing Changes to an Existing Heroku Remote**
-
-To push changes to an existing heroku app after it is deployed, you can use the same command as before. Since a 'heroku' git remote already exists, by choosing the on-screen option to "Update Existing App", all changes will be pushed and your app will be re-deployed:
-
-```bash
-dash-tools --deploy-heroku
-```
-
-If you would rather add specific files, make a commit and push to the 'heroku' remote manually:
-
-```bash
-git add SomeFileYouModified.txt
-git commit -m "Your Commit Message"
-git push heroku
-```
+---
 
 ## **Templates**
 
