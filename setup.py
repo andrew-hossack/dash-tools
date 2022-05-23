@@ -13,7 +13,7 @@ with open('requirements.txt') as f:
     requirements = f.readlines()
 
 setuptools.setup(
-    name="dashtools",
+    name="dash-tools",
     version=meta['__version__'],
     author="Andrew Hossack",
     author_email="andrew_hossack@outlook.com",
