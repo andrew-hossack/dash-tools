@@ -7,6 +7,7 @@ import os
 import argparse
 from dash_tools.deploy import deployHeroku
 from dash_tools.templating import buildApp, buildAppUtils, createTemplate
+from dash_tools.runtime import runtimeUtils
 from dash_tools.version import __version__
 
 
@@ -125,6 +126,23 @@ def heroku(args):
     else:
         print('dash-tools: heroku error: too few arguments')
         exit('dash-tools: Available heroku options: --deploy, --update')
+
+
+@subcommand(
+    [
+        argument(
+            "run",
+            help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
+            default=False,
+            action="store_true"),
+    ])
+def run(args):
+    if args.run:
+        try:
+            runtimeUtils.run_app(os.getcwd())
+        except RuntimeError as e:
+            print(e)
+            exit('dash-tools: run: Failed')
 
 
 def main():

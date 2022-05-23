@@ -104,18 +104,10 @@ For simple API changes, please add adequate unit tests under `/tests`
 
 ## TODO List
 
-Commands
-
-- add 'dash-tools --run' to run the app.py file
-
 Templates
 
 - add fast-dash template https://github.com/dkedar7/fast_dash
 - add dash-iconify template https://github.com/snehilvj/dash-iconify
-
-Functionality
-
-- open Heroku CLI and Git CLI download links in browser
 
 Other
 

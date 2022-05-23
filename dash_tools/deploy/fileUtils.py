@@ -68,8 +68,8 @@ def verify_procfile(root_path: os.PathLike) -> dict:
         {
             'valid': True (valid) or False (invalid),
             'dir': Directory of app,
-            'hook': Hook name
             'module': Module name
+            'hook': Hook name
         }
     """
     with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
