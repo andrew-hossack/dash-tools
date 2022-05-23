@@ -7,6 +7,7 @@
 import os
 import shutil
 
+from dash_tools.deploy import deployHeroku, fileUtils
 from dash_tools.templating import buildAppUtils
 
 
@@ -15,6 +16,10 @@ def create_template(src: os.PathLike, dest: os.PathLike):
     Recursively copies all files and directories from src. Appends '.template' to all files.
     Saves new template to parent directory of src.
     """
+
+    if not os.path.exists(src):
+        print(f"dash-tools: templates: init: Source file {src} does not exist")
+        exit('dash-tools: templates: init: Failed')
 
     # Check for file write permissions in the base directory (command invoke directory)
     if not buildAppUtils.check_write_permission(dest):
@@ -29,8 +34,30 @@ def create_template(src: os.PathLike, dest: os.PathLike):
         print(
             f'dash-tools: templates: init: Template directory {template_base_dir} already exists')
         exit(f'dash-tools: templates: init: Failed')
-    os.mkdir(template_base_dir)
 
+    # Check Procfile exists
+    if not fileUtils.check_file_exists(src, 'Procfile'):
+        print(
+            f'dash-tools: templates: init: No Procfile found in {src}')
+        if deployHeroku.prompt_user_choice("dash-tools: templates: init: Create Procfile?"):
+            fileUtils.create_procfile(src)
+
+    # Verify procfile
+    if not fileUtils.verify_procfile(src)["valid"]:
+        print(
+            f'dash-tools: templates: init: Procfile in {src} is invalid')
+        if not deployHeroku.prompt_user_choice("dash-tools: Continue?"):
+            exit(f'dash-tools: templates: init: Aborted')
+
+    # Check runtime exists
+    if not fileUtils.check_file_exists(src, 'runtime.py'):
+        print(
+            f'dash-tools: templates: init: No runtime.py found in {src}')
+        if deployHeroku.prompt_user_choice("dash-tools: templates: init: Create runtime.py?"):
+            fileUtils.create_runtime_txt(src)
+
+    # Make the new template directory
+    os.mkdir(template_base_dir)
     # Copy files from src to template_base_dir, appending '.template' to all files
     for path, _, files in os.walk(src):
         for name in files:

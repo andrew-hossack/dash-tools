@@ -17,21 +17,21 @@ def _check_required_files_exist(root_path: os.PathLike) -> bool:
     deploy_should_continue = True
     # Check if procfile exists
     if not fileUtils.check_file_exists(root_path, 'Procfile'):
-        if _prompt_user_choice(
+        if prompt_user_choice(
                 'dash-tools: heroku: deploy: Required file Procfile not found. Create one automatically?'):
             fileUtils.create_procfile(root_path)
         else:
             deploy_should_continue = False
     # Check for the Runtime file
     if (not fileUtils.check_file_exists(root_path, 'runtime.txt')) and deploy_should_continue:
-        if _prompt_user_choice(
+        if prompt_user_choice(
                 'dash-tools: heroku: deploy: Required file runtime.txt not found. Create one automatically?'):
             fileUtils.create_runtime_txt(root_path)
         else:
             deploy_should_continue = False
     # Check for the Requirements file
     if (not fileUtils.check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
-        if _prompt_user_choice(
+        if prompt_user_choice(
                 'dash-tools: heroku: deploy: Required file requirements.txt not found. Create one automatically?'):
             fileUtils.create_requirements_txt(root_path)
         else:
@@ -39,7 +39,7 @@ def _check_required_files_exist(root_path: os.PathLike) -> bool:
     return deploy_should_continue
 
 
-def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
+def prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
     """
     Prompt the user to continue or not.
 
@@ -59,7 +59,7 @@ def _prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_r
     elif response.lower() == 'n':
         return False
     elif does_repeat:
-        return _prompt_user_choice(message)
+        return prompt_user_choice(message)
     else:
         return False
 
@@ -241,7 +241,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
         exit('dash-tools: heroku: deploy: Failed')
 
     # Confirm deployment settings and create the project on Heroku if the user confirms
-    if not _prompt_user_choice(f'dash-tools: heroku: deploy: Please confirm creating app {heroku_app_name} on Heroku and adding git remote "heroku".'):
+    if not prompt_user_choice(f'dash-tools: heroku: deploy: Please confirm creating app {heroku_app_name} on Heroku and adding git remote "heroku".'):
         exit('dash-tools: heroku: deploy: Aborted')
 
     # Create the project on Heroku and capture the git remote URL
