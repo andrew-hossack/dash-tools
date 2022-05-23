@@ -141,13 +141,11 @@ def _success_message(heroku_app_name: str):
         webbrowser.open(f'https://{heroku_app_name}.herokuapp.com/')
 
 
-def _get_valid_app_name(heroku_app_name: str) -> str:
+def _get_valid_app_name() -> str:
     """
     Returns a unique and valid heroku app name
     """
-    # Generate or let user type in app name if it is not provided
-    if not heroku_app_name:
-        heroku_app_name = herokuUtils.get_heroku_app_name()
+    heroku_app_name = herokuUtils.get_heroku_app_name()
 
     # Wait for user to input a correct name
     should_continue = False
@@ -169,7 +167,7 @@ def _get_valid_app_name(heroku_app_name: str) -> str:
     return heroku_app_name
 
 
-def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[str, None]):
+def deploy_app_to_heroku(project_root_dir: os.PathLike):
     """
     Uses the Heroku CLI to deploy the current project
     """
@@ -204,7 +202,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
         while not should_continue:
             response = input('dash-tools: Choice (1, 2, 3) > ')
             if response == '1':
-                if not _add_changes_and_push_to_heroku(heroku_app_name):
+                if not _add_changes_and_push_to_heroku('update'):
                     exit('dash-tools: deploy-heroku: Failed to push to heroku')
                 print('dash-tools: deploy-heroku: Changes pushed to heroku remote')
                 exit('dash-tools: deploy-heroku: Success')
@@ -217,7 +215,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike, heroku_app_name: Union[s
                 should_continue = False
 
     # Get a unique app name
-    heroku_app_name = _get_valid_app_name(heroku_app_name)
+    heroku_app_name = _get_valid_app_name()
 
     # Check that the project has necessary files
     if not _check_required_files_exist(project_root_dir):

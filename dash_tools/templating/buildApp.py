@@ -9,7 +9,7 @@ import os
 import shutil
 from typing import Union
 
-from dash_tools.templating import templateUtils
+from dash_tools.templating import buildAppUtils
 
 
 def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
@@ -31,37 +31,25 @@ def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
-def _check_write_permission(path: os.PathLike) -> bool:
-    """
-    Check for write permission in directory/
-
-    Returns:
-        True if write access else allowed False
-    """
-    return os.access(path, os.W_OK)
-
-
-def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templateUtils.Template, str]):
+def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[buildAppUtils.Template, str]):
     '''
     Create a new app in the target directory.
 
     Looks for files in the /template directory
     '''
     # Check arguments
-    templateUtils.check_create_app_args(base_dir, app_name)
-    use_template = templateUtils.convert_to_template_or_error(use_template)
-    print(
-        f'dash-tools: init: Creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
+    buildAppUtils.check_create_app_args(base_dir, app_name)
+    use_template = buildAppUtils.convert_to_template_or_error(use_template)
 
     # Check for file write permissions in the base directory (command invoke directory)
-    if not _check_write_permission(base_dir):
+    if not buildAppUtils.check_write_permission(base_dir):
         print(
             f'dash-tools: init: No write permissions for {base_dir}')
         exit(f'dash-tools: init: Failed')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
-    template_base_path = templateUtils.get_templates_data_path(template)
+    template_base_path = buildAppUtils.get_templates_data_path(template)
     for path, _, files in os.walk(template_base_path):
         for name in files:
             # Skip non .template files
@@ -89,4 +77,5 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[templat
             # Format the file
             _format_file(name, app_name, dest)
 
-    print(f'dash-tools: init: Finished')
+    print(
+        f'dash-tools: init: Finished creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')

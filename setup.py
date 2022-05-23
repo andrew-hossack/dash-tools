@@ -19,10 +19,7 @@ setuptools.setup(
     author_email="andrew_hossack@outlook.com",
     description="Plotly Dash Templating and Deployment Tools",
     entry_points={
-        'console_scripts': [
-                'dash-tools = dash_tools.cli.cli:main'
-        ]
-    },
+        'console_scripts': ['dash-tools = dash_tools.cli.cli:main']},
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/andrew-hossack/dash-tools",

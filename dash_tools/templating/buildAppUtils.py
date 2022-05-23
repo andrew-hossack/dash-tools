@@ -9,6 +9,16 @@ import os
 from dash_tools.templating.Templates import Template
 
 
+def check_write_permission(path: os.PathLike) -> bool:
+    """
+    Check for write permission in directory/
+
+    Returns:
+        True if write access else allowed False
+    """
+    return os.access(path, os.W_OK)
+
+
 def print_templates():
     """
     Print the available templates.
