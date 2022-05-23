@@ -3,16 +3,43 @@
  # @ Create Time: 2022-04-01 12:47:58
  # Thanks to https://mike.depalatis.net/blog/simplifying-argparse.html
 '''
-import os
 import argparse
+import os
+import sys as _sys
 from dashtools.deploy import deployHeroku
-from dashtools.templating import buildApp, buildAppUtils, createTemplate
 from dashtools.runtime import runtimeUtils
+from dashtools.templating import buildApp, buildAppUtils, createTemplate
 from dashtools.version import __version__
 
 
-parser = argparse.ArgumentParser(
-    description=f'The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more information.')
+class MyArgumentParser(argparse.ArgumentParser):
+    """Override default help message"""
+
+    def print_help(self, file=None):
+        if file is None:
+            file = _sys.stdout
+        message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more details.
+\nAvailable Commands:
+    {'heroku':<29}Handle Heroku deployment. Choose option:
+        {'--deploy':<25}Deploys the current project to Heroku
+        {'--update [<remote name>]':<25}Push changes to existing Heroku remote
+    
+    {'init <app name> [<template>]':<29}Create a new app
+        {'--dir, -d':<25}Specify alternative create location
+    
+    {'run':<29}Run app locally from the current directory
+    
+    {'templates':<29}List and create templates
+        {'--init <directory>':<25}Creates a template from specified directory
+        {'--list':<25}List available templates
+"""
+        file.write(message+"\n")
+
+
+parser = MyArgumentParser()
+
+parser._positionals.title = 'Positional Arguments'
+parser._optionals.title = 'Optional Arguments'
 
 subparsers = parser.add_subparsers(dest="subcommand")
 
@@ -70,12 +97,14 @@ parser.add_argument(
 def init(args):
     """Initialize a new app."""
     if args.dir is None:
-        print('dashtools: init: No directory specified')
+        print('dashtools: init: No directory specified. Usage Example: dashtools init MyDashApp -d ~/Desktop')
         exit('dashtools: init: Failed')
     buildApp.create_app(
         target_dir=args.dir,
         app_name=args.init[0],
-        use_template=buildAppUtils.get_template_from_args(args))
+        template=buildAppUtils.get_template_from_args(args))
+    print(
+        f'dashtools: Run your app using the "cd {args.init[0]} && dashtools run" command')
     print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
 
@@ -154,6 +183,5 @@ def main():
     args = parser.parse_args()
     if args.subcommand is None:
         parser.print_help()
-        exit('\ndashtools: error: too few arguments')
     else:
         args.func(args)

@@ -31,7 +31,7 @@ def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
-def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[buildAppUtils.Template, str]):
+def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.Template):
     '''
     Create a new app in the target directory.
 
@@ -39,7 +39,6 @@ def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[build
     '''
     # Check arguments
     buildAppUtils.check_create_app_args(target_dir, app_name)
-    use_template = buildAppUtils.convert_to_template_or_error(use_template)
 
     # Check for file write permissions in the base directory (command invoke directory)
     if not buildAppUtils.check_write_permission(target_dir):
@@ -48,8 +47,8 @@ def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[build
         exit(f'dashtools: init: Failed')
 
     # Copy files from template directory
-    template = os.path.join('templates', use_template.value)
-    template_base_path = buildAppUtils.get_templates_data_path(template)
+    template_dir = os.path.join('templates', template.value)
+    template_base_path = buildAppUtils.get_templates_data_path(template_dir)
     for path, _, files in os.walk(template_base_path):
         for name in files:
             # Skip non .template files
@@ -78,4 +77,4 @@ def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[build
             _format_file(name, app_name, dest)
 
     print(
-        f'dashtools: init: Finished creating new app "{app_name}" at {os.path.join(target_dir, app_name)} using {use_template}')
+        f'dashtools: init: Created new app {app_name} at {os.path.join(target_dir, app_name)} with {template.name} template')

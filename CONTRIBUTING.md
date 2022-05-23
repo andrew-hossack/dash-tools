@@ -107,12 +107,12 @@ For simple API changes, please add adequate unit tests under `/tests`
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
 - Add docs for fastdash
 - Add docs for iconify
-- Rename dash-tools github to dashtools (?)
 - Rename dash-tools pypi to dashtools (?)
+- Rewrite and add unittests for CLI
 
 ## Financial Contributions
 
-This project is sponsored by helpful people like you! Please feel free to reach out directly to andrew_hossack@outlook.com if you would like to support or donate to this project. Thanks!
+This project is sponsored by helpful people like you! Please feel free to reach out directly to andrew_hossack@outlook.com or [Donate](https://github.com/sponsors/andrew-hossack) if you would like to help out this project. Thanks!
 
 ## Attribution
 

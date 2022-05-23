@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4] - 2022-05-22
 
-**dashtools is now dashtools on PyPi and via command line**
+**dash-tools command is now dashtools via command line**
 
 Major changes are an overhaul to the CLI entry to use subcommands. This looks like a change from this: `dashtools --init MyApp tabs` to `dashtools init MyApp tabs`. Also added a few new commands.
 
@@ -24,6 +24,7 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
 - Added `dashtools run` command to run the app.py file (recursive search for app.py file, if not specified in a Procfile)
 - Better heroku deployment name generation - takes three random nouns joined by dashes and appends four alphanumeric char to end (ex. mountain-surgeon-chair-h129)
 - Added logo
+- Updated help cli print message, try: `dashtools`
 
 ### Templates
 
