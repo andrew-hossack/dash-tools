@@ -7,7 +7,7 @@ import random
 import re
 import string
 import subprocess
-
+from dashtools.data import randomWords
 import requests
 
 
@@ -92,11 +92,10 @@ def get_heroku_app_name():
     print('dashtools: deploy-heroku: Please type a unique app name or press enter to generate one automatically.')
     app_name = input('dashtools: App Name (Optional) > ')
     if app_name == '':
-        # Generate a random app name
-        app_name = ''.join(random.choices(
-            string.ascii_lowercase + string.digits, k=12))
-        # App names must start with letter. Use 'dt-' for dashtools
-        app_name = ''.join(('dashtools-', app_name))
+        # Generate a random app name with three words
+        app_name = '-'.join(randomWords.get_words(3))
+        # Append alphanumeric characters to the end of the app name
+        app_name += f"-{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
     print(f'dashtools: deploy-heroku: Using app name "{app_name}"')
     return app_name
 

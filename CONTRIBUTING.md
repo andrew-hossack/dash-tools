@@ -107,6 +107,7 @@ For simple API changes, please add adequate unit tests under `/tests`
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
 - Rename dash-tools github to dashtools (?)
 - Rename dash-tools pypi to dashtools (?)
+- Add [![Downloads](https://pepy.tech/badge/dash-tools)](https://pepy.tech/project/dash-tools) badge to README
 
 ## Financial Contributions
 

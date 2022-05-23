@@ -21,6 +21,7 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
   - `dashtools templates --list`
   - `dashtools templates --init <directory to copy>`
 - Added `dashtools run` command to run the app.py file (recursive search for app.py file, if not specified in a Procfile)
+- Better heroku deployment name generation - takes three random nouns joined by dashes and appends four alphanumeric char to end (ex. mountain-surgeon-chair-h129)
 
 ### Templates
 
