@@ -62,7 +62,7 @@ parser.add_argument(
         argument(
             '--dir',
             '-d',
-            help='Specify the directory to create the app in. Default: current directory.',
+            help='Specify the directory to create the app in. Args: REQUIRED: <directory>',
             default=os.getcwd(),
             metavar='<directory>',
             nargs='?')
@@ -108,21 +108,23 @@ def templates(args):
     [
         argument(
             "--deploy",
-            help="Deploys the current project <app name> to Heroku. Run command from the root of the project. --deploy takes one or no argument: <app name> (e.g. dash-tools --deploy my-app) OR (dash-tools --deploy-heroku)",
+            help="Deploys the current project to Heroku. Run command from the root of the project",
             default=False,
             action="store_true",
         ),
         argument(
             "--update",
-            help="Updates the current project <app name> to Heroku. Run command from the root of the project",
-            default=False,
-            action="store_true"),
+            help="Updates the current project to Heroku. Run command from the root of the project. Args: OPTIONAL: <git remote>",
+            nargs="?",
+            const="heroku",
+            type=str
+        ),
     ])
 def heroku(args):
     if args.deploy:
         deployHeroku.deploy_app_to_heroku(os.getcwd())
     elif args.update:
-        raise NotImplementedError('TODO implement update functionality')
+        deployHeroku.update_heroku_app(args.update)
     else:
         print('dash-tools: heroku error: too few arguments')
         exit('dash-tools: Available heroku options: --deploy, --update')
