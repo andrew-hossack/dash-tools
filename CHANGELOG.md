@@ -10,9 +10,10 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
 
 ### Added / Changed
 
+- Invoke dashtools now by typing: `dashtools <command>` (was `dash-tools <command>` before)
 - Added subparsers to CLI to make commands look better:
   - `dashtools init <app name> [<template>]`
-- Added `-d` or `--dir` for `init` to specify create directory
+- Added `-d` or `--dir` for `init` to specify create directory, e.g. `dashtools init <appname> [<template>] --dir ~/MySandbox`
 - Added new `--update` command to directly update to "heroku" remote
   - `dashtools heroku --update`
 - Broke out heroku deploy command
@@ -22,6 +23,7 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
   - `dashtools templates --init <directory to copy>`
 - Added `dashtools run` command to run the app.py file (recursive search for app.py file, if not specified in a Procfile)
 - Better heroku deployment name generation - takes three random nouns joined by dashes and appends four alphanumeric char to end (ex. mountain-surgeon-chair-h129)
+- Added logo
 
 ### Templates
 
