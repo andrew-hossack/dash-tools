@@ -6,7 +6,7 @@
 
 
 import os
-from dash_tools.deploy.fileUtils import verify_procfile, check_file_exists
+from dashtools.deploy.fileUtils import verify_procfile, check_file_exists
 
 
 def run_app(root_path: os.PathLike):

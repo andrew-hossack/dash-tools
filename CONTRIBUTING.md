@@ -104,10 +104,9 @@ For simple API changes, please add adequate unit tests under `/tests`
 
 ## TODO List
 
-Other
-
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
-- add a way to upload templates?
+- Rename dash-tools github to dashtools (?)
+- Rename dash-tools pypi to dashtools (?)
 
 ## Financial Contributions
 

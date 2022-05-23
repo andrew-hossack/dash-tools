@@ -5,10 +5,10 @@
 '''
 import os
 import argparse
-from dash_tools.deploy import deployHeroku
-from dash_tools.templating import buildApp, buildAppUtils, createTemplate
-from dash_tools.runtime import runtimeUtils
-from dash_tools.version import __version__
+from dashtools.deploy import deployHeroku
+from dashtools.templating import buildApp, buildAppUtils, createTemplate
+from dashtools.runtime import runtimeUtils
+from dashtools.version import __version__
 
 
 parser = argparse.ArgumentParser(

@@ -7,8 +7,8 @@
 import os
 import shutil
 
-from dash_tools.deploy import deployHeroku, fileUtils
-from dash_tools.templating import buildAppUtils
+from dashtools.deploy import deployHeroku, fileUtils
+from dashtools.templating import buildAppUtils
 
 
 def create_template(src: os.PathLike, dest: os.PathLike):

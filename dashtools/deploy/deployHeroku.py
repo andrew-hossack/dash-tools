@@ -7,7 +7,7 @@ import re
 import subprocess
 import webbrowser
 
-from dash_tools.deploy import fileUtils, gitUtils, herokuUtils
+from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 
 def _check_required_files_exist(root_path: os.PathLike) -> bool:

@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 meta = {}
 
-with open('./dash_tools/version.py') as f:
+with open('./dashtools/version.py') as f:
     exec(f.read(), meta)
 
 with open('requirements.txt') as f:
@@ -19,7 +19,7 @@ setuptools.setup(
     author_email="andrew_hossack@outlook.com",
     description="Plotly Dash Templating and Deployment Tools",
     entry_points={
-        'console_scripts': ['dashtools = dash_tools.cli.cli:main']},
+        'console_scripts': ['dashtools = dashtools.cli.cli:main']},
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/andrew-hossack/dash-tools",

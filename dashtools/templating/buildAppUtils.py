@@ -6,7 +6,7 @@ import argparse
 from typing import Union
 from pkg_resources import resource_filename
 import os
-from dash_tools.templating.Templates import Template
+from dashtools.templating.Templates import Template
 
 
 def check_write_permission(path: os.PathLike) -> bool:

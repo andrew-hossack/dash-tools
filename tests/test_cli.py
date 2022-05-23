@@ -5,9 +5,9 @@
 import unittest
 from unittest.mock import MagicMock
 
-from dash_tools.cli import cli
-from dash_tools.deploy import deployHeroku
-from dash_tools.templating import buildApp, buildAppUtils
+from dashtools.cli import cli
+from dashtools.deploy import deployHeroku
+from dashtools.templating import buildApp, buildAppUtils
 
 
 class CLITest(unittest.TestCase):

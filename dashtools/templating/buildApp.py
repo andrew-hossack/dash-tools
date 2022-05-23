@@ -9,7 +9,7 @@ import os
 import shutil
 from typing import Union
 
-from dash_tools.templating import buildAppUtils
+from dashtools.templating import buildAppUtils
 
 
 def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):

@@ -4,8 +4,8 @@
 '''
 import argparse
 import unittest
-from dash_tools.templating import Templates
-from dash_tools.templating.buildAppUtils import convert_to_template_or_error, get_template_from_args
+from dashtools.templating import Templates
+from dashtools.templating.buildAppUtils import convert_to_template_or_error, get_template_from_args
 
 
 class TemplatesTest(unittest.TestCase):
