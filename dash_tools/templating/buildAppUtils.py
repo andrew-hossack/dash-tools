@@ -33,10 +33,10 @@ def check_create_app_args(base_dir, app_name):
     """
     app_dir = os.path.join(base_dir, app_name)
     if os.path.exists(app_dir):
-        print(f'dash-tools: init: App {app_dir} already exists.')
+        print(f'dashtools: init: App {app_dir} already exists.')
         print(
-            f'dash-tools: init: Please change the "{app_dir}" name or delete the {app_dir} directory!')
-        exit(f'dash-tools: init: Failed')
+            f'dashtools: init: Please change the "{app_dir}" name or delete the {app_dir} directory!')
+        exit(f'dashtools: init: Failed')
 
 
 def get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:
@@ -65,7 +65,7 @@ def convert_to_template_or_error(value) -> Template:
     try:
         return Template(value)
     except ValueError:
-        print(f'dash-tools: init: Template "{value}" is not a valid template.')
+        print(f'dashtools: init: Template "{value}" is not a valid template.')
         print('Valid templates are:')
         print_templates()
         exit(1)

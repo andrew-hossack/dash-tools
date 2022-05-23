@@ -13,13 +13,13 @@ with open('requirements.txt') as f:
     requirements = f.readlines()
 
 setuptools.setup(
-    name="dash-tools",
+    name="dashtools",
     version=meta['__version__'],
     author="Andrew Hossack",
     author_email="andrew_hossack@outlook.com",
     description="Plotly Dash Templating and Deployment Tools",
     entry_points={
-        'console_scripts': ['dash-tools = dash_tools.cli.cli:main']},
+        'console_scripts': ['dashtools = dash_tools.cli.cli:main']},
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/andrew-hossack/dash-tools",

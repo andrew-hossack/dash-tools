@@ -22,16 +22,16 @@ def create_requirements_txt(root_path: os.PathLike):
     """
     Creates requirements.txt file using pipreqs
     """
-    print('dash-tools: deploy-heroku: Creating requirements.txt')
+    print('dashtools: deploy-heroku: Creating requirements.txt')
     try:
         subprocess.check_output(f'pipreqs {root_path}', shell=True)
     except subprocess.CalledProcessError:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
         print(
-            f'dash-tools: deploy-heroku: Error creating requirements.txt')
-        print('dash-tools: deploy-heroku: Did you run --deploy-heroku in a valid dash app directory?')
-        exit('dash-tools: deploy-heroku: Failed')
+            f'dashtools: deploy-heroku: Error creating requirements.txt')
+        print('dashtools: deploy-heroku: Did you run --deploy-heroku in a valid dash app directory?')
+        exit('dashtools: deploy-heroku: Failed')
     # Append gunicorn to requirements.txt
     with open(os.path.join(root_path, 'requirements.txt'), 'a') as requirements_file:
         requirements_file.write('gunicorn')
@@ -44,7 +44,7 @@ def create_runtime_txt(root_path: os.PathLike):
     """
     with open(os.path.join(root_path, 'runtime.txt'), 'w') as runtime_file:
         runtime_file.write('python-3.8.10')
-    print('dash-tools: deploy-heroku: Created runtime.txt using python-3.8.10')
+    print('dashtools: deploy-heroku: Created runtime.txt using python-3.8.10')
 
 
 def create_procfile(root_path: os.PathLike):
@@ -54,7 +54,7 @@ def create_procfile(root_path: os.PathLike):
     with open(os.path.join(root_path, 'Procfile'), 'w') as procfile:
         procfile.write(
             f'web: gunicorn --timeout 600 --chdir src app:server')
-    print(f'dash-tools: deploy-heroku: Created Procfile')
+    print(f'dashtools: deploy-heroku: Created Procfile')
 
 
 def verify_procfile(root_path: os.PathLike) -> dict:

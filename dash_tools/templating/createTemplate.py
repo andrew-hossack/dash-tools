@@ -18,42 +18,42 @@ def create_template(src: os.PathLike, dest: os.PathLike):
     """
 
     if not os.path.exists(src):
-        print(f"dash-tools: templates: init: Source file {src} does not exist")
-        exit('dash-tools: templates: init: Failed')
+        print(f"dashtools: templates: init: Source file {src} does not exist")
+        exit('dashtools: templates: init: Failed')
 
     # Check for file write permissions in the base directory (command invoke directory)
     if not buildAppUtils.check_write_permission(dest):
         print(
-            f'dash-tools: templates: init: No write permissions for {dest}')
-        exit(f'dash-tools: templates: init: Failed')
+            f'dashtools: templates: init: No write permissions for {dest}')
+        exit(f'dashtools: templates: init: Failed')
 
     # Create the new template directory
     src = os.path.join(src, '')
     template_base_dir = os.path.join(dest, f'{os.path.normpath(src)}Template')
     if os.path.exists(template_base_dir):
         print(
-            f'dash-tools: templates: init: Template directory {template_base_dir} already exists')
-        exit(f'dash-tools: templates: init: Failed')
+            f'dashtools: templates: init: Template directory {template_base_dir} already exists')
+        exit(f'dashtools: templates: init: Failed')
 
     # Check Procfile exists
     if not fileUtils.check_file_exists(src, 'Procfile'):
         print(
-            f'dash-tools: templates: init: No Procfile found in {src}')
-        if deployHeroku.prompt_user_choice("dash-tools: templates: init: Create Procfile?"):
+            f'dashtools: templates: init: No Procfile found in {src}')
+        if deployHeroku.prompt_user_choice("dashtools: templates: init: Create Procfile?"):
             fileUtils.create_procfile(src)
 
     # Verify procfile
     if not fileUtils.verify_procfile(src)["valid"]:
         print(
-            f'dash-tools: templates: init: Procfile in {src} is invalid')
-        if not deployHeroku.prompt_user_choice("dash-tools: Continue?"):
-            exit(f'dash-tools: templates: init: Aborted')
+            f'dashtools: templates: init: Procfile in {src} is invalid')
+        if not deployHeroku.prompt_user_choice("dashtools: Continue?"):
+            exit(f'dashtools: templates: init: Aborted')
 
     # Check runtime exists
     if not fileUtils.check_file_exists(src, 'runtime.py'):
         print(
-            f'dash-tools: templates: init: No runtime.py found in {src}')
-        if deployHeroku.prompt_user_choice("dash-tools: templates: init: Create runtime.py?"):
+            f'dashtools: templates: init: No runtime.py found in {src}')
+        if deployHeroku.prompt_user_choice("dashtools: templates: init: Create runtime.py?"):
             fileUtils.create_runtime_txt(src)
 
     # Make the new template directory

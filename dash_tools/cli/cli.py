@@ -12,7 +12,7 @@ from dash_tools.version import __version__
 
 
 parser = argparse.ArgumentParser(
-    description=f'The dash-tools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more information.')
+    description=f'The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more information.')
 
 subparsers = parser.add_subparsers(dest="subcommand")
 
@@ -49,7 +49,7 @@ parser.add_argument(
     '-v',
     '--version',
     action='version',
-    version=__version__)
+    version=f'dashtools {__version__}')
 
 
 @subcommand(
@@ -70,13 +70,13 @@ parser.add_argument(
 def init(args):
     """Initialize a new app."""
     if args.dir is None:
-        print('dash-tools: init: No directory specified')
-        exit('dash-tools: init: Failed')
+        print('dashtools: init: No directory specified')
+        exit('dashtools: init: Failed')
     buildApp.create_app(
         target_dir=args.dir,
         app_name=args.init[0],
         use_template=buildAppUtils.get_template_from_args(args))
-    print(f'dash-tools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
+    print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
 
 @ subcommand(
@@ -93,15 +93,15 @@ def init(args):
     ])
 def templates(args):
     if args.list:
-        print('dash-tools: Templates usage example, type: dash-tools init MyApp csv')
-        print('dash-tools: templates: List of available templates:')
+        print('dashtools: Templates usage example, type: dashtools init MyApp csv')
+        print('dashtools: templates: List of available templates:')
         buildAppUtils.print_templates()
     elif args.init:
         createTemplate.create_template(src=args.init[0], dest=os.getcwd())
     else:
-        print('dash-tools: templates error: too few arguments')
-        print('dash-tools: For more information on templates, see https://github.com/andrew-hossack/dash-tools#templates')
-        exit('dash-tools: Available templates options: --list, --init')
+        print('dashtools: templates error: too few arguments')
+        print('dashtools: For more information on templates, see https://github.com/andrew-hossack/dash-tools#templates')
+        exit('dashtools: Available templates options: --list, --init')
 
 
 @subcommand(
@@ -126,8 +126,8 @@ def heroku(args):
     elif args.update:
         deployHeroku.update_heroku_app(args.update)
     else:
-        print('dash-tools: heroku error: too few arguments')
-        exit('dash-tools: Available heroku options: --deploy, --update')
+        print('dashtools: heroku error: too few arguments')
+        exit('dashtools: Available heroku options: --deploy, --update')
 
 
 @subcommand(
@@ -144,16 +144,16 @@ def run(args):
             runtimeUtils.run_app(os.getcwd())
         except RuntimeError as e:
             print(e)
-            exit('dash-tools: run: Failed')
+            exit('dashtools: run: Failed')
 
 
 def main():
     """
-    dash-tools CLI entry point.
+    dashtools CLI entry point.
     """
     args = parser.parse_args()
     if args.subcommand is None:
         parser.print_help()
-        exit('\ndash-tools: error: too few arguments')
+        exit('\ndashtools: error: too few arguments')
     else:
         args.func(args)

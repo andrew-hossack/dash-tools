@@ -20,7 +20,7 @@ def run_app(root_path: os.PathLike):
         proc = verify_procfile(root_path)
         if proc['valid']:
             try:
-                print('dash-tools: Runnig From Procfile')
+                print('dashtools: Running From Procfile')
                 os.chdir(root_path)
                 # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
                 os.system(
@@ -34,7 +34,7 @@ def run_app(root_path: os.PathLike):
                 break
         try:
             print(
-                f'dash-tools: Runnig From {root + "/" if root else ""}app.py')
+                f'dashtools: Running From {root + "/" if root else ""}app.py')
             os.chdir(root)
             # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
             os.system(f'python3 app.py')

@@ -1,7 +1,7 @@
 '''
  # @ Author: Andrew Hossack
  # @ Create Time: 2022-04-01 13:57:48
- # Build dash apps with dash-tools
+ # Build dash apps with dashtools
 '''
 
 import datetime
@@ -44,8 +44,8 @@ def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[build
     # Check for file write permissions in the base directory (command invoke directory)
     if not buildAppUtils.check_write_permission(target_dir):
         print(
-            f'dash-tools: init: No write permissions for {target_dir}')
-        exit(f'dash-tools: init: Failed')
+            f'dashtools: init: No write permissions for {target_dir}')
+        exit(f'dashtools: init: Failed')
 
     # Copy files from template directory
     template = os.path.join('templates', use_template.value)
@@ -78,4 +78,4 @@ def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[build
             _format_file(name, app_name, dest)
 
     print(
-        f'dash-tools: init: Finished creating new app "{app_name}" at {os.path.join(target_dir, app_name)} using {use_template}')
+        f'dashtools: init: Finished creating new app "{app_name}" at {os.path.join(target_dir, app_name)} using {use_template}')
