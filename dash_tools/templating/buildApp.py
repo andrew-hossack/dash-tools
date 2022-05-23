@@ -31,20 +31,20 @@ def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
-def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[buildAppUtils.Template, str]):
+def create_app(target_dir: os.PathLike, app_name: str, use_template: Union[buildAppUtils.Template, str]):
     '''
     Create a new app in the target directory.
 
     Looks for files in the /template directory
     '''
     # Check arguments
-    buildAppUtils.check_create_app_args(base_dir, app_name)
+    buildAppUtils.check_create_app_args(target_dir, app_name)
     use_template = buildAppUtils.convert_to_template_or_error(use_template)
 
     # Check for file write permissions in the base directory (command invoke directory)
-    if not buildAppUtils.check_write_permission(base_dir):
+    if not buildAppUtils.check_write_permission(target_dir):
         print(
-            f'dash-tools: init: No write permissions for {base_dir}')
+            f'dash-tools: init: No write permissions for {target_dir}')
         exit(f'dash-tools: init: Failed')
 
     # Copy files from template directory
@@ -63,7 +63,7 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[buildAp
 
             # Get the destination path
             rel_path = relative_path if relative_path != '.' else ''
-            dest = os.path.join(base_dir, app_name, rel_path, name)
+            dest = os.path.join(target_dir, app_name, rel_path, name)
             dest = dest.replace('.template', '')
             dest = dest.replace(r'{appName}', app_name)
 
@@ -78,4 +78,4 @@ def create_app(base_dir: os.PathLike, app_name: str, use_template: Union[buildAp
             _format_file(name, app_name, dest)
 
     print(
-        f'dash-tools: init: Finished creating new app "{app_name}" at {os.path.join(base_dir, app_name)} using {use_template}')
+        f'dash-tools: init: Finished creating new app "{app_name}" at {os.path.join(target_dir, app_name)} using {use_template}')

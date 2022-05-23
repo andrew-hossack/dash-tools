@@ -56,18 +56,29 @@ parser.add_argument(
         argument(
             "init",
             help='Create a new Dash app. Args: REQUIRED: <app name> OPTIONAL: <template> (Default: "default").',
-            nargs='+')
+            metavar='<app name> [<template>]',
+            nargs='+'),
+        argument(
+            '--dir',
+            '-d',
+            help='Specify the directory to create the app in. Default: current directory.',
+            default=os.getcwd(),
+            metavar='<directory>',
+            nargs='?')
     ])
 def init(args):
     """Initialize a new app."""
+    if args.dir is None:
+        print('dash-tools: init: No directory specified')
+        exit('dash-tools: init: Failed')
     buildApp.create_app(
-        base_dir=os.getcwd(),
+        target_dir=args.dir,
         app_name=args.init[0],
         use_template=buildAppUtils.get_template_from_args(args))
     print(f'dash-tools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
 
-@subcommand(
+@ subcommand(
     [
         argument(
             "--list",

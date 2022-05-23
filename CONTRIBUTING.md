@@ -107,8 +107,6 @@ For simple API changes, please add adequate unit tests under `/tests`
 Commands
 
 - add 'dash-tools --run' to run the app.py file
-- add 'dash-tools --create-template' command to turn existing directory into a template
-- add 'dash-tools --init -d' option to specify absolute create directory
 
 Templates
 
