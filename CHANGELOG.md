@@ -20,4 +20,9 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
   - `dash-tools templates --init <directory to copy>`
 - Added `dash-tools run` command to run the app.py file (recursive search for app.py file, if not specified in a Procfile)
 
+### Templates
+
+- Added fast-dash template https://fastdash.app/
+- Added dash-iconify template https://github.com/snehilvj/dash-iconify
+
 ### Fixed

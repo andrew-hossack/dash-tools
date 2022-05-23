@@ -104,11 +104,6 @@ For simple API changes, please add adequate unit tests under `/tests`
 
 ## TODO List
 
-Templates
-
-- add fast-dash template https://github.com/dkedar7/fast_dash
-- add dash-iconify template https://github.com/snehilvj/dash-iconify
-
 Other
 
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/

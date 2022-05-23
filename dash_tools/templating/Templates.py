@@ -19,6 +19,8 @@ class Template(Enum):
     ADVANCED = 'advanced'
     CSV = 'csv'
     DEFAULT = 'default'
+    FASTDASH = 'fastdash'
+    ICONIFY = 'iconify'
     IRIS = 'iris'
     MANTINE = 'mantine'
     MULTIPAGE = 'multipage'

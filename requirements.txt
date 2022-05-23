@@ -11,3 +11,5 @@ pre-commit
 pytest
 pandas
 dash-mantine-components
+fast-dash
+dash-iconify

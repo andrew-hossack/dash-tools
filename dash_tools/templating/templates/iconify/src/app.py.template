@@ -1,0 +1,23 @@
+'''
+ # @ Create Time: {createTime}
+'''
+
+from dash_iconify import DashIconify
+from dash import Dash
+
+app = Dash(__name__, title="{appName}")
+
+# Declare server for Heroku deployment. Needed for Procfile.
+server = app.server
+
+app.layout = DashIconify(
+    icon="ion:logo-github",
+    width=30,
+    height=30,
+    rotate=1,
+    flip="horizontal",
+)
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
+

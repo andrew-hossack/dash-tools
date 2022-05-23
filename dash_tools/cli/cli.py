@@ -94,13 +94,13 @@ def init(args):
 def templates(args):
     if args.list:
         print('dash-tools: Templates usage example, type: dash-tools init MyApp csv')
-        print('dash-tools: For more information on templates, see https://github.com/andrew-hossack/dash-tools#templates')
         print('dash-tools: templates: List of available templates:')
         buildAppUtils.print_templates()
     elif args.init:
         createTemplate.create_template(src=args.init[0], dest=os.getcwd())
     else:
         print('dash-tools: templates error: too few arguments')
+        print('dash-tools: For more information on templates, see https://github.com/andrew-hossack/dash-tools#templates')
         exit('dash-tools: Available templates options: --list, --init')
 
 
