@@ -20,7 +20,7 @@
 
 ## **About**
 
-[**dash-tools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to the web has never been quicker.
+[**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to the web has never been quicker.
 
 Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it!
 
@@ -28,7 +28,7 @@ Want to deploy your app to the web? We've got you covered. With [Heroku](https:/
 
 ## **Installation**
 
-Ready to use **dash-tools**? Installation is easy with pip:
+Ready to use **dashtools**? Installation is easy with pip:
 
 ```bash
 pip install dash-tools
@@ -46,46 +46,70 @@ pip install dash-tools
 ### A. Create an App
 
 1. Create a Dash project in a new directory called "MyDashApp" (using your terminal or command prompt):
+    <details>
+      <summary>Note</summary>
+      "MyDashApp" can be changed to any name. However, for the purpose of this tutorial, we recommend keeping it as "MyDashApp".
+    </details>
 
-```bash
-dash-tools --init MyDashApp
-```
+    ```bash
+    dashtools init MyDashApp
+    ```
 
-2. Open the default app:
-
-```bash
-.\MyDashApp\src\app.py
-```
+2. Open the default `app.py` file that comes with this project:
+    <details>
+      <summary>Windows</summary>
+  
+      ```bash
+       .\MyDashApp\src\app.py
+      ```  
+    </details>
+    <details>
+      <summary>Linux and Mac OS</summary>
+  
+      ```bash
+       ./MyDashApp/src/app.py
+      ```  
+    </details>
 
 3. Replace the code in `app.py` with your own app code. Make sure to keep the `server = app.server` right after app instantiation:
 
 ![update-app](https://user-images.githubusercontent.com/32049495/169304171-bf23b2d0-26b4-4767-b38f-cd6586ddf56e.gif)
 
 4. Run your app to ensure it works:
-
-```bash
-python .\MyDashApp\src\app.py
-```
+    <details>
+      <summary>Windows</summary>
+  
+      ```bash
+       python .\MyDashApp\src\app.py
+      ```  
+    </details>
+    <details>
+      <summary>Linux and Mac OS</summary>
+  
+      ```bash
+       python ./MyDashApp/src/app.py
+      ```  
+    </details>
 
 #### Deploy App to Web with Heroku
 
 5. Make sure you are in your project's root directory:
 
-```bash
-cd MyDashApp
-```
+    ```bash
+    cd MyDashApp
+    ```
 
 6. Initiate git to allow deployment of app to web:
 
-```bash
-git init
-```
+    ```bash
+    git init
+    ```
 
 7. Deploy to Heroku:
 
-```bash
-dash-tools --deploy-heroku
-```
+    ```bash
+    dashtools heroku --deploy
+    ```
 
 ![deploy-app](./deploy-app.gif)
 
@@ -95,39 +119,52 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 1. Using App template with CSV
 
-```bash
-dash-tools --init MyCSVApp csv
-```
+    ```bash
+    dashtools init MyCSVApp csv
+    ```
 
 2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 13, 26, and 27. 
+    * 13: `server = app.server`
+    * 26: `PATH = pathlib.Path(__file__).parent`
+    * 27: `DATA_PATH = PATH.joinpath("data").resolve()`
 
 3. Replace the default CSV file in the `data` folder with your own CSV file   
 
 4. Run your app to ensure it works:
-
-```bash
-python .\MyCSVApp\src\app.py
-```
+    <details>
+      <summary>Windows</summary>
+  
+      ```bash
+       python .\MyCSVApp\src\app.py
+      ```  
+    </details>
+    <details>
+      <summary>Linux and Mac OS</summary>
+  
+      ```bash
+       python ./MyCSVApp/src/app.py
+      ```  
+    </details>
 
 #### Deploy App to Web with Heroku
 
 5. Make sure you are in your project's root directory:
 
-```bash
-cd MyCSVApp
-```
+    ```bash
+    cd MyCSVApp
+    ```
 
 6. Initiate git to allow deployment of app to web:
 
-```bash
-git init
-```
+    ```bash
+    git init
+    ```
 
 7. Deploy to Heroku:
 
-```bash
-dash-tools --deploy-heroku
-```
+    ```bash
+    dashtools heroku --deploy
+    ```
 
 ---
 
