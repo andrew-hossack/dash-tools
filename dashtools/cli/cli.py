@@ -19,12 +19,15 @@ class MyArgumentParser(argparse.ArgumentParser):
         if file is None:
             file = _sys.stdout
         message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more details.
-\nAvailable Commands:
+\nUsage:
+    {'dashtools <command> [options]':<29}
+
+\nCommands and Options:
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku
-        {'--update [<remote name>]':<25}Push changes to existing Heroku remote
+        {'--update [remote name]':<25}Push changes to existing Heroku remote
     
-    {'init <app name> [<template>]':<29}Create a new app
+    {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
     
     {'run':<29}Run app locally from the current directory
@@ -32,6 +35,9 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'templates':<29}List and create templates
         {'--init <directory>':<25}Creates a template from specified directory
         {'--list':<25}List available templates
+\nOther Options:
+    {'--help, -h':<29}Display help message
+    {'--version, -v':<29}Display version
 """
         file.write(message+"\n")
 

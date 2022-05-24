@@ -31,4 +31,3 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
 - Added fast-dash template https://fastdash.app/
 - Added dash-iconify template https://github.com/snehilvj/dash-iconify
 
-### Fixed
