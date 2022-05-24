@@ -3,7 +3,7 @@
  # @ Create Time: 2022-04-28 22:09:23
 '''
 import unittest
-from dash_tools.deploy import herokuUtils
+from dashtools.deploy import herokuUtils
 
 
 class HerokuUtilsTest(unittest.TestCase):

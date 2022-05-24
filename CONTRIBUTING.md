@@ -104,26 +104,15 @@ For simple API changes, please add adequate unit tests under `/tests`
 
 ## TODO List
 
-Commands
-- add 'dash-tools --run' to run the app.py file
-- add 'dash-tools --create-template' command to turn existing directory into a template
-- add 'dash-tools --init -d' option to specify absolute create directory  
-
-Templates
-- add fast-dash template https://github.com/dkedar7/fast_dash 
-- add dash-iconify template https://github.com/snehilvj/dash-iconify 
-
-Functionality
-- open Heroku CLI and Git CLI download links in browser
-- remove dashes -- from commands, Eg. 'dash-tools init MyApp tabs' or 'dash-tools templates --list' or 'dash-tools templates --init' or 'dash-tools heroku --deploy' or 'dash-tools heroku --update' https://realpython.com/python-command-line-arguments/ 
-
-Other 
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
-- add a way to upload templates? 
+- Add docs for fastdash
+- Add docs for iconify
+- Rename dash-tools pypi to dashtools (?)
+- Rewrite and add unittests for CLI
 
 ## Financial Contributions
 
-This project is sponsored by helpful people like you! Please feel free to reach out directly to andrew_hossack@outlook.com if you would like to support or donate to this project. Thanks!
+This project is sponsored by helpful people like you! Please feel free to reach out directly to andrew_hossack@outlook.com or [Donate](https://github.com/sponsors/andrew-hossack) if you would like to help out this project. Thanks!
 
 ## Attribution
 

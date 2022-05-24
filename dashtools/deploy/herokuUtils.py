@@ -7,7 +7,7 @@ import random
 import re
 import string
 import subprocess
-
+from dashtools.data import randomWords
 import requests
 
 
@@ -32,7 +32,7 @@ def login_heroku_successful() -> bool:
     """
     Try to log into Heroku
     """
-    print(f'dash-tools: deploy-heroku: Logging into Heroku...')
+    print(f'dashtools: deploy-heroku: Logging into Heroku...')
     regex = r'Error: quit'
     loginWasSuccessful = True
     try:
@@ -57,7 +57,7 @@ def check_heroku_app_name_available(heroku_app_name: str) -> bool:
         if requests.get(f'https://{heroku_app_name}.herokuapp.com/', headers={'User-Agent': 'Custom'}).status_code == 404:
             return True
     except requests.exceptions.ConnectionError:
-        exit('dash-tools: deploy-heroku: Invalid Heroku app name')
+        exit('dashtools: deploy-heroku: Invalid Heroku app name')
     return False
 
 
@@ -68,7 +68,7 @@ def create_app_on_heroku(app_name: str) -> bool:
     Returns:
         Success of the operation (True/False)
     """
-    print(f'dash-tools: deploy-heroku: Creating {app_name} on Heroku')
+    print(f'dashtools: deploy-heroku: Creating {app_name} on Heroku')
     url_regex = r'https:\/\/git\.heroku\.com\/[a-zA-Z0-9-_]*\.git'
     try:
         heroku_command_output = subprocess.check_output(
@@ -89,15 +89,14 @@ def get_heroku_app_name():
     """
     Create or generate app name if one isn't provided
     """
-    print('dash-tools: deploy-heroku: Please type a unique app name or press enter to generate one automatically.')
-    app_name = input('dash-tools: App Name (Optional) > ')
+    print('dashtools: deploy-heroku: Please type a unique app name or press enter to generate one automatically.')
+    app_name = input('dashtools: App Name (Optional) > ')
     if app_name == '':
-        # Generate a random app name
-        app_name = ''.join(random.choices(
-            string.ascii_lowercase + string.digits, k=12))
-        # App names must start with letter. Use 'dt-' for dash-tools
-        app_name = ''.join(('dt-', app_name))
-    print(f'dash-tools: deploy-heroku: Using app name "{app_name}"')
+        # Generate a random app name with three words
+        app_name = '-'.join(randomWords.get_words(3))
+        # Append alphanumeric characters to the end of the app name
+        app_name += f"-{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
+    print(f'dashtools: deploy-heroku: Using app name "{app_name}"')
     return app_name
 
 

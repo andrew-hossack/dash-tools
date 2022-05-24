@@ -4,8 +4,8 @@
 '''
 import argparse
 import unittest
-from dash_tools.templating import Templates
-from dash_tools.templating.templateUtils import convert_to_template_or_error, get_template_from_args
+from dashtools.templating import Templates
+from dashtools.templating.buildAppUtils import _convert_to_template_or_error, get_template_from_args
 
 
 class TemplatesTest(unittest.TestCase):
@@ -21,12 +21,12 @@ class TemplatesTest(unittest.TestCase):
 
     def test_convert_to_template_or_error(self):
         # test valid template
-        template = convert_to_template_or_error('default')
+        template = _convert_to_template_or_error('default')
         assert template == Templates.Template.DEFAULT
 
         # test invalid template
         with self.assertRaises(SystemExit):
-            convert_to_template_or_error('invalid')
+            _convert_to_template_or_error('invalid')
 
     def test_get_template_from_args(self):
         # test no template passed
@@ -37,4 +37,4 @@ class TemplatesTest(unittest.TestCase):
         # test template passed
         args = argparse.Namespace(init=['init', 'tabs'])
         template = get_template_from_args(args)
-        assert template == 'tabs'
+        assert template == Templates.Template.TABS
