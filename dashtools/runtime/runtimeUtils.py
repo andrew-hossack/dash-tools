@@ -38,6 +38,9 @@ def run_app(root_path: os.PathLike):
             os.chdir(root)
             # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
             os.system(f'python3 app.py')
-        except Exception as e:
-            print(e)
+            # Has to run as os.system() to get the output
+            # This means that if no app file is found, an error will be printed to screen
+            # And cannot be handled in a cleaner way
+        except Exception:
+            exit('dashtools: run: No app.py file found')
     return

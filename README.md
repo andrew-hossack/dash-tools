@@ -73,7 +73,7 @@ pip install dash-tools
 4. Make sure you are in your project's root directory:
 
    ```bash
-   cd MyCSVApp
+   cd MyDashApp
    ```
 
 5. Run your app to ensure it works:
@@ -274,6 +274,14 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 _Problem:_ You encounter an error when generating a requirements.txt file
 
 _Solution:_ Verify that you are running the `dashtools heroku --deploy` command from a valid plotly dash app directory. E.g. there is a `src/app.py` file.
+
+### **Common `run` Issues**
+
+<details><summary>No such file or directory</summary>
+
+_Problem:_ You encounter an error: 'No such file or directory' when trying to `dashtools run` your app
+
+_Solution:_ Verify that you are running the `dashtools run` command from within a valid project root directory. Your app must be named `app.py`, or have a valid Procfile pointing to the app file.
 
 </details>
 
