@@ -94,7 +94,7 @@ pip install dash-tools
 
 ### B. Create an App with Local CSV sheet
 
-A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV Dash-tools template to create a project with CSV data.
+A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
 
 1. Using App template with CSV
 
@@ -134,29 +134,46 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 ## **Templates**
 
-Templates contain boilerplate code for Dash projects, making it much easier to start with useful baseline apps.
+Templates contain boilerplate code for projects, making it much easier to start with useful baseline apps.
 
-### **Using Templates**
+### **Usage Examples**
 
-Use the optional template argument with the `init` command:
+1. Create an app "MyWonderfulApp" with template "tabs"
 
-    dashtools init <appname> [template]
+   ```bash
+   dashtools init MyWonderfulApp tabs
+   ```
 
-The following example will create a new app "MyWonderfulApp" (you can name your app anything) using the 'tabs' template (or any other template listed below):
+1. To list out available templates, use the `templates --list` command:
 
-```bash
-dashtools init MyWonderfulApp tabs
+   ```bash
+   dashtools templates --list
+   ```
+
+### **Format**
+
+Templates may include different components, modules and layouts. They have the following format:
+
+```
+AppName
+│-- Procfile
+│-- README.md
+│-- runtime.txt
+│
+└── src
+    |-- app.py
+    |-- __init__.py
+    |-- assets/     [*]
+    |-- containers/ [*]
+    |-- components/ [*]
+    └-- data/       [*]
 ```
 
-To list out available templates, use the `templates --list` command:
-
-```bash
-dashtools templates --list
-```
+**[*]** _Not included in all templates_
 
 ### **Available Templates**
 
-_Click the dropdowns below to see screenshots!_
+_Click the dropdowns below to see screenshots._
 
 <details><summary>Template: 'advanced'</summary>
 
@@ -182,6 +199,24 @@ _To use this template, type: `dashtools init MyAmazingApp default`_
 
 Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 ![](docs/default_theme.png)
+
+</details>
+
+<details><summary>Template: 'fastdash'</summary>
+
+_To use this template, type: `dashtools init StellarDashApp fastdash`_
+
+Fast Dash template. See [Fast Dash Docs](https://fastdash.app/)
+![](docs/fastdash_template.png)
+
+</details>
+
+<details><summary>Template: 'iconify'</summary>
+
+_To use this template, type: `dashtools init DashingApp iconify`_
+
+Dash Iconify - a Dash component library which brings over 100,000 vector icons. See [Dash Iconify](https://github.com/snehilvj/dash-iconify)
+![](docs/iconify.png)
 
 </details>
 
@@ -232,11 +267,11 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 
 ## **Commands**
 
-### Usage:
+### Usage
 
     dashtools <command> [options]
 
-### Commands and Options:
+### Commands and Options
 
 - **`heroku`** Handle Heroku deployment. Choose option:
   - **`--deploy`** Deploys the current project to Heroku
@@ -248,16 +283,16 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
   - **`--init <directory to convert>`** Creates a template from specified directory
   - **`--list`** List available templates
 
-### Other Options:
+### Other Options
 
 - **`--help, -h`** Display help message
 - **`--version, -v`** Display version
 
-## **Troubleshooting Common Issues**
+## **Troubleshooting**
 
 Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues).
 
-### **Common `init` Issues**
+<details><summary>Common init Issues</summary>
 
 <details><summary>No write permission</summary>
 
@@ -267,7 +302,9 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 
 </details>
 
-### **Common `heroku --deploy` Issues**
+</details>
+
+<details><summary>Common heroku --deploy Issues</summary>
 
 <details><summary>Error when creating requirements.txt file</summary>
 
@@ -275,13 +312,19 @@ _Problem:_ You encounter an error when generating a requirements.txt file
 
 _Solution:_ Verify that you are running the `dashtools heroku --deploy` command from a valid plotly dash app directory. E.g. there is a `src/app.py` file.
 
-### **Common `run` Issues**
+</details>
+
+</details>
+
+<details><summary>Common run Issues</summary>
 
 <details><summary>No such file or directory</summary>
 
 _Problem:_ You encounter an error: 'No such file or directory' when trying to `dashtools run` your app
 
 _Solution:_ Verify that you are running the `dashtools run` command from within a valid project root directory. Your app must be named `app.py`, or have a valid Procfile pointing to the app file.
+
+</details>
 
 </details>
 

@@ -105,8 +105,6 @@ For simple API changes, please add adequate unit tests under `/tests`
 ## TODO List
 
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
-- Add docs for fastdash
-- Add docs for iconify
 - Rename dash-tools pypi to dashtools (?)
 - Rewrite and add unittests for CLI
 
