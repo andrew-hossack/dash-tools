@@ -73,7 +73,7 @@ pip install dash-tools
 4. Make sure you are in your project's root directory:
 
    ```bash
-   cd MyCSVApp
+   cd MyDashApp
    ```
 
 5. Run your app to ensure it works:
