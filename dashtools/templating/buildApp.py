@@ -7,7 +7,6 @@
 import datetime
 import os
 import shutil
-from typing import Union
 
 from dashtools.templating import buildAppUtils
 
