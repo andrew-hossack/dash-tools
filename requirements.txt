@@ -1,6 +1,7 @@
 autopep8
 dash
 dash-bootstrap-components
+dash-leaflet
 Flask
 gunicorn
 packaging==21.0

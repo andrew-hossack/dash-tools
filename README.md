@@ -229,6 +229,15 @@ Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensourc
 
 </details>
 
+<details><summary>Template: 'leaflet'</summary>
+
+_To use this template, type: `dashtools init BestMapApp leaflet`_
+
+Dash leaflet plugin. See [Dash Leaflet](https://github.com/thedirtyfew/dash-leaflet)
+![](docs/leaflet.png)
+
+</details>
+
 <details><summary>Template: 'mantine'</summary>
 
 _To use this template, type: `dashtools init MyGreatApp mantine`_
