@@ -104,7 +104,6 @@ For simple API changes, please add adequate unit tests under `/tests`
 
 ## TODO List
 
-- Instead of including all requirements for each template in the project's requirements.txt, add a requirements file to each template with what packages it requires, e.g.: `templateInfo` file includes `dash-leaflet`. If the user doesn't have the requirement already installed, prompt to pip install it
 - create MkDocs-material website https://squidfunk.github.io/mkdocs-material/creating-your-site/
 - Rename dash-tools pypi to dashtools (?)
 - Rewrite and add unittests for CLI

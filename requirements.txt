@@ -1,7 +1,6 @@
 autopep8
 dash
 dash-bootstrap-components
-dash-leaflet
 Flask
 gunicorn
 packaging==21.0
@@ -11,6 +10,3 @@ pipreqs
 pre-commit
 pytest
 pandas
-dash-mantine-components
-fast-dash
-dash-iconify

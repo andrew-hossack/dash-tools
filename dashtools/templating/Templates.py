@@ -21,6 +21,7 @@ class Template(Enum):
     DEFAULT = 'default'
     FASTDASH = 'fastdash'
     ICONIFY = 'iconify'
+    LEAFLET = 'leaflet'
     IRIS = 'iris'
     MANTINE = 'mantine'
     MULTIPAGE = 'multipage'
