@@ -21,7 +21,6 @@ class MyArgumentParser(argparse.ArgumentParser):
         message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more details.
 \nUsage:
     {'dashtools <command> [options]':<29}
-
 \nCommands and Options:
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku

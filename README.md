@@ -2,25 +2,21 @@
 
 ![](docs/logo.png)
 
-<hr>
 <h3>
 <b><i>Create, Run and Deploy Templated Plotly Dash Apps from Terminal</i></b>
 </h3>
 
-
 [![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | [![Downloads](https://pepy.tech/badge/dash-tools)](https://pepy.tech/project/dash-tools) | ![Build and Test](https://img.shields.io/github/workflow/status/andrew-hossack/dash-tools/Build%20and%20Test%20on%20Push%20or%20PR?label=Build%20and%20Test) | ![Code Quality](https://img.shields.io/lgtm/grade/python/github/andrew-hossack/dash-tools?label=Code%20Quality) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
 
-![](docs/intro_gif.gif)
+<hr>
 
 </div>
 
 ## **About**
 
-[**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash Framework](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to the web has never been quicker.
+[**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to [Heroku](https://heroku.com/) has never been quicker.
 
 Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it!
-
-Want to deploy your app to the web? We've got you covered. With [Heroku](https://heroku.com/) support, deploying your project will take under a minute.
 
 ## **Installation**
 
@@ -142,18 +138,20 @@ Templates contain boilerplate code for Dash projects, making it much easier to s
 
 ### **Using Templates**
 
-Use the optional template argument with the `--init` command.
+Use the optional template argument with the `init` command:
+
+    dashtools init <appname> [template]
 
 The following example will create a new app "MyWonderfulApp" (you can name your app anything) using the 'tabs' template (or any other template listed below):
 
 ```bash
-dash-tools --init MyWonderfulApp tabs
+dashtools init MyWonderfulApp tabs
 ```
 
-To list out available templates, use the `--templates` or `-t` command:
+To list out available templates, use the `templates --list` command:
 
 ```bash
-dash-tools --templates
+dashtools templates --list
 ```
 
 ### **Available Templates**
@@ -162,7 +160,7 @@ _Click the dropdowns below to see screenshots!_
 
 <details><summary>Template: 'advanced'</summary>
 
-_To use this template, type: `dash-tools --init MyFuturisticApp advanced`_
+_To use this template, type: `dashtools init MyFuturisticApp advanced`_
 
 Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
 ![](docs/advanced_theme.png)
@@ -171,7 +169,7 @@ Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-pa
 
 <details><summary>Template: 'csv'</summary>
 
-_To use this template, type: `dash-tools --init MyCSVLoaderApp csv`_
+_To use this template, type: `dashtools init MyCSVLoaderApp csv`_
 
 Example of CSV file loading. Includes the default CSV load example from Plotly.
 ![](docs/csv_template.png)
@@ -180,7 +178,7 @@ Example of CSV file loading. Includes the default CSV load example from Plotly.
 
 <details><summary>Template: 'default'</summary>
 
-_To use this template, type: `dash-tools --init MyAmazingApp default`_
+_To use this template, type: `dashtools init MyAmazingApp default`_
 
 Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 ![](docs/default_theme.png)
@@ -189,7 +187,7 @@ Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 
 <details><summary>Template: 'iris'</summary>
 
-_To use this template, type: `dash-tools --init MyFantasticApp iris`_
+_To use this template, type: `dashtools init MyFantasticApp iris`_
 
 Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
 ![](docs/iris_theme.png)
@@ -198,7 +196,7 @@ Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensourc
 
 <details><summary>Template: 'mantine'</summary>
 
-_To use this template, type: `dash-tools --init MyGreatApp mantine`_
+_To use this template, type: `dashtools init MyGreatApp mantine`_
 
 Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.com/)
 ![](docs/mantine_theme.png)
@@ -207,7 +205,7 @@ Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.c
 
 <details><summary>Template: 'multipage'</summary>
 
-_To use this template, type: `dash-tools --init MyPristineApp multipage`_
+_To use this template, type: `dashtools init MyPristineApp multipage`_
 
 New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
 ![](docs/multipage_new_theme.png)
@@ -216,7 +214,7 @@ New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/
 
 <details><summary>Template: 'sidebar'</summary>
 
-_To use this template, type: `dash-tools --init MySnazzyApp sidebar`_
+_To use this template, type: `dashtools init MySnazzyApp sidebar`_
 
 Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
 ![](docs/sidebar_theme.png)
@@ -225,7 +223,7 @@ Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.openso
 
 <details><summary>Template: 'tabs'</summary>
 
-_To use this template, type: `dash-tools --init MyBeautifulApp tabs`_
+_To use this template, type: `dashtools init MyBeautifulApp tabs`_
 
 Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
 ![](docs/tabs_theme.png)
@@ -234,22 +232,32 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 
 ## **Commands**
 
-### **Project Commands**
+### Usage:
 
-- **`--deploy-heroku` Args: OPTIONAL (`unique heroku project name`) :** Deploys the project to Heroku using the [Heroku CLI](https://devcenter.heroku.com/categories/command-line) (Must Install Seperately) and [Git](https://git-scm.com/downloads). Invoke from the project root directory.
-- **`--init, -i` Args: REQUIRED (`project name`) OPTIONAL (`template`) :** Creates a Plotly Dash app with the given name in the current working directory. Optional args specified can be used for templates.
-- **`--templates, -t` :** List available templates.
+    dashtools <command> [options]
 
-### **Other**
+### Commands and Options:
 
-- **`--help, -h`:** Display CLI helpful hints
-- **`--version`:** Display current version.
+- **`heroku`** Handle Heroku deployment. Choose option:
+  - **`--deploy`** Deploys the current project to Heroku
+  - **`--update [remote name (OPTIONAL)]`** Push changes to existing Heroku remote
+- **`init <app name> [template (OPTIONAL)]`** Create a new app
+  - **`--dir, -d`** Specify alternative create location
+- **`run`** Run app locally from the current directory
+- **`templates`** List and create templates
+  - **`--init <directory to convert>`** Creates a template from specified directory
+  - **`--list`** List available templates
+
+### Other Options:
+
+- **`--help, -h`** Display help message
+- **`--version, -v`** Display version
 
 ## **Troubleshooting Common Issues**
 
 Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues).
 
-### **Common `--init` Issues**
+### **Common `init` Issues**
 
 <details><summary>No write permission</summary>
 
@@ -259,13 +267,13 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 
 </details>
 
-### **Common `--deploy-heroku` Issues**
+### **Common `heroku --deploy` Issues**
 
 <details><summary>Error when creating requirements.txt file</summary>
 
 _Problem:_ You encounter an error when generating a requirements.txt file
 
-_Solution:_ Verify that you are running the `dash-tools --deploy-heroku` command from a valid plotly dash app directory. E.g. there is a `src/app.py` file.
+_Solution:_ Verify that you are running the `dashtools heroku --deploy` command from a valid plotly dash app directory. E.g. there is a `src/app.py` file.
 
 </details>
 
