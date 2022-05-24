@@ -1,0 +1,37 @@
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+._dash-loading-callback {
+    /* TODO Doesn't display with 100% opacity */
+
+  /* Background */
+  background-image: url('img/loader.gif');
+  background-size: 380px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(25,25,25, 1);
+  z-index: 9999999;
+
+  /* The banner */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* color: transparent; */
+
+  opacity: 0;
+  /* Delay animation by 1s to prevent flashing 
+     and smoothly transition the animation over 0.5s 
+   */
+  -moz-animation: fadein 0.5s ease-in 1s forwards; /* Firefox */
+  -webkit-animation: fadein 0.5s ease-in 1s forwards; /* Safari and Chrome */
+  -o-animation: fadein 0.5s ease-in 1s forwards; /* Opera */
+  animation: fadein 0.5s ease-in 1s forwards;
+}

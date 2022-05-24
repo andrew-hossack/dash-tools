@@ -1,0 +1,429 @@
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-SemiBold.eot');
+    src: local('Proxima Soft SemiBold'), local('ProximaSoft-SemiBold'),
+        url('font/ProximaSoft-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-SemiBold.woff2') format('woff2'),
+        url('font/ProximaSoft-SemiBold.woff') format('woff'),
+        url('font/ProximaSoft-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+.btn-primary {
+    border-color: transparent !important; 
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-BoldIt.eot');
+    src: local('Proxima Soft Bold Italic'), local('ProximaSoft-BoldIt'),
+        url('font/ProximaSoft-BoldIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-BoldIt.woff2') format('woff2'),
+        url('font/ProximaSoft-BoldIt.woff') format('woff'),
+        url('font/ProximaSoft-BoldIt.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Light.eot');
+    src: local('Proxima Soft Light'), local('ProximaSoft-Light'),
+        url('font/ProximaSoft-Light.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Light.woff2') format('woff2'),
+        url('font/ProximaSoft-Light.woff') format('woff'),
+        url('font/ProximaSoft-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Thin.eot');
+    src: local('Proxima Soft Thin'), local('ProximaSoft-Thin'),
+        url('font/ProximaSoft-Thin.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Thin.woff2') format('woff2'),
+        url('font/ProximaSoft-Thin.woff') format('woff'),
+        url('font/ProximaSoft-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-LightIt.eot');
+    src: local('Proxima Soft Light Italic'), local('ProximaSoft-LightIt'),
+        url('font/ProximaSoft-LightIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-LightIt.woff2') format('woff2'),
+        url('font/ProximaSoft-LightIt.woff') format('woff'),
+        url('font/ProximaSoft-LightIt.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Medium.eot');
+    src: local('Proxima Soft Medium'), local('ProximaSoft-Medium'),
+        url('font/ProximaSoft-Medium.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Medium.woff2') format('woff2'),
+        url('font/ProximaSoft-Medium.woff') format('woff'),
+        url('font/ProximaSoft-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-SemiBoldIt.eot');
+    src: local('Proxima Soft SemiBold Italic'), local('ProximaSoft-SemiBoldIt'),
+        url('font/ProximaSoft-SemiBoldIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-SemiBoldIt.woff2') format('woff2'),
+        url('font/ProximaSoft-SemiBoldIt.woff') format('woff'),
+        url('font/ProximaSoft-SemiBoldIt.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Bold.eot');
+    src: local('Proxima Soft Bold'), local('ProximaSoft-Bold'),
+        url('font/ProximaSoft-Bold.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Bold.woff2') format('woff2'),
+        url('font/ProximaSoft-Bold.woff') format('woff'),
+        url('font/ProximaSoft-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Black.eot');
+    src: local('Proxima Soft Black'), local('ProximaSoft-Black'),
+        url('font/ProximaSoft-Black.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Black.woff2') format('woff2'),
+        url('font/ProximaSoft-Black.woff') format('woff'),
+        url('font/ProximaSoft-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-RegularIt.eot');
+    src: local('Proxima Soft Regular Italic'), local('ProximaSoft-RegularIt'),
+        url('font/ProximaSoft-RegularIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-RegularIt.woff2') format('woff2'),
+        url('font/ProximaSoft-RegularIt.woff') format('woff'),
+        url('font/ProximaSoft-RegularIt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-Regular.eot');
+    src: local('Proxima Soft Regular'), local('ProximaSoft-Regular'),
+        url('font/ProximaSoft-Regular.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-Regular.woff2') format('woff2'),
+        url('font/ProximaSoft-Regular.woff') format('woff'),
+        url('font/ProximaSoft-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-MediumIt.eot');
+    src: local('Proxima Soft Medium Italic'), local('ProximaSoft-MediumIt'),
+        url('font/ProximaSoft-MediumIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-MediumIt.woff2') format('woff2'),
+        url('font/ProximaSoft-MediumIt.woff') format('woff'),
+        url('font/ProximaSoft-MediumIt.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-BlackIt.eot');
+    src: local('Proxima Soft Black Italic'), local('ProximaSoft-BlackIt'),
+        url('font/ProximaSoft-BlackIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-BlackIt.woff2') format('woff2'),
+        url('font/ProximaSoft-BlackIt.woff') format('woff'),
+        url('font/ProximaSoft-BlackIt.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-ExtraBoldIt.eot');
+    src: local('Proxima Soft ExtraBold Italic'), local('ProximaSoft-ExtraBoldIt'),
+        url('font/ProximaSoft-ExtraBoldIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-ExtraBoldIt.woff2') format('woff2'),
+        url('font/ProximaSoft-ExtraBoldIt.woff') format('woff'),
+        url('font/ProximaSoft-ExtraBoldIt.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-ThinIt.eot');
+    src: local('Proxima Soft Thin Italic'), local('ProximaSoft-ThinIt'),
+        url('font/ProximaSoft-ThinIt.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-ThinIt.woff2') format('woff2'),
+        url('font/ProximaSoft-ThinIt.woff') format('woff'),
+        url('font/ProximaSoft-ThinIt.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: url('font/ProximaSoft-ExtraBold.eot');
+    src: local('Proxima Soft ExtraBold'), local('ProximaSoft-ExtraBold'),
+        url('font/ProximaSoft-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('font/ProximaSoft-ExtraBold.woff2') format('woff2'),
+        url('font/ProximaSoft-ExtraBold.woff') format('woff'),
+        url('font/ProximaSoft-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .btn {
+    font-family: "Proxima Soft";
+}
+
+.btn-secondary {
+    background-color:#ff6e35;
+    border-color:#ff6e35;
+}
+
+.btn-secondary:visited {
+    background-color:#ed6430;
+    border-color:#ed6430;
+}
+
+.btn-secondary:focus {
+    background-color:#ed6430;
+    border-color:#ed6430;
+}
+
+.btn-secondary:hover {
+    background-color:#ff8052;
+    border-color:#ff8052;
+}
+
+.btn-secondary:active {
+    background-color:#ed6430;
+    border-color:#ed6430;
+}
+
+
+.btn-primary {
+    background-color: #2f53ca;
+    border-color: #2f53ca;
+}
+
+.btn-primary:visited {
+    background-color: #00008B;
+    border-color: #00008B;
+}
+
+.btn-primary:focus {
+    background-color: #00008B;
+    border-color: #00008B;
+}
+
+.btn-primary:hover {
+    background-color: #00008B;
+    border-color: #00008B;
+}
+
+.btn-primary:active {
+    background-color: #00008B;
+    border-color: #00008B;
+}
+
+/* Top right text */
+.home-left-panel {
+    position: fixed;
+    top: 2%;
+    left: 41%;
+    background-position: center;
+    background-color: transparent;
+    z-index: 50;
+}
+
+
+.home {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #000000;
+    height:100%;
+    width:100%;
+    background-size:100%;
+    background-position: 50% 0%;
+}
+
+
+.home-video {
+    position: fixed;
+    height:100%;
+    width:100%;
+    bottom: 0px;
+}
+
+.background-image 
+{
+	background-image: url('/assets/img/embrace-bg.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: fixed;
+	min-height: 100%;
+	min-width: 100%;
+    z-index: -100;
+    background-position: 0% -10%;
+}
+
+.background-image-volca
+{
+	background-image: url('/assets/img/2707451.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: fixed;
+	min-height: 100%;
+	min-width: 100%;
+    background-position: 0% -10%;
+    z-index: -200;
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+.center {
+    margin: auto;
+    width: 55%;
+    padding: 10px;
+  }
+
+.div-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.align-bottom {
+    position: absolute;
+    bottom: 0vh;
+  }
+
+/* Fix box width of datepicker to be 100% of parent container*/
+.DateInput, .DateInput_1 {
+  width: auto; /* replace with whatever length you prefer */
+}
+
+/* Fix the font size and other stuff of datepicker*/
+.DateInput_input, .DateInput_input_1 {
+  line-height: calc(1.5em + 0.75rem);
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.no-wrapping {
+    word-wrap: break-word;
+    -moz-hyphens:auto; 
+    -webkit-hyphens:auto; 
+    -o-hyphens:auto; 
+    hyphens:auto; 
+}
+
+.background-image-forestfire
+{
+	background-image: url('/assets/img/forestfire-about-page.jpeg');
+	background-repeat: no-repeat;
+	background-position: absolute;
+	background-size: cover;
+	min-height: 100%;
+	min-width: 100%;
+    background-position: 100%, 100%;
+    z-index: -100;
+}
+
+.form-item {
+    font-weight: bold;
+}
+
+#upload-button-container {
+  background: linear-gradient(
+    to left,
+    rgba(242, 242, 242, 0) 0%,
+    rgba(242, 242, 242, 1) 20%,
+    rgba(242, 242, 242, 1) 80%,
+    rgba(242, 242, 242, 0) 100%
+  );
+  padding: 0px;
+}
+
+
+.uploadButton, .uploadButton:hover, .uploadButton:active, .uploadButton:visited, .uploadButton:focus {
+    width: 200px;
+    background-color: #119dff !important; 
+    border-radius: 5px;
+    border-color: transparent !important;
+    color: white !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+
+.modalButton, .modalButton:hover, .modalButton:active, .modalButton:visited, .modalButton:focus{
+    background-color: #F2CB07 !important;
+    border-radius: 5px;
+    border-color: transparent !important;
+    color: black !important;
+    border-color: transparent !important;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.reportButtons, .reportButtons:hover, .reportButtons:active, .reportButtons:visited, .reportButtons:focus{
+    background-color: #EC8300 !important;
+    border-radius: 5px;
+    border-color: transparent !important;
+    color: black !important;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+html, body { height: 100%;}
+
+#video-upload-padding {
+    padding: 0px !important;
+}
+
+#video-upload-padding label{
+    padding: 8px;
+}
+
+.SingleDatePickerInput__withBorder {
+    border-radius: 0.25rem;
+}
