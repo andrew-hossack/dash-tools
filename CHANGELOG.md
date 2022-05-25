@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added / Changed
 
-- Added `packages` file to template root directory. Specify required packages on each new line, and user will be prompted to install if it is not found when they do `dashtools init <template>`
+- Added `packages.txt` file to template root directory. Specify required packages on each new line, like a requirements.txt file, and user will be prompted to install if it is not found when they do `dashtools init <template>`
 
 ### Templates
 

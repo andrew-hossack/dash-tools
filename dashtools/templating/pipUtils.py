@@ -50,7 +50,7 @@ def _get_template_required_packages(template_value: str) -> list:
     return a list of pip requirements.
     """
     packages_file = os.path.join(
-        buildApp._get_template_path(template_value), 'packages')
+        buildApp._get_template_path(template_value), 'packages.txt')
     if os.path.exists(packages_file):
         with open(packages_file, 'r') as f:
             return f.read().splitlines()
