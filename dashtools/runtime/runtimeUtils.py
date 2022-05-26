@@ -20,20 +20,18 @@ def run_app(root_path: os.PathLike):
         # Look for a Procfile to run the app, else recursive search for app.py file
         proc = verify_procfile(root_path)
         if proc['valid']:
-            try:
-                print('dashtools: Running From Procfile')
-                os.chdir(root_path)
-                # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
-                os.system(
-                    f'python3 -m {proc["dir"]}.{proc["module"].replace(".py","")}')
-            except Exception as e:
-                print(e)
+            print('dashtools: Running From Procfile')
+            os.chdir(root_path)
+            modpath = proc["dir"].replace("/", ".").replace("\\", ".")
+            modname = proc["module"].replace(".py", "")
+            # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
+            os.system(f'python3 -m {modpath}.{modname}')
         else:
             print('dashtools: Invalid Procfile')
             exit('dashtools: run: Failed')
     else:
         # Find app.py file in the root_path directory
-        for root, dirs, files in os.walk(root_path):
+        for root, _, files in os.walk(root_path):
             if 'app.py' in files:
                 break
         try:

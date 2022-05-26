@@ -76,7 +76,7 @@ def verify_procfile(root_path: os.PathLike) -> dict:
         procfile_contents = procfile.read()
 
     # Look for --chdir somedir
-    chdir_regex = r"--chdir [a-zA-Z]+"
+    chdir_regex = r"--chdir [a-zA-Z\/\\]+"
     try:
         chdir = re.search(chdir_regex, procfile_contents).group(0)
         chdir = chdir.replace('--chdir ', '')
