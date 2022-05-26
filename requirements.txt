@@ -4,7 +4,6 @@ dash-bootstrap-components
 Flask
 gunicorn
 packaging==21.0
-python-dotenv
 setuptools==47.1.0
 pipreqs
 pre-commit

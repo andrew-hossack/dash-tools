@@ -246,8 +246,9 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)
     if not procfile['valid']:
+        print(f'dashtools: Invalid Procfile.')
         print(
-            f'dashtools: Procfile is incorrect. Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
+            f'dashtools: Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
         exit('dashtools: heroku: deploy: Failed')
 
     # Log into Heroku

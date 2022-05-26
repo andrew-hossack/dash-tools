@@ -16,7 +16,7 @@
 
 [**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to [Heroku](https://heroku.com/) has never been quicker.
 
-Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it!
+Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it.
 
 ## **Installation**
 
@@ -106,8 +106,8 @@ A common use for Dash is to display CSV data that is located inside the project 
 2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 13, 26, and 27.
 
    - 13: `server = app.server`
-   - 26: `PATH = pathlib.Path(__file__).parent`
-   - 27: `DATA_PATH = PATH.joinpath("data").resolve()`
+   - 23: `PATH = pathlib.Path(__file__).parent`
+   - 24: `DATA_PATH = PATH.joinpath("data").resolve()`
 
 3. Replace the default CSV file in the `data` folder with your own CSV file
 
@@ -135,20 +135,20 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 ## **Templates**
 
-Templates contain boilerplate code for projects, making it much easier to start with useful baseline apps.
+Templates contain boilerplate code for projects, making it much easier to start with useful baseline apps. Example A shown above uses the "default" template, as no template argument was specified. Example B shown above uses the "csv" template.
 
 ### **Usage Examples**
-
-1. Create an app "MyWonderfulApp" with template "tabs"
-
-   ```bash
-   dashtools init MyWonderfulApp tabs
-   ```
 
 1. To list out available templates, use the `templates --list` command:
 
    ```bash
    dashtools templates --list
+   ```
+
+2. Create an app "MyWonderfulApp", choosing one of the templates listed above. Here, we will choose "tabs":
+
+   ```bash
+   dashtools init MyWonderfulApp tabs
    ```
 
 ### **Format**
@@ -300,7 +300,7 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 
 ## **Troubleshooting**
 
-Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues).
+Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose).
 
 <details><summary>Common init Issues</summary>
 
@@ -324,6 +324,14 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 
 </details>
 
+<details><summary>Procfile is incorrect</summary>
+
+_Problem:_ When deploying, you get an error "Procfile is incorrect"
+
+_Solution:_ When deploying an app, the Procfile is checked for validity. Make sure that your Procfile points to the correct server entrypoint, e.g. `server = app.server`.
+
+</details>
+
 </details>
 
 <details><summary>Common run Issues</summary>
@@ -333,6 +341,14 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 _Problem:_ You encounter an error: 'No such file or directory' when trying to `dashtools run` your app
 
 _Solution:_ Verify that you are running the `dashtools run` command from within a valid project root directory. Your app must be named `app.py`, or have a valid Procfile pointing to the app file.
+
+</details>
+
+<details><summary>Invalid Procfile</summary>
+
+_Problem:_ When you try to run, you get an error "Invalid Procfile"
+
+_Solution:_ When you run an app, the Procfile is checked for validity. Make sure that your Procfile points to the correct server entrypoint, e.g. `server = app.server`.
 
 </details>
 

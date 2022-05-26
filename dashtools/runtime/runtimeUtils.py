@@ -13,6 +13,7 @@ def run_app(root_path: os.PathLike):
     '''
     Look for a Procfile to run the app, else recursive search for app.py file
     # TODO verify this works for all systems. Not sure if python3 is correct cmd
+    # TODO web: gunicorn --timeout 600 --chdir NRCCallApp/dashboard app:server DOES NOT WORK
     '''
     # Check Procfile exists
     if check_file_exists(root_path, 'Procfile'):
@@ -27,6 +28,9 @@ def run_app(root_path: os.PathLike):
                     f'python3 -m {proc["dir"]}.{proc["module"].replace(".py","")}')
             except Exception as e:
                 print(e)
+        else:
+            print('dashtools: Invalid Procfile')
+            exit('dashtools: run: Failed')
     else:
         # Find app.py file in the root_path directory
         for root, dirs, files in os.walk(root_path):
