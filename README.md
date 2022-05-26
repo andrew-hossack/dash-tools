@@ -93,6 +93,16 @@ pip install dash-tools
 
 ![deploy-app](docs/readme/deploy-app.gif)
 
+#### Pushing App Changes to Heroku (Optional)
+
+7. If you make changes to your app after deploying it, push them to Heroku using:
+
+   ```bash
+   dashtools heroku --update
+   ```
+
+> Read [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md) for more details
+
 ### B. Create an App with Local CSV sheet
 
 A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
@@ -130,6 +140,16 @@ A common use for Dash is to display CSV data that is located inside the project 
    ```bash
    dashtools heroku --deploy
    ```
+
+#### Pushing App Changes to Heroku (Optional)
+
+7. If you make changes to your app after deploying it, push them to Heroku using:
+
+   ```bash
+   dashtools heroku --update
+   ```
+
+> Read [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md) for more details
 
 ---
 
@@ -302,18 +322,6 @@ Tabs theme with dynamically generated content. See [Faculty.ai Example](https://
 
 Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose).
 
-<details><summary>Common init Issues</summary>
-
-<details><summary>No write permission</summary>
-
-_Problem:_ You receive a 'write permission' error while trying to init a new app
-
-_Solution:_ Please check your write permissions for the current directory. Try the init command from a different directory.
-
-</details>
-
-</details>
-
 <details><summary>Common heroku --deploy Issues</summary>
 
 <details><summary>Error when creating requirements.txt file</summary>
@@ -329,6 +337,32 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 _Problem:_ When deploying, you get an error "Procfile is incorrect"
 
 _Solution:_ When deploying an app, the Procfile is checked for validity. Make sure that your Procfile points to the correct server entrypoint, e.g. `server = app.server`.
+
+</details>
+
+</details>
+
+<details><summary>Common heroku --update Issues</summary>
+
+<details><summary>Unable to update heroku app</summary>
+
+_Problem:_ When you try to update your app, you get an error "Unable to update heroku app. Is the project already deployed?"
+
+_Solution:_ Make sure you have already run `git init` in the project root directory, and that you have already followed steps to deploy your project to heroku with `dashtools heroku --deploy`
+
+If both of these steps do not work, verify that the `heroku` remote was added by running `git remote`. If you do not see it, try re-deploying your app or manually push to the correct remote with the `dashtools heroku --update <remote>` option, where `<remote>` is replaced with the correct remote.
+
+</details>
+
+</details>
+
+<details><summary>Common init Issues</summary>
+
+<details><summary>No write permission</summary>
+
+_Problem:_ You receive a 'write permission' error while trying to init a new app
+
+_Solution:_ Please check your write permissions for the current directory. Try the init command from a different directory.
 
 </details>
 

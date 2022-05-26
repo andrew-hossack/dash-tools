@@ -73,15 +73,14 @@ def _add_changes_and_push_to_heroku(heroku_app_name: str, remote: str = 'heroku'
         False (Failure)
     """
     # Create a commit to push to Heroku
-    print(f'dashtools: Creating commit to push to {remote}')
-    os.system(f'git add .')
-    os.system(
-        f'git commit -m "Deploy to Heroku for app {heroku_app_name} - dashtools"')
-    # Push to Heroku
-    print(f'dashtools: Pushing to Heroku')
     try:
+        subprocess.check_output(f'git add .', shell=True)
+        print(f'dashtools: Created commit to push to {remote}')
         subprocess.check_output(
-            f'git push {remote} HEAD:master', shell=True)
+            f'git commit -m "Deploy to Heroku for app {heroku_app_name} - dashtools"', shell=True)
+        # Push to Heroku
+        print(f'dashtools: Pushing to Heroku')
+        subprocess.check_output(f'git push {remote} HEAD:master', shell=True)
     except subprocess.CalledProcessError:
         return False
     return True
@@ -150,8 +149,9 @@ def update_heroku_app(remote: str = 'heroku'):
         remote(str): Remote to update. Default 'heroku'
     """
     if not _add_changes_and_push_to_heroku('update', remote=remote):
-        exit('dashtools: heroku: deploy: Failed to push to heroku')
-    print('dashtools: Changes pushed to heroku remote')
+        print(f'dashtools: Unable to update heroku app. Is the project already deployed?')
+        exit('dashtools: heroku: update: Failed')
+    print('dashtools: Changes pushed to {remote} remote')
     exit('dashtools: heroku: update: Success')
 
 
