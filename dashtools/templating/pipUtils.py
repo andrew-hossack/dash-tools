@@ -7,7 +7,6 @@ from dashtools.templating import buildApp
 from dashtools.deploy import deployHeroku
 import os
 import pkg_resources
-from pkg_resources import DistributionNotFound, VersionConflict
 
 
 def _install_pip_requirement(requirement: str):
@@ -24,9 +23,9 @@ def _check_pip_requirement_installed(requirement: str) -> bool:
     '''
     try:
         pkg_resources.get_distribution(requirement)
-    except DistributionNotFound:
+    except pkg_resources.DistributionNotFound:
         return False
-    except VersionConflict:
+    except pkg_resources.VersionConflict:
         return False
     return True
 
