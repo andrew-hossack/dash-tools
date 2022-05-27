@@ -38,7 +38,7 @@ def _check_pip_requirements(requirements: list, template_value: str):
         if not _check_pip_requirement_installed(req):
             print(
                 f'dashtools: Template {template_value} requires pip module {req}, which is not installed')
-            if deployHeroku.prompt_user_choice(f'Install {req}?'):
+            if deployHeroku.prompt_user_choice(f'dashtools: Install {req}?'):
                 _install_pip_requirement(req)
                 print()
 

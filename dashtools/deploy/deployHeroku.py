@@ -246,10 +246,11 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)
     if not procfile['valid']:
-        print(f'dashtools: Invalid Procfile.')
+        print(f'dashtools: Invalid Procfile!')
         print(
             f'dashtools: Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
-        exit('dashtools: heroku: deploy: Failed')
+        if not prompt_user_choice('dashtools: App will not start without a valid Procfile. Continuing is not recommended.'):
+            exit('dashtools: heroku: deploy: Aborted')
 
     # Log into Heroku
     if not herokuUtils.login_heroku_successful():

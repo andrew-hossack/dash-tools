@@ -9,6 +9,27 @@ import os
 from dashtools.deploy.fileUtils import verify_procfile, check_file_exists
 
 
+def _run_from_app(root_path: os.PathLike):
+    """
+    Try looking for an app.py file in the directory recursively
+    """
+    # Find app.py file in the root_path directory
+    for root, _, files in os.walk(root_path):
+        if 'app.py' in files:
+            break
+    try:
+        print(
+            f'dashtools: Running From {root + "/" if root else ""}app.py')
+        os.chdir(root)
+        # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
+        os.system(f'python3 app.py')
+        # Has to run as os.system() to get the output
+        # This means that if no app file is found, an error will be printed to screen
+        # And cannot be handled in a cleaner way
+    except Exception:
+        exit('dashtools: run: No app.py file found')
+
+
 def run_app(root_path: os.PathLike):
     '''
     Look for a Procfile to run the app, else recursive search for app.py file
@@ -27,22 +48,7 @@ def run_app(root_path: os.PathLike):
             # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
             os.system(f'python3 -m {modpath}.{modname}')
         else:
-            print('dashtools: Invalid Procfile')
-            exit('dashtools: run: Failed')
+            _run_from_app(root_path)
     else:
-        # Find app.py file in the root_path directory
-        for root, _, files in os.walk(root_path):
-            if 'app.py' in files:
-                break
-        try:
-            print(
-                f'dashtools: Running From {root + "/" if root else ""}app.py')
-            os.chdir(root)
-            # NOTE Not too sure if python3 is the right command for all systems, it might need to be changed
-            os.system(f'python3 app.py')
-            # Has to run as os.system() to get the output
-            # This means that if no app file is found, an error will be printed to screen
-            # And cannot be handled in a cleaner way
-        except Exception:
-            exit('dashtools: run: No app.py file found')
+        _run_from_app(root_path)
     return
