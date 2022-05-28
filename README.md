@@ -229,15 +229,6 @@ Templates contain boilerplate code for projects, making it much easier to start 
 
    </details>
 
-   <details><summary>Template: 'iconify'</summary>
-
-   _To use this template, type: `dashtools init DashingApp iconify`_
-
-   Dash Iconify - a Dash component library which brings over 100,000 vector icons. See [Dash Iconify](https://github.com/snehilvj/dash-iconify)
-   ![](docs/templates/iconify.png)
-
-   </details>
-
    <details><summary>Template: 'iris'</summary>
 
    _To use this template, type: `dashtools init MyFantasticApp iris`_
