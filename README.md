@@ -326,6 +326,7 @@ AppName
 - **`init <app name> [template (OPTIONAL)]`** Create a new app
   - **`--dir, -d`** Specify alternative create location
 - **`run`** Run app locally from the current directory
+  - **`--set-python-shell-cmd`** Specify the python shell command, e.g. python3 or python3.exe, etc.
 - **`templates`** List and create templates
   - **`--init <directory to convert>`** Creates a template from specified directory
   - **`--list`** List available templates
@@ -385,9 +386,7 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 
 </details>
 
-<!-- TODO implement run feature. See dashtools/runtime/runtimeUtils.py -->
-
-<!-- <details><summary>Common run Issues</summary>
+<details><summary>Common run Issues</summary>
 
 <details><summary>No such file or directory</summary>
 
@@ -405,7 +404,7 @@ _Solution:_ When you run an app, the Procfile is checked for validity. Make sure
 
 </details>
 
-</details> -->
+</details>
 
 ## **Development**
 
