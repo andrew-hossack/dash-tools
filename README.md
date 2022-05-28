@@ -342,7 +342,7 @@ Running into issues? Outlined below are common errors and solutions. If you do n
 
 <details><summary>Common heroku --deploy Issues</summary>
 
-<details><summary>Error when creating requirements.txt file</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;Error when creating requirements.txt file</summary>
 
 _Problem:_ You encounter an error when generating a requirements.txt file
 
@@ -350,7 +350,15 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 
 </details>
 
-<details><summary>Procfile is incorrect</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;No webpage displayed after Heroku deployment, no error messages</summary>
+
+_Problem:_ You are able to deploy your project online to Heroku, but nothing appears
+
+_Solution:_ If no error message arises but your heroku app does not display on the webpage, this may be due to missing libraries that your app needs to run successfully. Check the requirements.txt. file.
+
+</details>
+
+<details><summary>&ensp;&ensp;&ensp;&ensp;Procfile is incorrect</summary>
 
 _Problem:_ When deploying, you get an error "Procfile is incorrect"
 
@@ -362,7 +370,7 @@ _Solution:_ When deploying an app, the Procfile is checked for validity. Make su
 
 <details><summary>Common heroku --update Issues</summary>
 
-<details><summary>Unable to update heroku app</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;Unable to update heroku app</summary>
 
 _Problem:_ When you try to update your app, you get an error "Unable to update heroku app. Is the project already deployed?"
 
@@ -376,7 +384,7 @@ If both of these steps do not work, verify that the `heroku` remote was added by
 
 <details><summary>Common init Issues</summary>
 
-<details><summary>No write permission</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;No write permission</summary>
 
 _Problem:_ You receive a 'write permission' error while trying to init a new app
 
@@ -388,7 +396,15 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 
 <details><summary>Common run Issues</summary>
 
-<details><summary>No such file or directory</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;No valid python command found for your system</summary>
+
+_Problem:_ You encounter an error: No valid python command found for your system when trying to run your app
+
+_Solution:_ Set the python shell command with "dashtools run --set-python-shell-cmd <command>". The correct command will be the python command that runs python, eg. python, python.exe, python3, python3.exe on your system. Note that although you may be able to run 'python' from your terminal, this may be an alias command for your terminal, and not the correct command.
+
+</details>
+
+<details><summary>&ensp;&ensp;&ensp;&ensp;No such file or directory</summary>
 
 _Problem:_ You encounter an error: 'No such file or directory' when trying to `dashtools run` your app
 
@@ -396,7 +412,7 @@ _Solution:_ Verify that you are running the `dashtools run` command from within 
 
 </details>
 
-<details><summary>Invalid Procfile</summary>
+<details><summary>&ensp;&ensp;&ensp;&ensp;Invalid Procfile</summary>
 
 _Problem:_ When you try to run, you get an error "Invalid Procfile"
 

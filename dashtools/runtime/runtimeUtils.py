@@ -65,7 +65,7 @@ def _python_shell_cmd() -> str:
             configUtils.set_config_value('python_shell_cmd', command)
         else:
             print(
-                'dashtools: run: No python command found, eg. python or python.exe to run the app')
+                'dashtools: run: error: No valid python command found for your system')
             exit('dashtools: run: Please set the python shell command with "dashtools run --set-python-shell-cmd <command>"')
     return command
 
