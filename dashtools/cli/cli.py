@@ -7,8 +7,8 @@ import argparse
 import os
 import sys as _sys
 from dashtools.deploy import deployHeroku
-from dashtools.runtime import runtimeUtils
 from dashtools.templating import buildApp, buildAppUtils, createTemplate
+from dashtools.runtime import runtimeUtils
 from dashtools.version import __version__
 
 
@@ -29,6 +29,9 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
     
+    {'run':<29}Run the app
+        {'--set-python-shell-cmd':<25}Set the python shell command
+
     {'templates':<29}List and create templates
         {'--init <directory>':<25}Creates a template from specified directory
         {'--list':<25}List available templates
@@ -162,22 +165,28 @@ def heroku(args):
         exit('dashtools: Available heroku options: --deploy, --update')
 
 
-# TODO implement - see dashtools/runtime/runtimeUtils.py for information
-# @subcommand(
-#     [
-#         argument(
-#             "run",
-#             help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
-#             default=False,
-#             action="store_true"),
-#     ])
-# def run(args):
-#     if args.run:
-#         try:
-#             runtimeUtils.run_app(os.getcwd())
-#         except RuntimeError as e:
-#             print(e)
-#             exit('dashtools: run: Failed')
+@subcommand(
+    [
+        argument(
+            "run",
+            help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
+            default=False,
+            action="store_true"),
+        argument(
+            '--set-python-shell-cmd',
+            help='Set the python shell command. Args: REQUIRED: <python shell command>',
+            metavar='<python shell command>',
+            nargs=1)
+    ])
+def run(args):
+    if args.set_python_shell_cmd:
+        runtimeUtils.set_python_shell_cmd(args.set_python_shell_cmd[0])
+    elif args.run:
+        try:
+            runtimeUtils.run_app(os.getcwd())
+        except RuntimeError as e:
+            print(e)
+            exit('dashtools: run: Failed')
 
 
 def main():
