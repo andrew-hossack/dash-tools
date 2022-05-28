@@ -156,7 +156,7 @@ def heroku(args):
     if args.deploy:
         deployHeroku.deploy_app_to_heroku(os.getcwd())
     elif args.update:
-        deployHeroku.update_heroku_app(args.update)
+        deployHeroku.update_heroku_app(os.getcwd(), remote=args.update)
     else:
         print('dashtools: heroku error: too few arguments')
         exit('dashtools: Available heroku options: --deploy, --update')

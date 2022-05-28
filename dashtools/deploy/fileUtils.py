@@ -18,23 +18,30 @@ def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
     return True
 
 
-def create_requirements_txt(root_path: os.PathLike):
+def create_requirements_txt(root_path: os.PathLike, update=False):
     """
     Creates requirements.txt file using pipreqs
     """
-    print('dashtools: Creating requirements.txt')
+    print(
+        f'dashtools: {"Updating" if update else "Creating"} requirements.txt')
     try:
-        subprocess.check_output(f'pipreqs {root_path}', shell=True)
+        if update:
+            subprocess.check_output(
+                f'pipreqs --force {root_path}', shell=True)
+        else:
+            subprocess.check_output(
+                f'pipreqs {root_path}', shell=True)
     except subprocess.CalledProcessError:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
         print(
             f'dashtools: Error creating requirements.txt')
-        print('dashtools: Did you run --deploy-heroku in a valid dash app directory?')
+        print('dashtools: Did you run heroku --deploy in a valid dash app directory?')
         exit('dashtools: heroku: deploy: Failed')
     # Append gunicorn to requirements.txt
-    with open(os.path.join(root_path, 'requirements.txt'), 'a') as requirements_file:
-        requirements_file.write('gunicorn')
+    with open(os.path.join(root_path, 'requirements.txt'), 'r+') as requirements_file:
+        if 'gunicorn' not in requirements_file.read():
+            requirements_file.write('gunicorn')
 
 
 def create_runtime_txt(root_path: os.PathLike):

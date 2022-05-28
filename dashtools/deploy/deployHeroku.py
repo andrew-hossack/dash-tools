@@ -31,11 +31,9 @@ def _check_required_files_exist(root_path: os.PathLike) -> bool:
             deploy_should_continue = False
     # Check for the Requirements file
     if (not fileUtils.check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
-        if prompt_user_choice(
-                'dashtools: Required file requirements.txt not found. Create one automatically?'):
-            fileUtils.create_requirements_txt(root_path)
-        else:
-            deploy_should_continue = False
+        fileUtils.create_requirements_txt(root_path, update=False)
+    else:
+        fileUtils.create_requirements_txt(root_path, update=True)
     return deploy_should_continue
 
 
@@ -141,13 +139,16 @@ def _success_message(heroku_app_name: str):
     print('dashtools: heroku: deploy: Finished')
 
 
-def update_heroku_app(remote: str = 'heroku'):
+def update_heroku_app(project_root: os.PathLike, remote: str = 'heroku'):
     """
     Updates the existing heroku app
 
     Args:
         remote(str): Remote to update. Default 'heroku'
     """
+    # (Re)generate requirements file
+    if fileUtils.check_file_exists(project_root, 'requirements.txt'):
+        fileUtils.create_requirements_txt(project_root, update=True)
     if not _add_changes_and_push_to_heroku('update', remote=remote):
         print(f'dashtools: Unable to update heroku app. Is the project already deployed?')
         exit('dashtools: heroku: update: Failed')
@@ -226,7 +227,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
         while True:
             response = input('dashtools: Choice (1, 2, 3) > ')
             if response == '1':
-                update_heroku_app()
+                update_heroku_app(project_root_dir)
             elif response == '2':
                 _remove_heroku_remote()
                 break
@@ -240,7 +241,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
 
     # Check that the project has necessary files
     if not _check_required_files_exist(project_root_dir):
-        print('dashtools: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        print('dashtools: Procfile, runtime.txt are needed for Heroku deployment.')
         exit('dashtools: heroku: deploy: Aborted')
 
     # Check procfile is correct
