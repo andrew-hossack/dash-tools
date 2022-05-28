@@ -29,8 +29,6 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
     
-    {'run':<29}Run app locally from the current directory
-    
     {'templates':<29}List and create templates
         {'--init <directory>':<25}Creates a template from specified directory
         {'--list':<25}List available templates
@@ -164,21 +162,22 @@ def heroku(args):
         exit('dashtools: Available heroku options: --deploy, --update')
 
 
-@subcommand(
-    [
-        argument(
-            "run",
-            help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
-            default=False,
-            action="store_true"),
-    ])
-def run(args):
-    if args.run:
-        try:
-            runtimeUtils.run_app(os.getcwd())
-        except RuntimeError as e:
-            print(e)
-            exit('dashtools: run: Failed')
+# TODO implement - see dashtools/runtime/runtimeUtils.py for information
+# @subcommand(
+#     [
+#         argument(
+#             "run",
+#             help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
+#             default=False,
+#             action="store_true"),
+#     ])
+# def run(args):
+#     if args.run:
+#         try:
+#             runtimeUtils.run_app(os.getcwd())
+#         except RuntimeError as e:
+#             print(e)
+#             exit('dashtools: run: Failed')
 
 
 def main():

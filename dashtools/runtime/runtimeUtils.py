@@ -2,6 +2,10 @@
  # @ Author: Andrew Hossack
  # @ Create Time: 2022-05-23 00:08:07
  # @ Handle running the app
+ # TODO IMPLEMENT THIS FEATURE. This is a work in progress.
+ # TODO Initially run through a list of python shell commands to figure
+ # out how to run the app, e.g. python, python3, python.exe, etc. Save
+ # to an environment variable. Else, prompt user to enter the command.
 '''
 
 

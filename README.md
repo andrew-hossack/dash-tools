@@ -79,8 +79,16 @@ pip install dash-tools
 
 5. Run your app to ensure it works:
 
+   Linux and Mac OS
+
    ```bash
-   dashtools run
+   python src/app.py
+   ```
+
+   Windows
+
+   ```bash
+   python src\app.py
    ```
 
 #### Deploy App to Web with Heroku
@@ -90,7 +98,7 @@ pip install dash-tools
    ```bash
    dashtools heroku --deploy
    ```
-   
+
    <details>
      <summary>Alert!</summary>
      After you are prompted to create the `requirements.txt` file, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
@@ -134,8 +142,16 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 5. Run your app to ensure it works:
 
+   Linux and Mac OS
+
    ```bash
-   dashtools run
+   python src/app.py
+   ```
+
+   Windows
+
+   ```bash
+   python src\app.py
    ```
 
 #### Deploy App to Web with Heroku
@@ -145,7 +161,7 @@ A common use for Dash is to display CSV data that is located inside the project 
    ```bash
    dashtools heroku --deploy
    ```
-   
+
     <details>
      <summary>Alert!</summary>
      After you are prompted to create the `requirements.txt` file, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
@@ -168,6 +184,7 @@ A common use for Dash is to display CSV data that is located inside the project 
 Templates contain boilerplate code for projects, making it much easier to start with useful baseline apps. Example A shown above uses the "default" template, as no template argument was specified. Example B shown above uses the "csv" template.
 
 ### Available Templates
+
 1. To list out available templates, use the `templates --list` command:
 
    ```bash
@@ -280,6 +297,7 @@ Templates contain boilerplate code for projects, making it much easier to start 
    ```bash
    dashtools init MyWonderfulApp tabs
    ```
+
 3. Follow the steps in Example A to replace default app with your own app and deploy to heroku.
 
 ### **Format**
@@ -376,7 +394,9 @@ _Solution:_ Please check your write permissions for the current directory. Try t
 
 </details>
 
-<details><summary>Common run Issues</summary>
+<!-- TODO implement run feature. See dashtools/runtime/runtimeUtils.py -->
+
+<!-- <details><summary>Common run Issues</summary>
 
 <details><summary>No such file or directory</summary>
 
@@ -394,7 +414,7 @@ _Solution:_ When you run an app, the Procfile is checked for validity. Make sure
 
 </details>
 
-</details>
+</details> -->
 
 ## **Development**
 
