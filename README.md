@@ -101,7 +101,7 @@ pip install dash-tools
 
    <details>
      <summary>Alert!</summary>
-     After you are prompted to create the `requirements.txt` file, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
+     After the `requirements.txt` file is created, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
    </details>
 
 ![deploy-app](docs/readme/deploy-app.gif)
@@ -162,7 +162,7 @@ A common use for Dash is to display CSV data that is located inside the project 
 
     <details>
      <summary>Alert!</summary>
-     After you are prompted to create the `requirements.txt` file, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
+     After the `requirements.txt` file is created, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
    </details>
 
 #### Pushing App Changes to Heroku (Optional)
@@ -358,9 +358,9 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 _Problem:_ You are able to deploy your project online to Heroku, but nothing is displayed on the page
 
 _Solution1:_ This may be due to missing libraries that your app needs to run successfully. Check the requirements.txt. file.
-   
+
 _Solution2:_ This may due to the fact that you forgot to add `server = app.server` to you main app.py file
-   
+
 </details>
 
 <details><summary>&ensp;&ensp;&ensp;&ensp;Procfile is incorrect</summary>
