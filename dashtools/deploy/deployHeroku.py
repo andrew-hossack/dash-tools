@@ -209,7 +209,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
 
     # Check that git is initialized in the current repo
     if not gitUtils.is_git_repository():
-        print(f'dashtools: Current directory is not a git repository!')
+        print(f'dashtools: A git repository is needed for deployment. Current directory is not a git repository!')
         # Prompt user to init git
         if prompt_user_choice('dashtools: Would you like to init git?'):
             os.system('git init')
