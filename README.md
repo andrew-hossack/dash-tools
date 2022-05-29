@@ -299,18 +299,21 @@ Templates may include different components, modules and layouts. They have the f
 AppName
 │-- Procfile
 │-- README.md
+│-- requirements.txt [1]
 │-- runtime.txt
 │
 └── src
     |-- app.py
     |-- __init__.py
-    |-- assets/     [*]
-    |-- containers/ [*]
-    |-- components/ [*]
-    └-- data/       [*]
+    |-- assets/      [2]
+    |-- containers/  [2]
+    |-- components/  [2]
+    └-- data/        [2]
 ```
 
-**[*]** _Not included in all templates_
+**[1]** _Created during deployment_
+
+**[2]** _Not included in all templates_
 
 ## **Commands**
 
