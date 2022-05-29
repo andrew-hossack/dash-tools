@@ -355,10 +355,12 @@ _Solution:_ Verify that you are running the `dashtools heroku --deploy` command 
 
 <details><summary>&ensp;&ensp;&ensp;&ensp;No webpage displayed after Heroku deployment, no error messages</summary>
 
-_Problem:_ You are able to deploy your project online to Heroku, but nothing appears
+_Problem:_ You are able to deploy your project online to Heroku, but nothing is displayed on the page
 
-_Solution:_ If no error message arises but your heroku app does not display on the webpage, this may be due to missing libraries that your app needs to run successfully. Check the requirements.txt. file.
-
+_Solution1:_ This may be due to missing libraries that your app needs to run successfully. Check the requirements.txt. file.
+   
+_Solution2:_ This may due to the fact that you forgot to add `server = app.server` to you main app.py file
+   
 </details>
 
 <details><summary>&ensp;&ensp;&ensp;&ensp;Procfile is incorrect</summary>
@@ -368,10 +370,24 @@ _Problem:_ When deploying, you get an error "Procfile is incorrect"
 _Solution:_ When deploying an app, the Procfile is checked for validity. Make sure that your Procfile points to the correct server entrypoint, e.g. `server = app.server`.
 
 </details>
+   
+<details><summary>&ensp;&ensp;&ensp;&ensp;No solution found</summary>
+
+_Solution:_ Try typing into the terminal or command prompt `heroku logs --tail`. This will give you access to the official heroku logs of your app that enable monitoring your stack error troubleshooting
+
+</details>
 
 </details>
 
 <details><summary>Common heroku --update Issues</summary>
+   
+<details><summary>&ensp;&ensp;&ensp;&ensp; Your account has reached its concurrent build limit.</summary>
+
+_Problem:_ When you try to update and redeploy your app to Heroku too many times within 10 minutes, you will get the above error message
+
+_Solution:_ First, wait a few minutes and try again. If that doesn't work, check out a few possible solutions [in this thread](https://stackoverflow.com/questions/47028871/heroku-your-account-has-reached-its-concurrent-build-limit).
+
+</details>
 
 <details><summary>&ensp;&ensp;&ensp;&ensp;Unable to update heroku app</summary>
 
