@@ -380,8 +380,8 @@ _Solution:_ Try typing into the terminal or command prompt `heroku logs --tail`.
 </details>
 
 <details><summary>Common heroku --update Issues</summary>
-   
-<details><summary>&ensp;&ensp;&ensp;&ensp; Your account has reached its concurrent build limit.</summary>
+
+<details><summary>&ensp;&ensp;&ensp;&ensp;Your account has reached its concurrent build limit.</summary>
 
 _Problem:_ When you try to update and redeploy your app to Heroku too many times within 10 minutes, you will get the above error message
 
