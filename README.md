@@ -114,8 +114,6 @@ pip install dash-tools
    dashtools heroku --update
    ```
 
-> Read [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md) for more details
-
 ### B. Create an App with Local CSV sheet
 
 A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
@@ -175,7 +173,9 @@ A common use for Dash is to display CSV data that is located inside the project 
    dashtools heroku --update
    ```
 
-> Read [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md) for more details
+### C. Additional Examples
+
+Read [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md) for another tutorial on creating and deploying your app.
 
 ---
 
