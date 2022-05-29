@@ -18,23 +18,39 @@ def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
     return True
 
 
-def create_requirements_txt(root_path: os.PathLike):
+def _add_requirement(root_path: os.PathLike, requirement: str):
+    """
+    Adds a requirement to the requirements.txt file if it doesn't already exist
+    """
+    # Append gunicorn to requirements.txt
+    with open(os.path.join(root_path, 'requirements.txt'), 'r+') as requirements_file:
+        if requirement not in requirements_file.read():
+            requirements_file.write(f'{requirement}\n')
+
+
+def create_requirements_txt(root_path: os.PathLike, update=False):
     """
     Creates requirements.txt file using pipreqs
     """
-    print('dashtools: deploy-heroku: Creating requirements.txt')
+    print(
+        f'dashtools: {"Updating" if update else "Creating"} requirements.txt')
     try:
-        subprocess.check_output(f'pipreqs {root_path}', shell=True)
+        if update:
+            subprocess.check_output(
+                f'pipreqs --force {root_path}', shell=True)
+        else:
+            subprocess.check_output(
+                f'pipreqs {root_path}', shell=True)
     except subprocess.CalledProcessError:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
-        print(
-            f'dashtools: deploy-heroku: Error creating requirements.txt')
-        print('dashtools: deploy-heroku: Did you run --deploy-heroku in a valid dash app directory?')
-        exit('dashtools: deploy-heroku: Failed')
-    # Append gunicorn to requirements.txt
-    with open(os.path.join(root_path, 'requirements.txt'), 'a') as requirements_file:
-        requirements_file.write('gunicorn')
+        print('dashtools: Error creating requirements.txt')
+        print('dashtools: Did you run heroku --deploy in a valid dash app directory?')
+        exit('dashtools: heroku: deploy: Failed')
+
+    # Add requirements that might not be in requirements.txt
+    for req in ['gunicorn', 'pandas']:
+        _add_requirement(root_path, req)
 
 
 def create_runtime_txt(root_path: os.PathLike):
@@ -44,7 +60,7 @@ def create_runtime_txt(root_path: os.PathLike):
     """
     with open(os.path.join(root_path, 'runtime.txt'), 'w') as runtime_file:
         runtime_file.write('python-3.8.10')
-    print('dashtools: deploy-heroku: Created runtime.txt using python-3.8.10')
+    print('dashtools: Created runtime.txt using python-3.8.10')
 
 
 def create_procfile(root_path: os.PathLike):
@@ -54,7 +70,7 @@ def create_procfile(root_path: os.PathLike):
     with open(os.path.join(root_path, 'Procfile'), 'w') as procfile:
         procfile.write(
             f'web: gunicorn --timeout 600 --chdir src app:server')
-    print(f'dashtools: deploy-heroku: Created Procfile')
+    print(f'dashtools: Created Procfile')
 
 
 def verify_procfile(root_path: os.PathLike) -> dict:
@@ -76,7 +92,7 @@ def verify_procfile(root_path: os.PathLike) -> dict:
         procfile_contents = procfile.read()
 
     # Look for --chdir somedir
-    chdir_regex = r"--chdir [a-zA-Z]+"
+    chdir_regex = r"--chdir [a-zA-Z\/\\]+"
     try:
         chdir = re.search(chdir_regex, procfile_contents).group(0)
         chdir = chdir.replace('--chdir ', '')

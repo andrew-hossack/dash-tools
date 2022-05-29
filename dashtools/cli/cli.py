@@ -7,8 +7,8 @@ import argparse
 import os
 import sys as _sys
 from dashtools.deploy import deployHeroku
-from dashtools.runtime import runtimeUtils
 from dashtools.templating import buildApp, buildAppUtils, createTemplate
+from dashtools.runtime import runtimeUtils
 from dashtools.version import __version__
 
 
@@ -29,8 +29,9 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
     
-    {'run':<29}Run app locally from the current directory
-    
+    {'run':<29}Run the app (experimental)
+        {'--set-python-shell-cmd':<25}Set the python shell command
+
     {'templates':<29}List and create templates
         {'--init <directory>':<25}Creates a template from specified directory
         {'--list':<25}List available templates
@@ -109,7 +110,7 @@ def init(args):
         app_name=args.init[0],
         template=buildAppUtils.get_template_from_args(args))
     print(
-        f'dashtools: Run your app using the "cd {args.init[0]} && dashtools run" command')
+        f'dashtools: Run your app using the "python {os.path.join(args.init[0], "src", "app.py")}" command')
     print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
 
@@ -158,7 +159,7 @@ def heroku(args):
     if args.deploy:
         deployHeroku.deploy_app_to_heroku(os.getcwd())
     elif args.update:
-        deployHeroku.update_heroku_app(args.update)
+        deployHeroku.update_heroku_app(os.getcwd(), remote=args.update)
     else:
         print('dashtools: heroku error: too few arguments')
         exit('dashtools: Available heroku options: --deploy, --update')
@@ -171,9 +172,16 @@ def heroku(args):
             help="Run the app locally. Uses Procfile if available, else recursive search for app.py",
             default=False,
             action="store_true"),
+        argument(
+            '--set-python-shell-cmd',
+            help='Set the python shell command. Args: REQUIRED: <python shell command>',
+            metavar='<python shell command>',
+            nargs=1)
     ])
 def run(args):
-    if args.run:
+    if args.set_python_shell_cmd:
+        runtimeUtils.set_python_shell_cmd(args.set_python_shell_cmd[0])
+    elif args.run:
         try:
             runtimeUtils.run_app(os.getcwd())
         except RuntimeError as e:

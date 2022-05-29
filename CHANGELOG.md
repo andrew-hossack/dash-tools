@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5] - 2022-05-29
+
+### Added / Changed
+
+- Added `packages.txt` file to template root directory. Specify required packages on each new line, like a requirements.txt file, and user will be prompted to install if it is not found when they do `dashtools init <template>`
+- Cleaned up Docs directory and README (huge thanks to https://github.com/Coding-with-Adam)
+- Fixed `run` command to try different python shell commands
+- Added config file to store python shell settings
+- Added `run --set-python-shell-cmd` to set the python shell command in config
+- General prompting hint fixes and updates
+
+### Templates
+
+- Added leaflet template [Dash Leaflet](https://github.com/thedirtyfew/dash-leaflet)
+
 ## [1.4] - 2022-05-22
 
 **dash-tools command is now dashtools via command line**
@@ -30,4 +45,3 @@ Major changes are an overhaul to the CLI entry to use subcommands. This looks li
 
 - Added fast-dash template https://fastdash.app/
 - Added dash-iconify template https://github.com/snehilvj/dash-iconify
-

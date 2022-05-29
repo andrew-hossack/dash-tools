@@ -50,7 +50,7 @@ def create_template(src: os.PathLike, dest: os.PathLike):
             exit(f'dashtools: templates: init: Aborted')
 
     # Check runtime exists
-    if not fileUtils.check_file_exists(src, 'runtime.py'):
+    if not fileUtils.check_file_exists(src, 'runtime.txt'):
         print(
             f'dashtools: templates: init: No runtime.py found in {src}')
         if deployHeroku.prompt_user_choice("dashtools: templates: init: Create runtime.py?"):
@@ -84,3 +84,5 @@ def create_template(src: os.PathLike, dest: os.PathLike):
 
             # Copy the file
             shutil.copyfile(rel_src, dest)
+    print(
+        f'dashtools: templates: init: Created template {template_base_dir}')

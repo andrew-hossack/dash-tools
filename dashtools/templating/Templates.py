@@ -20,7 +20,7 @@ class Template(Enum):
     CSV = 'csv'
     DEFAULT = 'default'
     FASTDASH = 'fastdash'
-    ICONIFY = 'iconify'
+    LEAFLET = 'leaflet'
     IRIS = 'iris'
     MANTINE = 'mantine'
     MULTIPAGE = 'multipage'

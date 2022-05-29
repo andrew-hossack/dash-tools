@@ -1,6 +1,7 @@
 global-include *.json
 global-include *.include
 global-include *.html
+global-include *.ini
 global-include *.css
 global-include *.csv
 global-include *.eot
@@ -17,4 +18,5 @@ global-include *.map
 global-include *.js
 global-include *.ts
 global-include *.template
+global-include packages.txt
 graft dash_tools/templating/templates

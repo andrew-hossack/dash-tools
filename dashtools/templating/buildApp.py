@@ -8,7 +8,7 @@ import datetime
 import os
 import shutil
 
-from dashtools.templating import buildAppUtils
+from dashtools.templating import buildAppUtils, pipUtils
 
 
 def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
@@ -30,6 +30,14 @@ def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
+def _get_template_path(template_value: str) -> str:
+    """
+    Get path to template directory
+    """
+    template_dir = os.path.join('templates', template_value)
+    return buildAppUtils.get_templates_data_path(template_dir)
+
+
 def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.Template):
     '''
     Create a new app in the target directory.
@@ -46,8 +54,7 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
         exit(f'dashtools: init: Failed')
 
     # Copy files from template directory
-    template_dir = os.path.join('templates', template.value)
-    template_base_path = buildAppUtils.get_templates_data_path(template_dir)
+    template_base_path = _get_template_path(template.value)
     for path, _, files in os.walk(template_base_path):
         for name in files:
             # Skip non .template files
@@ -75,5 +82,7 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
             # Format the file
             _format_file(name, app_name, dest)
 
+    # Handle pip requirements
+    pipUtils.handle_template_requirements(template.value)
     print(
         f'dashtools: init: Created new app {app_name} at {os.path.join(target_dir, app_name)} with {template.name} template')

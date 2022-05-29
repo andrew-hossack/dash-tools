@@ -31,11 +31,9 @@ def _check_required_files_exist(root_path: os.PathLike) -> bool:
             deploy_should_continue = False
     # Check for the Requirements file
     if (not fileUtils.check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
-        if prompt_user_choice(
-                'dashtools: Required file requirements.txt not found. Create one automatically?'):
-            fileUtils.create_requirements_txt(root_path)
-        else:
-            deploy_should_continue = False
+        fileUtils.create_requirements_txt(root_path, update=False)
+    else:
+        fileUtils.create_requirements_txt(root_path, update=True)
     return deploy_should_continue
 
 
@@ -73,15 +71,14 @@ def _add_changes_and_push_to_heroku(heroku_app_name: str, remote: str = 'heroku'
         False (Failure)
     """
     # Create a commit to push to Heroku
-    print(f'dashtools: Creating commit to push to {remote}')
-    os.system(f'git add .')
-    os.system(
-        f'git commit -m "Deploy to Heroku for app {heroku_app_name} - dashtools"')
-    # Push to Heroku
-    print(f'dashtools: Pushing to Heroku')
     try:
+        subprocess.check_output(f'git add .', shell=True)
+        print(f'dashtools: Created commit to push to {remote}')
         subprocess.check_output(
-            f'git push {remote} HEAD:master', shell=True)
+            f'git commit -m "Deploy to Heroku for app {heroku_app_name} - dashtools"', shell=True)
+        # Push to Heroku
+        print(f'dashtools: Pushing to Heroku')
+        subprocess.check_output(f'git push {remote} HEAD:master', shell=True)
     except subprocess.CalledProcessError:
         return False
     return True
@@ -142,16 +139,20 @@ def _success_message(heroku_app_name: str):
     print('dashtools: heroku: deploy: Finished')
 
 
-def update_heroku_app(remote: str = 'heroku'):
+def update_heroku_app(project_root: os.PathLike, remote: str = 'heroku'):
     """
     Updates the existing heroku app
 
     Args:
         remote(str): Remote to update. Default 'heroku'
     """
+    # (Re)generate requirements file
+    if fileUtils.check_file_exists(project_root, 'requirements.txt'):
+        fileUtils.create_requirements_txt(project_root, update=True)
     if not _add_changes_and_push_to_heroku('update', remote=remote):
-        exit('dashtools: heroku: deploy: Failed to push to heroku')
-    print('dashtools: Changes pushed to heroku remote')
+        print(f'dashtools: Unable to update heroku app. Is the project already deployed?')
+        exit('dashtools: heroku: update: Failed')
+    print('dashtools: Changes pushed to {remote} remote')
     exit('dashtools: heroku: update: Success')
 
 
@@ -208,7 +209,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
 
     # Check that git is initialized in the current repo
     if not gitUtils.is_git_repository():
-        print(f'dashtools: Current directory is not a git repository!')
+        print(f'dashtools: A git repository is needed for deployment. Current directory is not a git repository!')
         # Prompt user to init git
         if prompt_user_choice('dashtools: Would you like to init git?'):
             os.system('git init')
@@ -226,7 +227,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
         while True:
             response = input('dashtools: Choice (1, 2, 3) > ')
             if response == '1':
-                update_heroku_app()
+                update_heroku_app(project_root_dir)
             elif response == '2':
                 _remove_heroku_remote()
                 break
@@ -240,15 +241,17 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
 
     # Check that the project has necessary files
     if not _check_required_files_exist(project_root_dir):
-        print('dashtools: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        print('dashtools: Procfile, runtime.txt are needed for Heroku deployment.')
         exit('dashtools: heroku: deploy: Aborted')
 
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)
     if not procfile['valid']:
+        print(f'dashtools: Invalid Procfile!')
         print(
-            f'dashtools: Procfile is incorrect. Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
-        exit('dashtools: heroku: deploy: Failed')
+            f'dashtools: Did you include "{procfile["hook"]} = app.server" after instantiating "app = Dash(...)" in {procfile["dir"]}/{procfile["module"]}?')
+        if not prompt_user_choice('dashtools: App will not start without a valid Procfile. Continuing is not recommended.'):
+            exit('dashtools: heroku: deploy: Aborted')
 
     # Log into Heroku
     if not herokuUtils.login_heroku_successful():

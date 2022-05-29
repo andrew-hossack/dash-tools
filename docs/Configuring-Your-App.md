@@ -1,160 +1,169 @@
-# 🛠️ **dash-tools** Tutorial - _Create and Upload Your App_
+# **dashtools** Tutorial - _Making Changes and Deploying to Heroku_
 
-The following sections will provide a beginner guide on how to modify your dash-tools project. This is a beginner tutorial, so more advanced topics such as [callbacks](https://dash.plotly.com/basic-callbacks) will not be discussed. Check out the [Plotly Dash Documentation](https://dash.plotly.com/) for more detailed information on dash features.
+> The following tutorial will explain how `dashtools heroku --deploy` works, and how you can use `dashtools heroku --update` to push new changes to your deployed app. Check out the _[Usage Examples](../README.md#usage-examples)_ section in the Readme before you begin.
 
-## 1. Creating Your App
+### Creating an App
 
-> _Already have a plotly dash project you want to publish to Heroku? Check out the [Uploading an Existing App](#41-optional-uploading-an-existing-app) section!_
+1. Create a Dash project in a new directory called "MyApp" (using your terminal or command prompt) using the "sidebar" template:
+   <details>
+     <summary>Note</summary>
+     "MyApp" can be changed to any name. However, for the purpose of this tutorial, we recommend keeping it as "MyApp".
+   </details>
 
-Welcome to the Plotly Dash and dash-tools tutorial! If you are like me, you are interested in learning how Dash can be useful for creating Python data-vis applications (or any type of web app). On its own, Plotly Dash provides a very simple framework for making that happen. With dash-tools, most of the boilerplate dash code is handled for you, making it easier to create amazing apps with even fewer keystrokes.
+   ```bash
+   dashtools init MyApp sidebar
+   ```
 
-Let's begin. We are going to create a new dash application called "MyApp". When you create an app, a directory will be created from where you call the command.
+2. Open the default `app.py` file that comes with this project:
+   <details>
+     <summary>Windows</summary>
 
-**To create the app, type the following command in your console:**
+   ```bash
+    .\MyApp\src\app.py
+   ```
 
-```bash
-dash-tools --init MyApp
-```
+   </details>
+   <details>
+     <summary>Linux and Mac OS</summary>
 
-The newly created "MyApp" directory will look something like this:
+   ```bash
+    ./MyApp/src/app.py
+   ```
 
-```
-MyApp
-│-- README.md
-│-- Procfile
-│-- runtime.txt
-│
-└───src
-    |-- __init__.py
-    └-- app.py
-```
+   </details>
 
-Don't know what the files are? That's okay, we will get to that later in the [Project Files](#5-additional-info---project-files) section. First, we will run the dash app locally in your browser to see what it looks like!
+3. Make sure you are in your project's root directory:
 
-## 2. Running Your App
+   ```bash
+   cd MyApp
+   ```
 
-> _Running your app in-browser is the best way to make sure everything works correctly. You can even see changes in real time!_
+4. Run your app to ensure it works:
+   <details>
+     <summary>Note</summary>
+     The run command can be used instead of the traditional "python ./src/app.py" command. In effect, they do the same thing.
+   </details>
 
-Let's run your newly created dash application to see what is looks like. The main application file is called `app.py` located in the `src` folder in your MyApp project.
+   ```bash
+   dashtools run
+   ```
 
-**To see your project in browser, type the following command in your console:**
+   Visiting http://127.0.0.1:8050/ in your browser will show local changes to the app in real-time
 
-```bash
-cd MyApp
-python src/app.py
-```
+   ![iris image](../docs/templates/sidebar_theme.png)
 
-The output of the second command will look something like this:
+### Deploy App to Web with Heroku
 
-```
-Dash is running on http://127.0.0.1:8050/
+6. Deploy to Heroku:
+   <details>
+     <summary>Note</summary>
+     The heroku --deploy command creates a new heroku project in your account, adds a git remote called heroku, and pushes changes to the remote. You can use the heroku --update command, discussed below, to push new changes.
+   </details>
 
- * Serving Flask app 'app' (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: on
-```
+   ```bash
+   dashtools heroku --deploy
+   ```
 
-Navigate to [http://127.0.0.1:8050/](http://127.0.0.1:8050/) in your browser to view your app. Any changes (or errors) you make to the project will be displayed in real-time here! Next, we will be exploring how to make changes to your new app.
+7. Visit your app online to view what it looks like. The URL will be provided when you deploy your app after **Application Page**
 
-## 3. Changing Your App
+![deploy success message](../docs/readme/deploy_success_msg.png)
 
-> _Making changes to your app is easy. Make sure to have the application running in your browser to view any changes you make._
+### Make Changes
 
-Congrats! If you have made it this far, you were able to create and view a python web application! Feel free to give yourself a pat on the back and grab a coffee for the troubles. In this section, we will talk about what the included project files are for, and how to change your application to make it your own.
+8.  Change the tab title
 
-Let's start by looking in the `src/app.py` file. As mentioned below in the [Additional Info - Project Files](#5-additional-info---project-files) section, this file is the main dash application file. Any changes you make here will affect the layout of your application.
+    On line 20, replace `MyApp` in `title="MyApp"` with any name you want. Observe that the tab title in your browser will update automatically
 
-**To change your application header and text, open your src/app.py file and make the following changes to app.layout:**
-
-```
-app.layout = html.Div(children=[
-    html.H1(children='Hey There! I'm a new header!'),
-
-    html.Div(children='''
-        I can add any text that I want here.
-    '''),
-
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
+    ```python
+    app = dash.Dash(
+        title="My Homepage",
+        external_stylesheets=[dbc.themes.BOOTSTRAP],
     )
-])
-```
+    ```
 
-With the magic of programming, you will see the new header and text appear in real time in your browser. Cool, right? If you want to learn more about how you can modify your app in better detail, check out the [Plotly Dash Docs](https://dash.plotly.com/layout)!
+    <details>
+    <summary>Receiving a "Site can’t be reached" error?</summary>
+    If you receive this error, make sure to correct any python syntax errors you might have and re-run the `dashtools run` command. Since your site is being re-rendered after each change you make, if your app isn't valid python syntax, it will cause this error
+    </details>
 
-> _Note: `server = app.server` in your `src/app.py` file is necessary to upload to Heroku - do not change this!_
+9.  Change the sidebar
 
-Now that you made some changes, let's publish them online to Heroku.
+    On line 46, the `sidebar` object defines the layout of the sidebar. Replace the object with the python snippet below to change the name of the sidebar links and title
 
-## 4. Deploy to Heroku
+    ```python
+    sidebar = html.Div(
+        [
+            html.H2("My Site", className="display-4"),
+            html.Hr(),
+            html.P(
+                "Navigation Menu", className="lead"
+            ),
+            dbc.Nav(
+                [
+                    dbc.NavLink("Home", href="/", active="exact"),
+                    dbc.NavLink("About", href="/about", active="exact"),
+                    dbc.NavLink("Contact", href="/contact", active="exact"),
+                ],
+                vertical=True,
+                pills=True,
+            ),
+        ],
+        style=SIDEBAR_STYLE,
+    )
+    ```
 
-> _Heroku is an application host. By hosting your app on Heroku, you will be able to access it from anywhere with an internet connection!_
+    <details>
+    <summary>What happens if you click the About or Contact button?</summary>
+    You will also notice an error message in the right hand corner of the screen: "Callback error updating page-content.children".
+    <br><br>
+    Clicking either of these buttons will try to redirect you to the /about or /contact pages, which have not been created yet. In the next section, we will create those pages. 
+    </details>
 
-Stick in there - you're doing great! Let's publish your changes online with Heroku. Like the idea of having a free python webhost? Me too!
+10. Add an _/about_ and _/contact_ Page
 
-Begin by creating a Heroku Account if you have not done so already: [Heroku Account Signup](https://signup.heroku.com/login). To upload your dash-tools application, run the following commands from the root of your MyApp directory.
+    The `def render_page_content(pathname):` method on line 72 is responsible for routing traffic in your app. Here, we will change `page-1` and `page-2` to work with the Home and About pages, as seen above.
 
-**Your project needs to be a git repository, type the following command in your console:**
+    Copy the following python snippet and replace the `render_page_content` method:
 
-```bash
-git init
-```
+    ```python
+    def render_page_content(pathname):
+        if pathname == "/":
+            return html.P("This is the content of the home page!")
+        elif pathname == "/about":
+            return html.P("This is your about page!")
+        elif pathname == "/contact":
+            return html.P("This is your contact page!")
+        # If the user tries to reach a different page, return a 404 message
+        return html.Div(
+            [
+                html.H1("404: Not found", className="text-danger"),
+                html.Hr(),
+                html.P(f"The pathname {pathname} was not recognised..."),
+            ]
+        )
+    ```
 
-**Next, to begin the upload process, type the following command in your console:**
+    <details>
+    <summary>What happens if you click the About or Contact button?</summary>
+    Congratulations! Your sidebar buttons will work now as you have linked the navigation links with the new page routing.
+    </details>
 
-```bash
-dash-tools --deploy-heroku
-```
+### Pushing App Changes to Heroku
 
-You will be prompted to choose either a unique Heroku name with the following criteria or have one generated for you. If you choose to create a name, make sure that:
+11. Make sure you are still in your project's root directory "MyApp"
 
-- Name is unique (not already taken)
-- At least 3 characters long
-- Starts with a letter, ends with a letter or digit
-- Only contains lowercase letters
-- Only contains letters, numbers and dashes
+12. After you are happy with your changes and verify that they work in browser, run the following command:
 
-That's really it. After you follow the on-screen instructions, your app will be uploaded for you, and you will be able to view it online!
+    ```bash
+    dashtools heroku --update
+    ```
 
-### 4.1 (Optional) Uploading an Existing App
+    The command will create a new commit and push it to the _heroku_ remote, created in the deploy step above. After the changes are received by heroku, your project will be re-built and re-deployed to the same web URL as before.
 
-Uploading an existing application without using a dash-tools template is easy. You need to make sure of the following:
+Congratulations, you have successfully made changes and updated your Heroku app!
 
-- Your project contains `src/app.py` application file
-- Your `src/app.py` file contains the `server = app.server` declaration for heroku
+## More Resources
 
-Since the deploy command will create your Procfile, runtime.txt and requirements.txt files for you, there is no need to worry about creating them yourself.
-
-To deploy, the next steps will be the same [as above](#4-deploy-to-heroku).
-
-## 5. Additional Info - Project Files
-
-As shown above in the [Creating Your App](#1-creating-your-app) section, the project directory contains boilerplate files:
-
-#### **Dash Files:**
-
-These files are necessary for your app to run.
-
-- `src/__init__.py` - _Declares the src directory as a python module_
-- `src/app.py` - _Main dash application file_
-
-#### **Heroku Files:**
-
-Files that are necessary to deploy your project to Heroku.
-
-- `Procfile` - _Specifies the commands that are executed by the app on Heroku startup_
-- `runtime.txt` - _Declares the python runtime version for heroku_
-
-> In the [Deploy to Heroku](#4-deploy-to-heroku) section, another necessary file will be generated automatically for you that isn't already included:
->
-> `requirements.txt` **(Not Created Yet)** - _List of required packages to include for Heroku_
-
-#### **Other Files:**
-
-Other files that are not required by either dash or Heroku.
-
-- `README.md`
-  - Markdown documentation file
+- [Readme](../README.md)
+- [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose)
+- [Troubleshooting](../README.md#troubleshooting)

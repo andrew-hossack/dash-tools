@@ -19,13 +19,9 @@ app.layout = html.Div([
     dcc.Graph(id="graph"),
 ])
 
-# Declare server for Heroku deplpoyment. Needed for Procfile.
-server = app.server
-
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("data").resolve()
-
 
 @app.callback(
     Output("graph", "figure"),
