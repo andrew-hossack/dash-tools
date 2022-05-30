@@ -8,6 +8,9 @@ from dashtools.deploy import deployHeroku
 import os
 import pkg_resources
 
+# TODO figure out which pip; pip3 or pip command. See configUtils for storing command and
+# runtimeUtils for implementation. If using python3 then pip3 is used.
+
 
 def _install_pip_requirement(requirement: str):
     '''
