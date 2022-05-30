@@ -142,13 +142,13 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 5. Run your app to ensure it works:
 
-   Windows
+   Linux and Mac OS
 
    ```bash
    python src/app.py
    ```
 
-   Linux and Mac OS
+   Windows
 
    ```bash
    python src\app.py
