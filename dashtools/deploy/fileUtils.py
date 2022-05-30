@@ -88,7 +88,7 @@ def verify_procfile(root_path: os.PathLike) -> dict:
             'hook': Hook name
         }
     """
-    with open(os.path.join(root_path, 'Procfile'), 'r') as procfile:
+    with open(os.path.join(root_path, 'Procfile'), 'r', encoding="utf8") as procfile:
         procfile_contents = procfile.read()
 
     # Look for --chdir somedir
@@ -126,7 +126,7 @@ def verify_procfile(root_path: os.PathLike) -> dict:
         }
 
     # Check that the hook exists in the module
-    with open(modpath, 'r') as modfile:
+    with open(modpath, 'r', encoding="utf8") as modfile:
         modfile_contents = modfile.read()
 
     # Look for the hook "{hook} =" or "{hook}=" with spaces and newlines
