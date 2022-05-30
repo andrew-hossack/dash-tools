@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.1] - 2022-05-29
+
+### Changed
+
+- Added utf8 encoding to verify_procfile method
+
 ## [1.5] - 2022-05-29
 
 ### Added / Changed
