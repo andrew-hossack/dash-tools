@@ -10,31 +10,36 @@ import webbrowser
 from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 
-def _check_required_files_exist(root_path: os.PathLike) -> bool:
+def _handle_heroku_files(root_path: os.PathLike) -> bool:
     """
     Check for Procfile, runtime.txt, requirements.txt
     """
-    deploy_should_continue = True
-    # Check if procfile exists
-    if not fileUtils.check_file_exists(root_path, 'Procfile'):
-        if prompt_user_choice(
-                'dashtools: Required file Procfile not found. Create one automatically?'):
+    procfile_exists = fileUtils.check_file_exists(root_path, 'Procfile')
+    runtime_exists = fileUtils.check_file_exists(root_path, 'runtime.txt')
+    requirements_exists = fileUtils.check_file_exists(
+        root_path, 'requirements.txt')
+
+    if not procfile_exists:
+        if prompt_user_choice('dashtools: Required file Procfile not found. Create one automatically?'):
             fileUtils.create_procfile(root_path)
-        else:
-            deploy_should_continue = False
-    # Check for the Runtime file
-    if (not fileUtils.check_file_exists(root_path, 'runtime.txt')) and deploy_should_continue:
-        if prompt_user_choice(
-                'dashtools: Required file runtime.txt not found. Create one automatically?'):
+            procfile_exists = True
+
+    if not runtime_exists:
+        if prompt_user_choice('dashtools: Required file runtime.txt not found. Create one automatically?'):
             fileUtils.create_runtime_txt(root_path)
-        else:
-            deploy_should_continue = False
-    # Check for the Requirements file
-    if (not fileUtils.check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
-        fileUtils.create_requirements_txt(root_path, update=False)
+            runtime_exists = True
+
+    if not requirements_exists:
+        if prompt_user_choice('dashtools: Required file requirements.txt not found. Create one automatically?'):
+            fileUtils.create_requirements_txt(root_path, update=False)
+            requirements_exists = True
     else:
+        # Update requirements.txt
         fileUtils.create_requirements_txt(root_path, update=True)
-    return deploy_should_continue
+
+    if not (procfile_exists and runtime_exists and requirements_exists):
+        print('dashtools: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        exit('dashtools: heroku: deploy: Aborted')
 
 
 def prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
@@ -239,10 +244,8 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
     # Get a unique app name
     heroku_app_name = _get_valid_app_name()
 
-    # Check that the project has necessary files
-    if not _check_required_files_exist(project_root_dir):
-        print('dashtools: Procfile, runtime.txt are needed for Heroku deployment.')
-        exit('dashtools: heroku: deploy: Aborted')
+    # Check that the project has necessary files, and generate them if not
+    _handle_heroku_files(project_root_dir)
 
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)
