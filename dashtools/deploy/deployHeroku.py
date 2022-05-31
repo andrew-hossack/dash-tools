@@ -165,25 +165,22 @@ def _get_valid_app_name() -> str:
     """
     Returns a unique and valid heroku app name
     """
-    heroku_app_name = herokuUtils.get_heroku_app_name()
-
-    # Wait for user to input a correct name
-    should_continue = False
-    while not should_continue:
+    should_loop = True
+    while should_loop:
+        # Generate new name
+        heroku_app_name = herokuUtils.get_heroku_app_name()
         # Check if the project already exists on Heroku if name is specified
         if not herokuUtils.check_heroku_app_name_available(heroku_app_name):
             print(
                 f'dashtools: App "{heroku_app_name}" already exists on Heroku!')
-            print(
-                'dashtools: Please choose a unique name that isn\'t already taken.')
-            heroku_app_name = herokuUtils.get_heroku_app_name()
+            print('dashtools: Please choose a unique name that isn\'t already taken.')
+        # Validate app name
         elif not herokuUtils.validate_heroku_app_name(heroku_app_name):
             print(
                 f'dashtools: App name "{heroku_app_name}" is not valid!')
             print('dashtools: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters.')
-            heroku_app_name = herokuUtils.get_heroku_app_name()
         else:
-            should_continue = True
+            should_loop = False
     return heroku_app_name
 
 
