@@ -177,7 +177,8 @@ A common use for Dash is to display CSV data that is located inside the project 
 
 ### C. Additional Examples
 
-[Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md)
+- [Charming Data Tutorial - Easiest Way to Deploy a Dash App to the Web](https://www.youtube.com/watch?v=Gv910_b5ID0)
+- [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md)
 
 ---
 
