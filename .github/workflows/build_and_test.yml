@@ -1,13 +1,13 @@
 name: Build and Test on Push or PR
 on: 
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   build-test-n-publish:
-    name: Build and publish Python distributions to PyPI and TestPyPI
+    name: Build and test Python distributions on push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
