@@ -241,11 +241,16 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
             else:
                 pass
 
-    # Get a unique app name
-    heroku_app_name = _get_valid_app_name()
+    # Check app.py file exists
+    if not fileUtils.app_root_path(project_root_dir):
+        print(f'dashtools: No app.py file found! Please create one.')
+        exit('dashtools: heroku: deploy: Failed')
 
     # Check that the project has necessary files, and generate them if not
     _handle_heroku_files(project_root_dir)
+
+    # Get a unique app name
+    heroku_app_name = _get_valid_app_name()
 
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)
