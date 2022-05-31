@@ -124,11 +124,13 @@ A common use for Dash is to display CSV data that is located inside the project 
    dashtools init MyCSVApp csv
    ```
 
-2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 13, 26, and 27.
+2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, 26, 27, and 31.
 
+   - 05: `import pathlib`
    - 13: `server = app.server`
    - 23: `PATH = pathlib.Path(__file__).parent`
    - 24: `DATA_PATH = PATH.joinpath("data").resolve()`
+   - 31: `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
 
 3. Replace the default CSV file in the `data` folder with your own CSV file
 
