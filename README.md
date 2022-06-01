@@ -8,8 +8,6 @@
 
 [![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | [![Downloads](https://pepy.tech/badge/dash-tools)](https://pepy.tech/project/dash-tools) | ![Build and Test](https://img.shields.io/github/workflow/status/andrew-hossack/dash-tools/Build%20and%20Test%20on%20Push%20or%20PR?label=Build%20and%20Test) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
 
-<hr>
-
 </div>
 
 ## **About**
@@ -17,6 +15,23 @@
 [**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to [Heroku](https://heroku.com/) has never been quicker.
 
 Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it.
+
+### Table of Contents
+
+- [Installation](#installation)
+- [Usage Examples](#usage-examples)
+  - [A. Create an App](#a-create-an-app)
+  - [B. Create an App with Local CSV sheet](#b-create-an-app-with-local-csv-sheet)
+  - [C. Additional Examples](#c-additional-examples)
+- [Templates](#templates)
+  - [Available Templates](#available-templates)
+  - [Format](#format)
+- [Commands](#commands)
+- [Troubleshooting](#troubleshooting)
+- [Development](#development)
+- [License](#license)
+
+---
 
 ## **Installation**
 
@@ -34,6 +49,8 @@ pip install dash-tools
 - **Heroku CLI** which can be downloaded [Here](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli)
 - **OS** Linux, MacOS, Windows
 - **Python Version** ≥ 3.6
+
+---
 
 ## **Usage Examples**
 
@@ -99,11 +116,6 @@ pip install dash-tools
    dashtools heroku --deploy
    ```
 
-   <details>
-     <summary>Alert!</summary>
-     After the `requirements.txt` file is created, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
-   </details>
-
 ![deploy-app](docs/readme/deploy-app.gif)
 
 #### Pushing App Changes to Heroku (Optional)
@@ -124,13 +136,13 @@ A common use for Dash is to display CSV data that is located inside the project 
    dashtools init MyCSVApp csv
    ```
 
-2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, 26, 27, and 31.
+2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, 14, 15, and 16.
 
    - 05: `import pathlib`
    - 13: `server = app.server`
-   - 23: `PATH = pathlib.Path(__file__).parent`
-   - 24: `DATA_PATH = PATH.joinpath("data").resolve()`
-   - 31: `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
+   - 14: `PATH = pathlib.Path(__file__).parent`
+   - 15: `DATA_PATH = PATH.joinpath("data").resolve()`
+   - 16: `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
 
 3. Replace the default CSV file in the `data` folder with your own CSV file
 
@@ -161,11 +173,6 @@ A common use for Dash is to display CSV data that is located inside the project 
    ```bash
    dashtools heroku --deploy
    ```
-
-    <details>
-     <summary>Alert!</summary>
-     After the `requirements.txt` file is created, compare the libraries your app is using with the libraries in the `requirements.txt` file. If your app uses additional libraries, make sure to add them to the requirements file before moving forward with the subsequent steps of deployment. 
-   </details>
 
 #### Pushing App Changes to Heroku (Optional)
 
@@ -294,7 +301,7 @@ Templates contain boilerplate code for projects, making it much easier to start 
 
 3. Follow the steps in Example A to replace default app with your own app and deploy to heroku.
 
-### **Format**
+### Format
 
 Templates may include different components, modules and layouts. They have the following format:
 
@@ -317,6 +324,8 @@ AppName
 **[1]** _Created during deployment_
 
 **[2]** _Not included in all templates_
+
+---
 
 ## **Commands**
 
@@ -341,6 +350,8 @@ AppName
 
 - **`--help, -h`** Display help message
 - **`--version, -v`** Display version
+
+---
 
 ## **Troubleshooting**
 

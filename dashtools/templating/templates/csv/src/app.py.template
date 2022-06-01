@@ -11,6 +11,9 @@ app = Dash(__name__, title="{appName}")
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
+PATH = pathlib.Path(__file__).parent
+DATA_PATH = PATH.joinpath("data").resolve()
+csv_data = pd.read_csv(DATA_PATH.joinpath("2014_apple_stock.csv"))
 
 app.layout = html.Div([
     html.H4('Simple stock plot with adjustable axis'),
@@ -19,16 +22,12 @@ app.layout = html.Div([
     dcc.Graph(id="graph"),
 ])
 
-# get relative data folder
-PATH = pathlib.Path(__file__).parent
-DATA_PATH = PATH.joinpath("data").resolve()
-
 @app.callback(
     Output("graph", "figure"),
     Input("button", "n_clicks"))
 def display_graph(n_clicks):
     # replace with your own data source
-    df = pd.read_csv(DATA_PATH.joinpath("2014_apple_stock.csv"))
+    df = csv_data
 
     if n_clicks % 2 == 0:
         x, y = 'AAPL_x', 'AAPL_y'

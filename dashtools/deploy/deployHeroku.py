@@ -178,7 +178,7 @@ def _get_valid_app_name() -> str:
         elif not herokuUtils.validate_heroku_app_name(heroku_app_name):
             print(
                 f'dashtools: App name "{heroku_app_name}" is not valid!')
-            print('dashtools: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters.')
+            print('dashtools: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters and maximum length of 30 characters.')
         else:
             should_loop = False
     return heroku_app_name
@@ -240,7 +240,7 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
 
     # Check app.py file exists
     if not fileUtils.app_root_path(project_root_dir):
-        print(f'dashtools: No app.py file found! Please create one.')
+        print(f'dashtools: No app.py file found! An app.py file is required to deploy your app.')
         exit('dashtools: heroku: deploy: Failed')
 
     # Check that the project has necessary files, and generate them if not

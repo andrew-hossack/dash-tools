@@ -117,12 +117,13 @@ def validate_heroku_app_name(heroku_app_name) -> bool:
     Heroku app names must start with a letter, end with a
     letter or digit, can only contain lowercase letters,
     numbers, and dashes, and have a minimum length of 3 characters.
+    Maximum 30 characters.
 
     Returns:
         True if valid
         False if invalid
     """
-    regex = r'^[a-z][a-z0-9-]{2,}$'
+    regex = r'^[a-z][a-z0-9-]{2,29}$'
     if re.search(regex, heroku_app_name):
         if heroku_app_name[-1] == '-':
             return False
