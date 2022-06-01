@@ -12,17 +12,27 @@
 
 ## **About**
 
-[**dashtools**](https://github.com/andrew-hossack/dash-tools) is an open-source toolchain for [Plotly Dash](https://dash.plotly.com/introduction). With a user-friendly command line interface, creating Dash applications and deploying them to [Heroku](https://heroku.com/) has never been quicker.
+[**DashTools**](https://github.com/andrew-hossack/dash-tools) is an open-source command line toolchain for [Plotly Dash](https://dash.plotly.com/introduction) that makes creating and deploying dash projects to [Heroku](https://heroku.com/) intuitive and easy.
 
-Includes user and developer-friendly app templates where generating a new app only takes seconds. In fact, it will take longer to install this tool than it will to use it.
+### Key Features
+
+- Deploy your app to Heroku with one command
+- Create an initial deploy-ready dash app template with one command
+- Many different included templates for creating apps:
+  - Tabs
+  - Sidebar
+  - Multipage
+  - CSV Loading
+  - ... And Many More!
 
 ### Table of Contents
 
 - [Installation](#installation)
 - [Usage Examples](#usage-examples)
-  - [A. Create an App](#a-create-an-app)
-  - [B. Create an App with Local CSV sheet](#b-create-an-app-with-local-csv-sheet)
-  - [C. Additional Examples](#c-additional-examples)
+  - [A. Deploy an App to Heroku](#a-deploy-an-app-to-heroku)
+  - [B. Create an App](#b-create-an-app)
+  - [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
+  - [D. Additional Examples](#d-additional-examples)
 - [Templates](#templates)
   - [Available Templates](#available-templates)
   - [Format](#format)
@@ -41,20 +51,49 @@ Ready to use **dashtools**? Installation is easy with pip:
 pip install dash-tools
 ```
 
-[Find dash-tools on PyPi](https://pypi.org/project/dash-tools/)
+> [Find dash-tools on PyPi](https://pypi.org/project/dash-tools/)
 
 #### Requires:
 
-- **Git CLI** which can be downloaded [Here](https://git-scm.com/downloads)
-- **Heroku CLI** which can be downloaded [Here](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli)
-- **OS** Linux, MacOS, Windows
+- **Git CLI** - [Download Here](https://git-scm.com/downloads)
+- **Heroku CLI** - [Download Here](https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli)
+- **OS** - Linux, MacOS, Windows
 - **Python Version** ≥ 3.6
 
 ---
 
 ## **Usage Examples**
 
-### A. Create an App
+### A. Deploy an App to Heroku
+
+> Note: If your app includes data files such as CSV, make sure to follow Usage Example [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
+
+1. Make sure you are in your project's root directory. Replace "MyApp" below with the top-level directory name of your app:
+
+   ```bash
+   cd MyApp
+   ```
+
+2. Verify that your app is ready to be deployed to Heroku:
+
+- Your project contains an **app.py** file
+
+- Your **app.py** file has a server declaration:
+
+  ```bash
+  # 'app = Dash(...)' is declared above
+  server = app.server
+  ```
+
+- Verify that running your app locally produces no errors
+
+3. Deploy to Heroku:
+
+   ```bash
+   dashtools heroku --deploy
+   ```
+
+### B. Create an App
 
 1. Create a Dash project in a new directory called "MyDashApp" (using your terminal or command prompt):
    <details>
@@ -126,7 +165,7 @@ pip install dash-tools
    dashtools heroku --update
    ```
 
-### B. Create an App with Local CSV sheet
+### C. Create an App with Local CSV sheet
 
 A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
 
@@ -182,7 +221,7 @@ A common use for Dash is to display CSV data that is located inside the project 
    dashtools heroku --update
    ```
 
-### C. Additional Examples
+### D. Additional Examples
 
 - [Charming Data Tutorial - Easiest Way to Deploy a Dash App to the Web](https://www.youtube.com/watch?v=Gv910_b5ID0)
 - [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md)
