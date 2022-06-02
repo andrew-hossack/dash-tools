@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added / Changed
 
 - Generate Procfile programatically based on location of `app,py` file. This allows users to upload any app to Heroku without needing a Procfile, requirements or runtime file.
+- Added retry for random heroku name generation
+- Added verify pip command workds on user system after init
+- Updated README
 
 ## [1.5.1] - 2022-05-29
 
