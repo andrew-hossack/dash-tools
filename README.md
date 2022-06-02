@@ -66,9 +66,11 @@ pip install dash-tools
 
 ### A. Deploy an App to Heroku
 
-> Note: If your app includes data files such as CSV, make sure to follow Usage Example [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
+1. Make sure you are in your project's root directory. For example, your project folder structure might look like this:
+   > - MyApp<br>
+   >   |-- app.py
 
-1. Make sure you are in your project's root directory. Replace "MyApp" below with the top-level directory name of your app:
+   Replace "MyApp" below with the directory name of your project, and go into that directory:
 
    ```bash
    cd MyApp
@@ -76,18 +78,37 @@ pip install dash-tools
 
 2. Verify that your app is ready to be deployed to Heroku:
 
-- Your project contains an **app.py** file
+   - Your project must contain an **app.py** file
 
-- Your **app.py** file has a server declaration:
+   - Your **app.py** file has a server declaration:
+   
+    ```bash
+    # 'app = Dash(...)' is declared above
+    server = app.server
+    ```
+3. If your app has local csv or excel sheets, read below. Otherwise, skip to step 4.
+   <details>
+     <summary>Requirements</summary>
+  
+     A. Your project folder structure should have a data folder that contains the csv/excel shee. For example:
+    
+     > - MyApp<br>
+     >  |-- app.py<br>
+     >  |-- data<br>
+     >    |-- YourCsvFileName.csv
+   
+     B. Make sure that your app.py file has the following lines of code at the top:
+  
+        - `import pathlib`
+        - `PATH = pathlib.Path(__file__).parent`
+        - `DATA_PATH = PATH.joinpath("data").resolve()`
+        - `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
+  
+   </details>
+   
+4. Verify that running your app locally produces no errors
 
-  ```bash
-  # 'app = Dash(...)' is declared above
-  server = app.server
-  ```
-
-- Verify that running your app locally produces no errors
-
-3. Deploy to Heroku:
+5. Deploy to Heroku:
 
    ```bash
    dashtools heroku --deploy
@@ -165,63 +186,7 @@ pip install dash-tools
    dashtools heroku --update
    ```
 
-### C. Create an App with Local CSV sheet
-
-A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
-
-1. Using App template with CSV
-
-   ```bash
-   dashtools init MyCSVApp csv
-   ```
-
-2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, 14, 15, and 16.
-
-   - 05: `import pathlib`
-   - 13: `server = app.server`
-   - 14: `PATH = pathlib.Path(__file__).parent`
-   - 15: `DATA_PATH = PATH.joinpath("data").resolve()`
-   - 16: `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
-
-3. Replace the default CSV file in the `data` folder with your own CSV file
-
-4. Make sure you are in your project's root directory:
-
-   ```bash
-   cd MyCSVApp
-   ```
-
-5. Run your app to ensure it works:
-
-   Linux and Mac OS
-
-   ```bash
-   python src/app.py
-   ```
-
-   Windows
-
-   ```bash
-   python src\app.py
-   ```
-
-#### Deploy App to Web with Heroku
-
-6. Deploy to Heroku:
-
-   ```bash
-   dashtools heroku --deploy
-   ```
-
-#### Pushing App Changes to Heroku (Optional)
-
-7. If you make changes to your app after deploying it, push them to Heroku using:
-
-   ```bash
-   dashtools heroku --update
-   ```
-
-### D. Additional Examples
+### C. Additional Examples
 
 - [Charming Data Tutorial - Easiest Way to Deploy a Dash App to the Web](https://www.youtube.com/watch?v=Gv910_b5ID0)
 - [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md)
