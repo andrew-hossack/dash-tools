@@ -8,8 +8,8 @@
 import os
 import subprocess
 from typing import Union
-from dashtools.deploy import fileUtils
 from dashtools.data import configUtils
+from dashtools.deploy import fileUtils
 
 
 def _is_correct_python_command(command: str) -> bool:
