@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2022-06-01
+
+### Added / Changed
+
+- Generate Procfile programatically based on location of `app,py` file. This allows users to upload any app to Heroku without needing a Procfile, requirements or runtime file.
+
 ## [1.5.1] - 2022-05-29
 
 ### Changed

@@ -155,7 +155,7 @@ def update_heroku_app(project_root: os.PathLike, remote: str = 'heroku'):
     if fileUtils.check_file_exists(project_root, 'requirements.txt'):
         fileUtils.create_requirements_txt(project_root, update=True)
     if not _add_changes_and_push_to_heroku('update', remote=remote):
-        print(f'dashtools: Unable to update heroku app. Is the project already deployed?')
+        print(f'dashtools: Unable to update heroku app. Project must be deployed to heroku before updating.')
         exit('dashtools: heroku: update: Failed')
     print('dashtools: Changes pushed to {remote} remote')
     exit('dashtools: heroku: update: Success')

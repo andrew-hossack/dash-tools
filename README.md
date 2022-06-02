@@ -3,7 +3,7 @@
 ![](docs/readme/logo.png)
 
 <h3>
-<b><i>Create, Run and Deploy Templated Plotly Dash Apps from Terminal</i></b>
+<b><i>Create, Run and Deploy Plotly Dash Apps from Terminal</i></b>
 </h3>
 
 [![GitHub](https://img.shields.io/github/stars/andrew-hossack/dash-tools?style=flat-square)](https://github.com/andrew-hossack/dash-tools) | [![Pypi](https://img.shields.io/pypi/v/dash-tools?style=flat-square)](https://pypi.org/project/dash-tools/) | [![Downloads](https://pepy.tech/badge/dash-tools)](https://pepy.tech/project/dash-tools) | ![Build and Test](https://img.shields.io/github/workflow/status/andrew-hossack/dash-tools/Build%20and%20Test%20on%20Push%20or%20PR?label=Build%20and%20Test) | ![License](https://img.shields.io/github/license/andrew-hossack/dash-tools)
@@ -14,25 +14,21 @@
 
 [**DashTools**](https://github.com/andrew-hossack/dash-tools) is an open-source command line toolchain for [Plotly Dash](https://dash.plotly.com/introduction) that makes creating and deploying dash projects to [Heroku](https://heroku.com/) intuitive and easy.
 
-### Key Features
+### Key Features:
 
-- Deploy your app to Heroku with one command
-- Create an initial deploy-ready dash app template with one command
-- Many different included templates for creating apps:
-  - Tabs
-  - Sidebar
-  - Multipage
-  - CSV Loading
-  - ... And Many More!
+1. Deploy your app to Heroku with one command
+2. Generate Procfile, requirements.txt and runtime.txt automatically on deploy
+3. Create a boilerplate dash apps with one command
+4. Choose from many different boilerplate templates for creating apps
 
 ### Table of Contents
 
 - [Installation](#installation)
 - [Usage Examples](#usage-examples)
-  - [A. Deploy an App to Heroku](#a-deploy-an-app-to-heroku)
+  - [A. Deploying and Updating a Deployed App with Heroku](#a-deploying-and-updating-a-deployed-app-with-heroku)
   - [B. Create an App](#b-create-an-app)
   - [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
-  - [D. Additional Examples](#d-additional-examples)
+  - [D. Additional Resources](#d-additional-resources)
 - [Templates](#templates)
   - [Available Templates](#available-templates)
   - [Format](#format)
@@ -64,9 +60,11 @@ pip install dash-tools
 
 ## **Usage Examples**
 
-### A. Deploy an App to Heroku
+### A. Deploying and Updating a Deployed App with Heroku
 
-> Note: If your app includes data files such as CSV, make sure to follow Usage Example [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
+#### Deploying an App
+
+> **Note:** If your app includes data files such as CSV, make sure to follow Usage Example [C. Create an App with Local CSV sheet](#c-create-an-app-with-local-csv-sheet)
 
 1. Make sure you are in your project's root directory. Replace "MyApp" below with the top-level directory name of your app:
 
@@ -74,23 +72,30 @@ pip install dash-tools
    cd MyApp
    ```
 
-2. Verify that your app is ready to be deployed to Heroku:
+2. If you did not create a boilerplate app using dashtools [init](#commands), you must verify that your app is ready to be deployed to Heroku. Make sure that your project meets the following requirements:
 
-- Your project contains an **app.py** file
+- Your project must contain an **app.py** file
 
-- Your **app.py** file has a server declaration:
+- Your **app.py** file must contain a server declaration under the `app = Dash(...)` declaration:
 
   ```bash
-  # 'app = Dash(...)' is declared above
   server = app.server
   ```
 
-- Verify that running your app locally produces no errors
-
-3. Deploy to Heroku:
+3. Deploying to Heroku is made simple with the following command:
 
    ```bash
    dashtools heroku --deploy
+   ```
+
+#### Updating an App
+
+> **Note:** Updates can only be pushed to projects that are already deployed on Heroku via above example [Deploying an App](#deploying-an-app)
+
+4. From the project's root directory, or the "MyApp" directory in the example above, run the following update command to push all changes to your deployed Heroku app:
+
+   ```bash
+   dashtools heroku --update
    ```
 
 ### B. Create an App
@@ -147,27 +152,9 @@ pip install dash-tools
    python src\app.py
    ```
 
-#### Deploy App to Web with Heroku
-
-6. Deploy to Heroku:
-
-   ```bash
-   dashtools heroku --deploy
-   ```
-
-![deploy-app](docs/readme/deploy-app.gif)
-
-#### Pushing App Changes to Heroku (Optional)
-
-7. If you make changes to your app after deploying it, push them to Heroku using:
-
-   ```bash
-   dashtools heroku --update
-   ```
-
 ### C. Create an App with Local CSV sheet
 
-A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV DashTools template to create a project with CSV data.
+A common use for Dash is to display CSV data that is located inside the project folder. For this, you can use the CSV dashtools [template](#templates) to create a project with CSV data.
 
 1. Using App template with CSV
 
@@ -175,13 +162,11 @@ A common use for Dash is to display CSV data that is located inside the project 
    dashtools init MyCSVApp csv
    ```
 
-2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, 14, 15, and 16.
+2. Replace the code in `app.py` with your own app's code, like shown in **example A** above. Make sure to keep code lines 5, 13, and 15.
 
    - 05: `import pathlib`
    - 13: `server = app.server`
-   - 14: `PATH = pathlib.Path(__file__).parent`
-   - 15: `DATA_PATH = PATH.joinpath("data").resolve()`
-   - 16: `df = pd.read_csv(DATA_PATH.joinpath("YourCsvFileName.csv"))`
+   - 15: `load_data()` method
 
 3. Replace the default CSV file in the `data` folder with your own CSV file
 
@@ -205,23 +190,7 @@ A common use for Dash is to display CSV data that is located inside the project 
    python src\app.py
    ```
 
-#### Deploy App to Web with Heroku
-
-6. Deploy to Heroku:
-
-   ```bash
-   dashtools heroku --deploy
-   ```
-
-#### Pushing App Changes to Heroku (Optional)
-
-7. If you make changes to your app after deploying it, push them to Heroku using:
-
-   ```bash
-   dashtools heroku --update
-   ```
-
-### D. Additional Examples
+### D. Additional Resources
 
 - [Charming Data Tutorial - Easiest Way to Deploy a Dash App to the Web](https://www.youtube.com/watch?v=Gv910_b5ID0)
 - [Tutorial - Making Changes and Deploying to Heroku](docs/Configuring-Your-App.md)
