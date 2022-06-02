@@ -18,7 +18,7 @@
 
 1. Deploy your app to Heroku with one command
 2. Generate Procfile, requirements.txt and runtime.txt automatically on deploy
-3. Create a boilerplate dash apps with one command
+3. Create boilerplate dash apps with one command
 4. Choose from many different boilerplate templates for creating apps
 
 ### Table of Contents
