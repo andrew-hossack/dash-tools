@@ -357,6 +357,14 @@ AppName
 
 Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose).
 
+<details><summary>Command 'dashtools' is not recognized (windows)</summary>
+
+_Problem:_ You encounter an error "The term 'dashtools' is not recognized as the name of a cmdlet, function, script file, or operable program" when trying to run the dashtools command on Windows.
+
+_Solution:_ Run the command with .\dashtools instead. You may need to add dashtools to your system path variables.
+
+</details>
+
 <details><summary>Common heroku --deploy Issues</summary>
 
 <details><summary>&ensp;&ensp;&ensp;&ensp;Error when creating requirements.txt file</summary>

@@ -7,7 +7,6 @@ import os
 import re
 import subprocess
 from typing import Union
-from dashtools.runtime import runtimeUtils
 
 
 def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
