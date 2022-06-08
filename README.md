@@ -70,7 +70,7 @@ Example A assumes you already have a functioninig app that you would like to dep
    ```
    MyApp
    |-- app.py
-   └-- ...
+   └── ...
    ```
 
    Replace "MyApp" below with the directory name of your project, and go into that directory:
