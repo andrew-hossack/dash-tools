@@ -99,8 +99,8 @@ Example A assumes you already have a functioninig app that you would like to dep
    MyApp
    |-- app.py
    |-- ...
-   └-- data
-       └-- YourCsvFileName.csv
+   └── data
+       └── YourCsvFileName.csv
    ```
 
    B. Make sure that your app.py file has the following lines of code:
