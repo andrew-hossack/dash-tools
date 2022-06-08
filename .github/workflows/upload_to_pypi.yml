@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test-n-publish:
-    name: Build and publish Python distributions to PyPI and TestPyPI
+    name: Build test and publish Python distributions to PyPI on release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -40,3 +40,17 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: Github Actions job result
+          to: andrew_hossack@outlook.com
+          from: GitHub Actions
+          secure: true
+          body: PyPi deploy job of ${{github.repository}} completed successfully!
+          ignore_cert: true
+          priority: normal

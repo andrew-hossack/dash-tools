@@ -10,31 +10,36 @@ import webbrowser
 from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 
-def _check_required_files_exist(root_path: os.PathLike) -> bool:
+def _handle_heroku_files(root_path: os.PathLike) -> bool:
     """
     Check for Procfile, runtime.txt, requirements.txt
     """
-    deploy_should_continue = True
-    # Check if procfile exists
-    if not fileUtils.check_file_exists(root_path, 'Procfile'):
-        if prompt_user_choice(
-                'dashtools: Required file Procfile not found. Create one automatically?'):
+    procfile_exists = fileUtils.check_file_exists(root_path, 'Procfile')
+    runtime_exists = fileUtils.check_file_exists(root_path, 'runtime.txt')
+    requirements_exists = fileUtils.check_file_exists(
+        root_path, 'requirements.txt')
+
+    if not procfile_exists:
+        if prompt_user_choice('dashtools: Required file Procfile not found. Create one automatically?'):
             fileUtils.create_procfile(root_path)
-        else:
-            deploy_should_continue = False
-    # Check for the Runtime file
-    if (not fileUtils.check_file_exists(root_path, 'runtime.txt')) and deploy_should_continue:
-        if prompt_user_choice(
-                'dashtools: Required file runtime.txt not found. Create one automatically?'):
+            procfile_exists = True
+
+    if not runtime_exists:
+        if prompt_user_choice('dashtools: Required file runtime.txt not found. Create one automatically?'):
             fileUtils.create_runtime_txt(root_path)
-        else:
-            deploy_should_continue = False
-    # Check for the Requirements file
-    if (not fileUtils.check_file_exists(root_path, 'requirements.txt')) and deploy_should_continue:
-        fileUtils.create_requirements_txt(root_path, update=False)
+            runtime_exists = True
+
+    if not requirements_exists:
+        if prompt_user_choice('dashtools: Required file requirements.txt not found. Create one automatically?'):
+            fileUtils.create_requirements_txt(root_path, update=False)
+            requirements_exists = True
     else:
+        # Update requirements.txt
         fileUtils.create_requirements_txt(root_path, update=True)
-    return deploy_should_continue
+
+    if not (procfile_exists and runtime_exists and requirements_exists):
+        print('dashtools: Procfile, runtime.txt, and requirements.txt are needed for Heroku deployment.')
+        exit('dashtools: heroku: deploy: Aborted')
 
 
 def prompt_user_choice(message: str, prompt: str = 'Continue? (y/n) > ', does_repeat: bool = True) -> bool:
@@ -150,7 +155,7 @@ def update_heroku_app(project_root: os.PathLike, remote: str = 'heroku'):
     if fileUtils.check_file_exists(project_root, 'requirements.txt'):
         fileUtils.create_requirements_txt(project_root, update=True)
     if not _add_changes_and_push_to_heroku('update', remote=remote):
-        print(f'dashtools: Unable to update heroku app. Is the project already deployed?')
+        print(f'dashtools: Unable to update heroku app. Project must be deployed to heroku before updating.')
         exit('dashtools: heroku: update: Failed')
     print('dashtools: Changes pushed to {remote} remote')
     exit('dashtools: heroku: update: Success')
@@ -160,25 +165,22 @@ def _get_valid_app_name() -> str:
     """
     Returns a unique and valid heroku app name
     """
-    heroku_app_name = herokuUtils.get_heroku_app_name()
-
-    # Wait for user to input a correct name
-    should_continue = False
-    while not should_continue:
+    should_loop = True
+    while should_loop:
+        # Generate new name
+        heroku_app_name = herokuUtils.get_heroku_app_name()
         # Check if the project already exists on Heroku if name is specified
         if not herokuUtils.check_heroku_app_name_available(heroku_app_name):
             print(
                 f'dashtools: App "{heroku_app_name}" already exists on Heroku!')
-            print(
-                'dashtools: Please choose a unique name that isn\'t already taken.')
-            heroku_app_name = herokuUtils.get_heroku_app_name()
+            print('dashtools: Please choose a unique name that isn\'t already taken.')
+        # Validate app name
         elif not herokuUtils.validate_heroku_app_name(heroku_app_name):
             print(
                 f'dashtools: App name "{heroku_app_name}" is not valid!')
-            print('dashtools: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters.')
-            heroku_app_name = herokuUtils.get_heroku_app_name()
+            print('dashtools: Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters and maximum length of 30 characters.')
         else:
-            should_continue = True
+            should_loop = False
     return heroku_app_name
 
 
@@ -236,13 +238,16 @@ def deploy_app_to_heroku(project_root_dir: os.PathLike):
             else:
                 pass
 
+    # Check app.py file exists
+    if not fileUtils.app_root_path(project_root_dir):
+        print(f'dashtools: No app.py file found! An app.py file is required to deploy your app.')
+        exit('dashtools: heroku: deploy: Failed')
+
+    # Check that the project has necessary files, and generate them if not
+    _handle_heroku_files(project_root_dir)
+
     # Get a unique app name
     heroku_app_name = _get_valid_app_name()
-
-    # Check that the project has necessary files
-    if not _check_required_files_exist(project_root_dir):
-        print('dashtools: Procfile, runtime.txt are needed for Heroku deployment.')
-        exit('dashtools: heroku: deploy: Aborted')
 
     # Check procfile is correct
     procfile = fileUtils.verify_procfile(project_root_dir)

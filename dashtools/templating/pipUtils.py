@@ -3,13 +3,25 @@
  # @ Create Time: 2022-05-24 17:46:41
 '''
 
+import subprocess
 from dashtools.templating import buildApp
 from dashtools.deploy import deployHeroku
 import os
 import pkg_resources
 
-# TODO figure out which pip; pip3 or pip command. See configUtils for storing command and
-# runtimeUtils for implementation. If using python3 then pip3 is used.
+
+def _check_pip_installed() -> bool:
+    """
+    Check if pip is installed
+    """
+    try:
+        subprocess.check_output(
+            'pip --version',
+            shell=True,
+            stderr=subprocess.DEVNULL)
+        return True
+    except subprocess.CalledProcessError:
+        return False
 
 
 def _install_pip_requirement(requirement: str):
@@ -41,9 +53,12 @@ def _check_pip_requirements(requirements: list, template_value: str):
         if not _check_pip_requirement_installed(req):
             print(
                 f'dashtools: Template {template_value} requires pip module {req}, which is not installed')
-            if deployHeroku.prompt_user_choice(f'dashtools: Install {req}?'):
-                _install_pip_requirement(req)
-                print()
+            if _check_pip_installed():
+                if deployHeroku.prompt_user_choice(f'dashtools: Install {req}?'):
+                    _install_pip_requirement(req)
+                    print()
+            else:
+                print(f'dashtools: Please install {req} manually')
 
 
 def _get_template_required_packages(template_value: str) -> list:

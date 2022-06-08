@@ -6,6 +6,7 @@
 import os
 import re
 import subprocess
+from typing import Union
 
 
 def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
@@ -63,13 +64,32 @@ def create_runtime_txt(root_path: os.PathLike):
     print('dashtools: Created runtime.txt using python-3.8.10')
 
 
+def app_root_path(root_path: os.PathLike) -> Union[os.PathLike, None]:
+    """
+    Look for an app.py file in the directory recursively
+
+    Returns:
+        Path to app.py file if found, else None
+    """
+    # Find app.py file in the root_path directory
+    app_path = None
+    for root, _, files in os.walk(root_path):
+        if 'app.py' in files:
+            app_path = root
+            break
+    return app_path
+
+
 def create_procfile(root_path: os.PathLike):
     """
     Create a procfile but prompt the user to verify it before continuing.
     """
+    app_path = app_root_path(root_path)
+    rel_path = os.path.relpath(app_path, root_path)
+    chdir = f'{" --chdir " + rel_path if rel_path != "." else ""}'
     with open(os.path.join(root_path, 'Procfile'), 'w') as procfile:
         procfile.write(
-            f'web: gunicorn --timeout 600 --chdir src app:server')
+            f'web: gunicorn{chdir if len(chdir) > 0 else ""} app:server')
     print(f'dashtools: Created Procfile')
 
 

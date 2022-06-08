@@ -85,6 +85,16 @@ def create_app_on_heroku(app_name: str) -> bool:
     return True
 
 
+def _generate_app_name():
+    # Generate a random app name with three words
+    app_name = '-'.join(randomWords.get_words(3))
+    # Append alphanumeric characters to the end of the app name
+    # eg. apple-banana-pear-1g3f
+    app_name += f"-{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
+    app_name = app_name.lower()
+    return app_name
+
+
 def get_heroku_app_name():
     """
     Create or generate app name if one isn't provided
@@ -92,11 +102,13 @@ def get_heroku_app_name():
     print('dashtools: Please type a unique app name or press enter to generate one automatically.')
     app_name = input('dashtools: App Name (Optional) > ')
     if app_name == '':
-        # Generate a random app name with three words
-        app_name = '-'.join(randomWords.get_words(3))
-        # Append alphanumeric characters to the end of the app name
-        app_name += f"-{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
-    print(f'dashtools: Using app name "{app_name}"')
+        while True:
+            app_name = _generate_app_name()
+            print(f'dashtools: Generated app name "{app_name}"')
+            if input('dashtools: Continue with this name or regenerate?\ndashtools: (Continue: y, Regenerate: n) > ') == 'y':
+                break
+    else:
+        print(f'dashtools: Using app name "{app_name}"')
     return app_name
 
 
@@ -105,12 +117,13 @@ def validate_heroku_app_name(heroku_app_name) -> bool:
     Heroku app names must start with a letter, end with a
     letter or digit, can only contain lowercase letters,
     numbers, and dashes, and have a minimum length of 3 characters.
+    Maximum 30 characters.
 
     Returns:
         True if valid
         False if invalid
     """
-    regex = r'^[a-z][a-z0-9-]{2,}$'
+    regex = r'^[a-z][a-z0-9-]{2,29}$'
     if re.search(regex, heroku_app_name):
         if heroku_app_name[-1] == '-':
             return False

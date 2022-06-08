@@ -8,8 +8,8 @@
 import os
 import subprocess
 from typing import Union
-from dashtools.deploy.fileUtils import verify_procfile, check_file_exists
 from dashtools.data import configUtils
+from dashtools.deploy import fileUtils
 
 
 def _is_correct_python_command(command: str) -> bool:
@@ -74,10 +74,10 @@ def _run_from_app(root_path: os.PathLike):
     """
     Try looking for an app.py file in the directory recursively
     """
-    # Find app.py file in the root_path directory
-    for root, _, files in os.walk(root_path):
-        if 'app.py' in files:
-            break
+    # Find app.py file in the root_path director
+    root = fileUtils.app_root_path(root_path)
+    if not root:
+        exit('dashtools: run: No app.py file found')
     try:
         print(
             f'dashtools: Running From {root + "/" if root else ""}app.py')
@@ -86,8 +86,9 @@ def _run_from_app(root_path: os.PathLike):
         # This means that if no app file is found, an error will be printed to screen
         # And cannot be handled in a cleaner way
         os.system(f'{_python_shell_cmd()} app.py')
+        return
     except Exception:
-        exit('dashtools: run: No app.py file found')
+        pass
 
 
 def run_app(root_path: os.PathLike):
@@ -95,8 +96,8 @@ def run_app(root_path: os.PathLike):
     Look for a Procfile to run the app, else recursive search for app.py file
     '''
     # Check Procfile exists
-    if check_file_exists(root_path, 'Procfile'):
-        proc = verify_procfile(root_path)
+    if fileUtils.check_file_exists(root_path, 'Procfile'):
+        proc = fileUtils.verify_procfile(root_path)
         if proc['valid']:
             print('dashtools: Running From Procfile')
             os.chdir(root_path)
