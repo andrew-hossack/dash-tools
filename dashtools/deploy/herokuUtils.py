@@ -104,9 +104,10 @@ def get_heroku_app_name():
     if app_name == '':
         while True:
             app_name = _generate_app_name()
-            print(f'dashtools: Generated app name "{app_name}"')
-            if input('dashtools: Continue with this name or regenerate?\ndashtools: (Continue: y, Regenerate: n) > ') == 'y':
-                break
+            if validate_heroku_app_name(app_name):
+                print(f'dashtools: Generated app name "{app_name}"')
+                if input('dashtools: Continue with this name or regenerate?\ndashtools: (Continue: y, Regenerate: n) > ') == 'y':
+                    break
     else:
         print(f'dashtools: Using app name "{app_name}"')
     return app_name
