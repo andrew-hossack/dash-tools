@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2022-06-12
+
+### Added / Changed
+
+- Verify generated heroku app name on deploy. This fixes bug where generated name is too long or invalid.
+
 ## [1.6.0] - 2022-06-05
 
 ### Added / Changed
