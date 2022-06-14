@@ -69,23 +69,25 @@ Example A assumes you already have a functioninig app that you would like to dep
 
    ```
    MyApp
-   |-- app.py
-   └── ...
+   └── src
+       |-- app.py
+       └── ...
    ```
 
-   Replace "MyApp" below with the directory name of your project, and go into that directory:
+   In your terminal or command prompt, replace "MyApp" below with the root directory name of your project, and go into that directory:
 
    ```bash
    cd MyApp
    ```
 
-2. If you did not create a boilerplate app using dashtools [init](#commands), you must verify that your app is ready to be deployed to Heroku:
+2. If you did not [create a boilerplate app](#b-create-an-app) using dashtools, you must verify that your app is ready to be deployed to Heroku:
 
    - Your project must contain an **app.py** file
 
-   - Your **app.py** file must contain a server declaration under the `app = Dash(...)` declaration:
+   - Your **app.py** file must contain a `server` variable after your initialize your app:
 
-   ```bash
+   ```python
+   app = Dash(__name__)
    server = app.server
    ```
 
@@ -97,16 +99,31 @@ Example A assumes you already have a functioninig app that you would like to dep
 
    ```
    MyApp
-   |-- app.py
-   |-- ...
+   |── src
+   |   |-- app.py
+   |   └── ...
    └── data
        └── YourCsvFileName.csv
    ```
 
-   B. Make sure that your app.py file has the following lines of code:
+   B. When loading in CSV data, make sure to use the correct path to the data file, as seen below:
 
-   - `import pathlib`
-   - `load_data()` method
+   ```python
+   import pandas as pd
+   import pathlib
+
+   def get_pandas_data(csv_filename: str) -> pd.DataFrame:
+      '''
+      Load data from /data directory as a pandas DataFrame
+      using relative paths. Relative paths are necessary for
+      data loading to work in Heroku.
+      '''
+      PATH = pathlib.Path(__file__).parent
+      DATA_PATH = PATH.joinpath("data").resolve()
+      return pd.read_csv(DATA_PATH.joinpath(csv_filename))
+
+   my_csv_dataframe = get_pandas_data("MyCSVFile.csv")
+   ```
 
    </details>
 
@@ -132,7 +149,7 @@ Updates can only be pushed to projects that are already deployed on Heroku via a
 
 1. Create a Dash project in a new directory called "MyDashApp" (using your terminal or command prompt):
    <details>
-     <summary>Note</summary>
+     <summary>Naming Note</summary>
      "MyDashApp" can be changed to any name. However, for the purpose of this tutorial, we recommend keeping it as "MyDashApp".
    </details>
 
