@@ -1,4 +1,4 @@
-dash
+dash>=2.5.1
 dash-bootstrap-components
 Flask
 gunicorn

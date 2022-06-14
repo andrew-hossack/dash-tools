@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.2] - 2022-06-14
+
+### Added / Changed
+
+- Updated to dash 2.5.1 in requirements
+- Updated multipage template
+
 ## [1.6.1] - 2022-06-12
 
 ### Added / Changed

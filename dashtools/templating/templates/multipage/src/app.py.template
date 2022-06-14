@@ -1,12 +1,12 @@
+'''
+ # @ Create Time: {createTime}
+'''
+
 import dash
-import pages_plugin
-from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 
-app = Dash(__name__, plugins=[pages_plugin],
-           external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP], title="{appName}")
 
-# Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 
 navbar = dbc.NavbarSimple(
@@ -19,15 +19,14 @@ navbar = dbc.NavbarSimple(
         nav=True,
         label="More Pages",
     ),
-    brand="Multi Page App Plugin Demo {appName}",
+    brand="Multi Page App Plugin Demo",
     color="primary",
     dark=True,
     className="mb-2",
 )
 
 app.layout = dbc.Container(
-    [navbar, pages_plugin.page_container],
-    className="dbc",
+    [navbar, dash.page_container],
     fluid=True,
 )
 
