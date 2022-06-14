@@ -1,13 +1,7 @@
-import dash
 from dash import html
+import dash
 
-dash.register_page(__name__, title='Page Not Found')
+dash.register_page(__name__, path="/404")
 
 
-def layout():
-    return html.Div(
-        [
-            html.H2('404 - Page not found'),
-            html.Div(html.A('Return home', href='/'))
-        ]
-    )
+layout = html.H1("Custom 404")

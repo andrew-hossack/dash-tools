@@ -270,8 +270,8 @@ Templates contain boilerplate code for projects, making it much easier to start 
 
    _To use this template, type: `dashtools init MyPristineApp multipage`_
 
-   New multipage theme. See [Multipage Plugin](https://github.com/plotly/dash-labs/blob/main/docs/08-MultiPageDashApp.md)
-   ![](docs/templates/multipage_new_theme.png)
+   Multipage theme. See more example [Multipage Apps](https://github.com/AnnMarieW/dash-multi-page-app-demos)
+   ![](docs/templates/multipage_template.png)
 
    </details>
 
