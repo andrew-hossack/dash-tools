@@ -10,6 +10,7 @@ from dashtools.deploy import deployHeroku
 from dashtools.templating import buildApp, buildAppUtils, createTemplate
 from dashtools.runtime import runtimeUtils
 from dashtools.version import __version__
+from dashtools.docker import dockerUtils
 
 
 class MyArgumentParser(argparse.ArgumentParser):
@@ -22,13 +23,16 @@ class MyArgumentParser(argparse.ArgumentParser):
 \nUsage:
     {'dashtools <command> [options]':<29}
 \nCommands and Options:
+    {'docker':<29}Handle Docker creation. Choose option:
+        {'--init':<25}Creates a docker image for the current project
+
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku
         {'--update [remote name]':<25}Push changes to existing Heroku remote
-    
+
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
-    
+
     {'run':<29}Run the app (experimental)
         {'--set-python-shell-cmd':<25}Set the python shell command
 
@@ -88,6 +92,27 @@ parser.add_argument(
 @subcommand(
     [
         argument(
+            '--init',
+            help='Create a new docker image for the current project',
+            metavar='<image name>',
+            nargs=1
+        ),
+    ])
+def docker(args):
+    """Initialize a new docker image for the current project."""
+    if args.init:
+        dockerUtils.create_image(
+            image_name=args.init[0],
+            cwd=os.getcwd()
+        )
+    else:
+        print('dashtools: docker: error: Too few arguments')
+        exit('dashtools: Available docker options: --init [--dir, -d]')
+
+
+@ subcommand(
+    [
+        argument(
             "init",
             help='Create a new Dash app. Args: REQUIRED: <app name> OPTIONAL: <template> (Default: "default").',
             metavar='<app name> [<template>]',
@@ -139,7 +164,7 @@ def templates(args):
         exit('dashtools: Available templates options: --list, --init')
 
 
-@subcommand(
+@ subcommand(
     [
         argument(
             "--deploy",
@@ -165,7 +190,7 @@ def heroku(args):
         exit('dashtools: Available heroku options: --deploy, --update')
 
 
-@subcommand(
+@ subcommand(
     [
         argument(
             "run",

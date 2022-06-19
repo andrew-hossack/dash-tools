@@ -29,29 +29,35 @@ def _add_requirement(root_path: os.PathLike, requirement: str):
             requirements_file.write(f'{requirement}\n')
 
 
-def create_requirements_txt(root_path: os.PathLike, update=False):
+def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = None, update=False):
     """
     Creates requirements.txt file using pipreqs
+
+    Args:
+        root_path: Path to the root directory of the project
+        destination: Optional path to save reqs file
+        update: Optional boolean to update existing requirements.txt
     """
     print(
         f'dashtools: {"Updating" if update else "Creating"} requirements.txt')
     try:
+        optional_path = f" --savepath {os.path.join(destination, 'requirements.txt')}" if destination else ""
         if update:
             subprocess.check_output(
-                f'pipreqs --force {root_path}', shell=True)
+                f'pipreqs --force {root_path}{optional_path}', shell=True)
         else:
             subprocess.check_output(
-                f'pipreqs {root_path}', shell=True)
+                f'pipreqs {root_path}{optional_path}', shell=True)
     except subprocess.CalledProcessError:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
         print('dashtools: Error creating requirements.txt')
-        print('dashtools: Did you run heroku --deploy in a valid dash app directory?')
-        exit('dashtools: heroku: deploy: Failed')
+        print('dashtools: Are you in a valid dash app directory?')
+        exit('dashtools: Exiting')
 
     # Add requirements that might not be in requirements.txt
     for req in ['gunicorn', 'pandas']:
-        _add_requirement(root_path, req)
+        _add_requirement(destination if destination else root_path, req)
 
 
 def create_runtime_txt(root_path: os.PathLike):
@@ -77,12 +83,15 @@ def app_root_path(root_path: os.PathLike) -> Union[os.PathLike, None]:
         if 'app.py' in files:
             app_path = root
             break
+    if app_path is None:
+        print('dashtools: Error: No app.py file found! An app.py file is needed for this operation.')
+        exit('dashtools: Exiting')
     return app_path
 
 
 def create_procfile(root_path: os.PathLike):
     """
-    Create a procfile but prompt the user to verify it before continuing.
+    Create a procfile.
     """
     app_path = app_root_path(root_path)
     rel_path = os.path.relpath(app_path, root_path)
