@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2022-06-27
+
+### Added
+
+- Added `docker --init` command; creates a docker image in the current directory. Adds requirements.txt file and Dockerfile in the current directory if one isn't found.
+
 ## [1.6.2] - 2022-06-14
 
 ### Added / Changed

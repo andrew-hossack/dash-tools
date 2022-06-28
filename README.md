@@ -353,6 +353,8 @@ AppName
 
 ### Commands and Options
 
+- **`docker`** Docker commands. Choose option:
+  - **`--init <image name>`** Creates a docker image with required files in current directory
 - **`heroku`** Handle Heroku deployment. Choose option:
   - **`--deploy`** Deploys the current project to Heroku
   - **`--update [remote name (OPTIONAL)]`** Push changes to existing Heroku remote

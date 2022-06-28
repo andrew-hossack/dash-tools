@@ -8,8 +8,8 @@ import os
 import subprocess
 import webbrowser
 
-from dashtools.deploy.deployHeroku import prompt_user_choice
 from dashtools.deploy import fileUtils
+from dashtools.deploy.deployHeroku import prompt_user_choice
 
 
 def _check_docker_installed() -> bool:
@@ -86,10 +86,14 @@ def create_image(image_name: str, cwd: os.PathLike) -> None:
 
     # 4. Build image
     print(f'dashtools: docker: init: Building image {image_name}')
-    subprocess.run(
-        f'docker build -t {image_name} .',
-        shell=True,
-        check=True)
+    try:
+        subprocess.run(
+            f'docker build -t {image_name} .',
+            shell=True,
+            check=True)
+    except subprocess.CalledProcessError as e:
+        print(e)
+        exit('dashtools: docker: error: Failed to build image')
 
     print(f'dashtools: docker: init: Image {image_name} created!')
     print(
