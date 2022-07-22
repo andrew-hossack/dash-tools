@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2022-07/21
+
+### Changed
+
+- Fixed `advanced` template issues where it will not run.
+
 ## [1.7.0] - 2022-06-27
 
 ### Added

@@ -3,13 +3,13 @@
 '''
 
 
-from dash import Dash, html, dcc, Input, Output, ClientsideFunction, State
+from dash import Dash, html, dcc, Input, Output, ClientsideFunction
 import dash_bootstrap_components as dbc
-from components.navbar import navbar
-from components.footer import footer
-from containers.home import home_page
-from containers.about import about_page
-from containers.error import error_page
+from .components.navbar import navbar
+from .components.footer import footer
+from .containers.home import home_page
+from .containers.about import about_page
+from .containers.error import error_page
 
 
 # global app definition

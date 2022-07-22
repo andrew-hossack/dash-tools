@@ -8,7 +8,7 @@ def home_header():
     """
     Home header
     """
-    from app import app
+    from ..app import app
     layout = html.Div([
 
         html.Div(
