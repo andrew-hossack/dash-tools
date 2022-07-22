@@ -6,11 +6,13 @@
 import argparse
 import os
 import sys as _sys
+import webbrowser
+
 from dashtools.deploy import deployHeroku
-from dashtools.templating import buildApp, buildAppUtils, createTemplate
-from dashtools.runtime import runtimeUtils
-from dashtools.version import __version__
 from dashtools.docker import dockerUtils
+from dashtools.runtime import runtimeUtils
+from dashtools.templating import buildApp, buildAppUtils, createTemplate
+from dashtools.version import __version__
 
 
 class MyArgumentParser(argparse.ArgumentParser):
@@ -41,6 +43,7 @@ class MyArgumentParser(argparse.ArgumentParser):
         {'--list':<25}List available templates
 \nOther Options:
     {'--help, -h':<29}Display help message
+    {'--report-issue':<29}Report a bug or issue
     {'--version, -v':<29}Display version
 """
         file.write(message+"\n")
@@ -87,6 +90,12 @@ parser.add_argument(
     '--version',
     action='version',
     version=f'dashtools {__version__}')
+
+parser.add_argument(
+    '-i',
+    '--report-issue',
+    action='store_true',
+    help='Report a bug or issue')
 
 
 @subcommand(
@@ -219,7 +228,12 @@ def main():
     dashtools CLI entry point.
     """
     args = parser.parse_args()
-    if args.subcommand is None:
-        parser.print_help()
-    else:
+    if args.subcommand:
         args.func(args)
+    elif args.report_issue:
+        print('dashtools: Report an issue at: https://github.com/andrew-hossack/dash-tools/issues/new/choose')
+        if input('dashtools: Open in browser? (y/n) > ') == 'y':
+            webbrowser.open(
+                'https://github.com/andrew-hossack/dash-tools/issues/new/choose')
+    else:
+        parser.print_help()
