@@ -369,6 +369,7 @@ AppName
 ### Other Options
 
 - **`--help, -h`** Display help message
+- **`--report-issue`** Report a bug or issue
 - **`--version, -v`** Display version
 
 ---
