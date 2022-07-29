@@ -36,7 +36,7 @@ class MyArgumentParser(argparse.ArgumentParser):
         {'--dir, -d':<25}Specify alternative create location
 
     {'run':<29}Run the app (experimental)
-        {'--set-python-shell-cmd':<25}Set the python shell command
+        {'--set-py-cmd <command>':<25}Set the python shell command
 
     {'templates':<29}List and create templates
         {'--init <directory>':<25}Creates a template from specified directory
@@ -207,14 +207,14 @@ def heroku(args):
             default=False,
             action="store_true"),
         argument(
-            '--set-python-shell-cmd',
+            '--set-py-cmd',
             help='Set the python shell command. Args: REQUIRED: <python shell command>',
             metavar='<python shell command>',
             nargs=1)
     ])
 def run(args):
-    if args.set_python_shell_cmd:
-        runtimeUtils.set_python_shell_cmd(args.set_python_shell_cmd[0])
+    if args.set_py_cmd:
+        runtimeUtils.set_python_shell_cmd(args.set_py_cmd[0])
     elif args.run:
         try:
             runtimeUtils.run_app(os.getcwd())
