@@ -54,11 +54,13 @@ def check_heroku_app_name_available(heroku_app_name: str) -> bool:
         False if not
     """
     try:
-        if requests.get(f'https://{heroku_app_name}.herokuapp.com/', headers={'User-Agent': 'Custom'}).status_code == 404:
-            return True
-    except requests.exceptions.ConnectionError:
-        exit('dashtools: heroku: deploy: Invalid Heroku app name')
-    return False
+        requests.get(
+            url=f'https://{heroku_app_name}.herokuapp.com/',
+            headers={'User-Agent': 'Custom'}
+        )
+        return False
+    except requests.exceptions.ConnectionError as e:
+        return True
 
 
 def create_app_on_heroku(app_name: str) -> bool:

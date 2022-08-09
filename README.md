@@ -361,7 +361,7 @@ AppName
 - **`init <app name> [template (OPTIONAL)]`** Create a new app
   - **`--dir, -d`** Specify alternative create location
 - **`run`** Run app locally from the current directory
-  - **`--set-python-shell-cmd`** Specify the python shell command, e.g. python3 or python3.exe, etc.
+  - **`--set-py-cmd <shell command>`** Specify the python shell command, e.g. "python3" or "python3.exe", etc.
 - **`templates`** List and create templates
   - **`--init <directory to convert>`** Creates a template from specified directory
   - **`--list`** List available templates
