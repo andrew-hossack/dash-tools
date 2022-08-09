@@ -4,10 +4,10 @@
 '''
 
 import configparser
-from typing import Union
+from typing import List, Union
 
 
-def _get_config() -> str:
+def _get_config() -> List[str]:
     """
     Get the config file
     """

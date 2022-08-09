@@ -56,7 +56,7 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
         exit('dashtools: Exiting')
 
     # Add requirements that might not be in requirements.txt
-    for req in ['gunicorn', 'pandas']:
+    for req in ['gunicorn', 'pandas', 'dash-tools']:
         _add_requirement(destination if destination else root_path, req)
 
 

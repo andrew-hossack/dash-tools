@@ -376,7 +376,9 @@ AppName
 
 ## **Troubleshooting**
 
-Running into issues? Outlined below are common errors and solutions. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose).
+Running into issues? Outlined below are common errors and solutions.
+
+Please make sure you are running the latest version of dash-tools: `python -m pip install --upgrade dash-tools` first. If you do not find an answer below, please [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose).
 
 <details><summary>Command 'dashtools' is not recognized (windows)</summary>
 

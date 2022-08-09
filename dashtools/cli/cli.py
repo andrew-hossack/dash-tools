@@ -8,6 +8,7 @@ import os
 import sys as _sys
 import webbrowser
 
+from dashtools.cli import update
 from dashtools.deploy import deployHeroku
 from dashtools.docker import dockerUtils
 from dashtools.runtime import runtimeUtils
@@ -26,7 +27,7 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'dashtools <command> [options]':<29}
 \nCommands and Options:
     {'docker':<29}Handle Docker creation. Choose option:
-        {'--init <image name>':<25}Creates a docker image with required files in current directory
+        {'--init <image name>':<25}Creates a docker image in current directory
 
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku
@@ -92,7 +93,6 @@ parser.add_argument(
     version=f'dashtools {__version__}')
 
 parser.add_argument(
-    '-i',
     '--report-issue',
     action='store_true',
     help='Report a bug or issue')
@@ -237,3 +237,4 @@ def main():
                 'https://github.com/andrew-hossack/dash-tools/issues/new/choose')
     else:
         parser.print_help()
+    update.check_for_updates()
