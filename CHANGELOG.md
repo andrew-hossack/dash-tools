@@ -2,7 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.7.1] - 2022-07/21
+## [1.7.3] - 2022-08-09
+
+### Fixed
+
+- Fixed bug with Heroku HTTP request. When validating heroku name availability, a request is sent to heroku. Their server changed from a 404 response to an "This site can’t be reached" response. Fixed method for validating heroku app name.
+
+## [1.7.2] - 2022-07-28
+
+### Changed
+
+- Renamed `run --set-py-cmd` command
+
+## [1.7.1] - 2022-07-21
 
 ### Changed
 
