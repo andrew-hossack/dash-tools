@@ -8,3 +8,5 @@ pipreqs==0.4.11
 pre-commit==2.16.0
 pytest==6.2.2
 pandas
+yolk3k==0.9
+termcolor==1.1.0

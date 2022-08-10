@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2022-08-10
+
+### Added
+
+- Added pypi version check to prompt user if their current version is out of date
+
 ## [1.7.3] - 2022-08-09
 
 ### Fixed
