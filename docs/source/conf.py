@@ -24,7 +24,6 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx_copybutton',  # copy button on code snippets
-    'm2r',  # markdown to rst conversion
 ]
 
 source_suffix = ['.rst', '.md']
