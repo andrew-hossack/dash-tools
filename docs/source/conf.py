@@ -23,8 +23,11 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-    'sphinx_copybutton',
+    'sphinx_copybutton',  # copy button on code snippets
+    'm2r',  # markdown to rst conversion
 ]
+
+source_suffix = ['.rst', '.md']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
