@@ -1,8 +1,12 @@
-# Configuration file for the Sphinx documentation builder.
-from ...dashtools.version import __version__
-
-
+import os
 # -- Project information
+
+# TODO load this dynamically
+
+# Open parent directory and get the version number
+with open(os.path.join(os.path.dirname(__file__), '...', 'dashtools').join('version.py')) as f:
+    __version__ = f.read().split('=')[1].strip()
+
 
 project = 'DashTools'
 author = 'Andrew Hossack'

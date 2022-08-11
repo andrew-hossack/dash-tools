@@ -20,4 +20,3 @@ global-include *.ts
 global-include *.template
 global-include packages.txt
 graft dash_tools/templating/templates
-global-exclude docs/*
