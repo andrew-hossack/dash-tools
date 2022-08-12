@@ -40,7 +40,7 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
         update: Optional boolean to update existing requirements.txt
     """
     print(
-        f'dashtools: {"Updating" if update else "Creating"} requirements.txt to {root_path}...')
+        f'dashtools: {"Found requirements.txt. Updating" if update else "Creating requirements.txt"} to {root_path}...')
     try:
         args = {'<path>': root_path, '--encoding': 'utf8', '--pypi-server': None, '--proxy': None, '--proxy-auth': None,
                 '--proxy-type': None, '--requirement': None, '--requirements': None, '--version': None, '--use-local': None, '--savepath': None, '--diff': None, '--clean': None, '--print': None, '--force': None, '--mode': None}
@@ -51,9 +51,8 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
             pipreqs.init(args)
         else:
             pipreqs.init(args)
-    except subprocess.CalledProcessError as e:
-        # pipreqs throws a SyntaxError if it encounters a non-ASCII character
-        # One reason may be that the user is not in a valid dash app directory
+    except Exception as e:
+        # Catch any pipreqs exceiptions
         print(e)
         print('dashtools: Error creating requirements.txt')
         print('dashtools: Are you in a valid dash app directory?')

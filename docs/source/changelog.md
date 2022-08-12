@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.2] - 2022-08-12
+
+### Fixed
+
+- Pipreqs generating requirements.txt does not work on some systems. Fixed with calling pipreqs.init(args) directly.
+
 ## [1.8.1] - 2022-08-12
 
 ### Changed
