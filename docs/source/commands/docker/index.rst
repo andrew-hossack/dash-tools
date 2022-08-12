@@ -1,5 +1,5 @@
 =======
-init
+docker
 =======
 
 The docker init command is used to create a new docker image from the current directory.

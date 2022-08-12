@@ -1,5 +1,5 @@
 =======
-Version
+version
 =======
 
 Print the version of dashtools.

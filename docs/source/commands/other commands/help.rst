@@ -1,5 +1,5 @@
 ====
-Help
+help
 ====
 
 Print the help message.

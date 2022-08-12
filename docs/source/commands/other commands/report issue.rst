@@ -1,5 +1,5 @@
 =============
-Report Issue
+report issue
 =============
 
 Report an issue in GitHub.
