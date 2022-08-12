@@ -11,10 +11,11 @@ DashTools is an open-source command line toolchain for `Plotly Dash <https://das
 
 Use dashtools to...
 --------------
-- Deploy your app to Heroku with one command
+- Create amazing templated dash apps with one command
+- Deploy your app to Heroku in under a minute
 - Generate Procfile, requirements.txt and runtime.txt automatically on deploy
-- Create boilerplate dash apps with one command
 - Choose from many different boilerplate templates for creating apps
+- Dockerize your app in a single step
 
 
 Getting started

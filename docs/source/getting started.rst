@@ -15,6 +15,12 @@ You can install dash-tools from PyPI via pip.
 
     pip install dash-tools
 
+Additional requirements:
+
+- **Heroku CLI** - `Download Here <https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli>`_
+- **Git CLI** - `Download Here <https://git-scm.com/downloads>`_
+- **OS** - Linux, MacOS, Windows
+- **Python Version** ≥ 3.6
 
 Simple Usage
 ----------
