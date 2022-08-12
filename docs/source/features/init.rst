@@ -58,6 +58,5 @@ Create a new project using the "multipage" template:
 Create a new project using the "multipage" template in the "apps" directory:
 
 .. code-block:: bash
+
     dashtools init My-Favorite-App multipage --dir apps
-
-
