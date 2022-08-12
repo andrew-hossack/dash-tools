@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 from typing import Union
+from pipreqs import pipreqs
 
 
 def check_file_exists(root_path: os.PathLike, file_name: str) -> bool:
@@ -39,15 +40,17 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
         update: Optional boolean to update existing requirements.txt
     """
     print(
-        f'dashtools: {"Updating" if update else "Creating"} requirements.txt')
+        f'dashtools: {"Updating" if update else "Creating"} requirements.txt to {root_path}...')
     try:
-        optional_path = f" --savepath {os.path.join(destination, 'requirements.txt')}" if destination else ""
+        args = {'<path>': root_path, '--encoding': 'utf8', '--pypi-server': None, '--proxy': None, '--proxy-auth': None,
+                '--proxy-type': None, '--requirement': None, '--requirements': None, '--version': None, '--use-local': None, '--savepath': None, '--diff': None, '--clean': None, '--print': None, '--force': None, '--mode': None}
+        args['--savepath'] = os.path.join(destination,
+                                          'requirements.txt') if destination else None
         if update:
-            os.system(
-                f'pipreqs --encoding=utf8 --force {root_path}{optional_path}')
+            args['--force'] = True
+            pipreqs.init(args)
         else:
-            os.system(
-                f'pipreqs --encoding=utf8 {root_path}{optional_path}')
+            pipreqs.init(args)
     except subprocess.CalledProcessError as e:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
