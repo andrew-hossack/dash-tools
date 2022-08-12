@@ -48,9 +48,10 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
         else:
             subprocess.check_output(
                 f'pipreqs --encoding=utf8 {root_path}{optional_path}', shell=True)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
+        print(e)
         print('dashtools: Error creating requirements.txt')
         print('dashtools: Are you in a valid dash app directory?')
         exit('dashtools: Exiting')
