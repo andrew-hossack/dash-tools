@@ -7,8 +7,8 @@ Installation instructions and basic usage.
 Prerequisites
 ----------------------------
 
-- **Heroku CLI** - `Download Here <https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli>`_
 - **Git CLI** - `Download Here <https://git-scm.com/downloads>`_
+- **Heroku CLI** - `Download Here <https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli>`_
 - **OS** - Linux, MacOS, Windows
 - **Python Version** ≥ 3.6
 
