@@ -24,5 +24,5 @@ Commands
     init
     run
     templates
-    other commands
+    other commands/index
 
