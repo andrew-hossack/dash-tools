@@ -51,17 +51,31 @@ You can deploy any project containing an app.py file. Running the following comm
     dashtools heroku --deploy
 
 
-Updating a deployed Heroku Project
+Updating a deployed Project
 ************************************
 
-Updating a deployed project is as easy as pushing changes to the remote Heroku repository. Using the following command will update the remote 'heroku' repository and restart the application.
+Updating a deployed project is as easy as pushing changes to the remote Heroku repository. Using the following command from the project root will update the remote 'heroku' repository and restart the application.
 
 .. code-block:: bash
     
     dashtools heroku --update
 
 
-Project Templates
+Running a Project
 **********************
 
-Todo.
+Running the app.py file is as simple as running the following command from the project root, or any directory above the app.py file.
+
+.. code-block:: bash
+    
+    dashtools run
+
+
+Dockerizing a Project
+**********************
+
+To create a Docker image for your project, run the following command in the project root with an image name.
+
+.. code-block:: bash
+    
+    dashtools docker --init MyProjectImage
