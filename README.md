@@ -10,6 +10,8 @@
 
 </div>
 
+> **_INFO:_** DashTools Documentation will be transitioning to https://dash-tools.readthedocs.io/en/latest/index.html
+
 ## **About**
 
 [**DashTools**](https://github.com/andrew-hossack/dash-tools) is an open-source command line toolchain for [Plotly Dash](https://dash.plotly.com/introduction) that makes creating and deploying dash projects to [Heroku](https://heroku.com/) intuitive and easy.

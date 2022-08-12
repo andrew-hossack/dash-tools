@@ -1,3 +1,4 @@
 # Requirements for sphinx/rtd build
 furo==2022.6.21
 sphinx-copybutton==0.5.0
+myst-parser==0.18.0

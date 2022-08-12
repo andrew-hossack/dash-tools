@@ -1,6 +1,4 @@
-# Configuration file for the Sphinx documentation builder.
-from ...dashtools.version import __version__
-
+from version import __version__
 # -- Project information
 
 project = 'DashTools'
@@ -16,7 +14,7 @@ html_theme_options = {
     "light_logo": "images/logo_bk_small.png",
     "dark_logo": "images/logo_w_small.png",
     "top_of_page_button": None,
-    "announcement": "<em>Thank you for using DashTools!</em> If you like it, consider leaving the project a <a href='https://github.com/andrew-hossack/dash-tools' target='_blank'> star on GitHub</a>.",
+    "announcement": "<em>Thank you for using DashTools!</em> If you like it, consider leaving the project a <a href='https://github.com/andrew-hossack/dash-tools' target='_blank'>⭐ on GitHub</a>.",
 }
 
 extensions = [
@@ -25,8 +23,11 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-    'sphinx_copybutton',
+    'sphinx_copybutton',  # copy button on code snippets
+    'myst_parser',  # md parser
 ]
+
+source_suffix = ['.rst', '.md']
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
