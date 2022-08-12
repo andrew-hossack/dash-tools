@@ -5,7 +5,7 @@ init
 The ``init`` command is used to create a new templated project in the current directory.
 
 .. note::
-    See :doc:`Templates <../templates/index>` for information on using Templates.
+    See :doc:`Templates <../templates/list>` for available project templates.
 
 Usage
 ========

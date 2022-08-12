@@ -33,6 +33,7 @@ Pages
 
     getting started
     commands/index
+    tutorials/index
 
 .. toctree::
     :caption: Development

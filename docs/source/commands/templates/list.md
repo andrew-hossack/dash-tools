@@ -12,9 +12,9 @@ List all available templates.
 dashtools templates --list
 ```
 
-## Templates
+## Available Templates
 
-_Click the dropdowns below to see screenshots._
+Click the dropdowns below to see screenshots of each project template.
 
 <details><summary>Template: 'advanced'</summary>
 
