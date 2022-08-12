@@ -84,4 +84,4 @@ To create a Docker image for your project, run the following command in the proj
 Learn More
 ----------
 
-Check out the :doc:`Features <features/index>` page for more in-depth usage examples.
+Check out the :doc:`Commands <commands/index>` page for more in-depth usage examples.

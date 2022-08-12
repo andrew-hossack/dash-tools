@@ -30,7 +30,7 @@ Pages
     :maxdepth: 1
 
     getting started
-    features/index
+    commands/index
 
 .. toctree::
     :caption: Development

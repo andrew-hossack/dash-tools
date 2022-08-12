@@ -1,5 +1,5 @@
 =======
-Features
+Commands
 =======
 
 Please see below for an updates list of commands.
