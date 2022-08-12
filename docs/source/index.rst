@@ -38,4 +38,5 @@ Pages
 
     changelog
     contributing
+    issues
     license
