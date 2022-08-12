@@ -6,6 +6,8 @@
    :align: center
    :class: only-dark
 
+|
+
 DashTools is an open-source command line toolchain for `Plotly Dash <https://dash.plotly.com/introduction>`_ that makes creating and deploying dash projects to `Heroku <https://heroku.com/>`_ intuitive and easy.
 
 
