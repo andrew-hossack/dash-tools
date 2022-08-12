@@ -1,15 +1,18 @@
-# templates
+# list
 
-Templates are pre-configured dashboards that can be used to quickly create new dash projects. Template commands:
+List all available templates.
 
-```{toctree}
-:maxdepth: 2
+## Usage
 
-    list
-    init
+`dashtools templates --list`
+
+## Examples
+
+```bash
+dashtools templates --list
 ```
 
-## Available Templates
+## Templates
 
 _Click the dropdowns below to see screenshots._
 
@@ -18,7 +21,7 @@ _Click the dropdowns below to see screenshots._
 _To use this template, type: `dashtools init MyFuturisticApp advanced`_
 
 Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-page routing, external stylesheets, header, footer, and 404 page.
-![](docs/templates/advanced_theme.png)
+![](img/advanced_theme.png)
 
 </details>
 
@@ -27,7 +30,7 @@ Advanced multi-page template. Includes examples of ClientsideCallbacks, multi-pa
 _To use this template, type: `dashtools init MyCSVLoaderApp csv`_
 
 Example of CSV file loading. Includes the default CSV load example from Plotly.
-![](docs/templates/csv_template.png)
+![](img/csv_template.png)
 
 </details>
 
@@ -36,7 +39,7 @@ Example of CSV file loading. Includes the default CSV load example from Plotly.
 _To use this template, type: `dashtools init MyAmazingApp default`_
 
 Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
-![](docs/templates/default_theme.png)
+![](img/default_theme.png)
 
 </details>
 
@@ -45,7 +48,7 @@ Basic Dash template. See [Dash Docs](https://dash.plotly.com/layout)
 _To use this template, type: `dashtools init StellarDashApp fastdash`_
 
 Fast Dash template. See [Fast Dash Docs](https://fastdash.app/)
-![](docs/templates/fastdash_template.png)
+![](img/fastdash_template.png)
 
 </details>
 
@@ -54,7 +57,7 @@ Fast Dash template. See [Fast Dash Docs](https://fastdash.app/)
 _To use this template, type: `dashtools init MyFantasticApp iris`_
 
 Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/iris/)
-![](docs/templates/iris_theme.png)
+![](img/iris_theme.png)
 
 </details>
 
@@ -63,7 +66,7 @@ Iris theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensourc
 _To use this template, type: `dashtools init BestMapApp leaflet`_
 
 Dash leaflet plugin. See [Dash Leaflet](https://github.com/thedirtyfew/dash-leaflet)
-![](docs/templates/leaflet.png)
+![](img/leaflet.png)
 
 </details>
 
@@ -72,7 +75,7 @@ Dash leaflet plugin. See [Dash Leaflet](https://github.com/thedirtyfew/dash-leaf
 _To use this template, type: `dashtools init MyGreatApp mantine`_
 
 Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.com/)
-![](docs/templates/mantine_theme.png)
+![](img/mantine_theme.png)
 
 </details>
 
@@ -81,7 +84,7 @@ Basic mantine template. See [Dash Mantine](https://www.dash-mantine-components.c
 _To use this template, type: `dashtools init MyPristineApp multipage`_
 
 Multipage theme. See more example [Multipage Apps](https://github.com/AnnMarieW/dash-multi-page-app-demos)
-![](docs/templates/multipage_template.png)
+![](img/multipage_template.png)
 
 </details>
 
@@ -90,7 +93,7 @@ Multipage theme. See more example [Multipage Apps](https://github.com/AnnMarieW/
 _To use this template, type: `dashtools init MySnazzyApp sidebar`_
 
 Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/)
-![](docs/templates/sidebar_theme.png)
+![](img/sidebar_theme.png)
 
 </details>
 
@@ -99,6 +102,6 @@ Sidebar theme. See [Faculty.ai Example](https://dash-bootstrap-components.openso
 _To use this template, type: `dashtools init MyBeautifulApp tabs`_
 
 Tabs theme with dynamically generated content. See [Faculty.ai Example](https://dash-bootstrap-components.opensource.faculty.ai/examples/graphs-in-tabs/)
-![](docs/templates/tabs_theme.png)
+![](img/tabs_theme.png)
 
 </details>
