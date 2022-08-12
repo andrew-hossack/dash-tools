@@ -34,7 +34,7 @@ Using dash-tools is similar to other popular command line clients for creating a
 Creating a Project
 **********************
 
-Creating a new dash project is simple. Here we choose to name it "MyApp". Doing so will create a directory named "MyApp" in the current working directory:
+Creating a new dash project is simple. Here we choose to name it "MyApp". Doing so will create a directory named "MyApp" in the current working directory.
 
 .. code-block:: bash
 
@@ -44,10 +44,24 @@ Creating a new dash project is simple. Here we choose to name it "MyApp". Doing 
 Deploying a Project
 **********************
 
-FOo
+You can deploy any project containing an app.py file. Running the following command will create Procfile, requirements.txt, and runtime.txt if they are not found. Follow the on-screen prompts to complete the deployment to Heroku.
+
+.. code-block:: bash
+    
+    dashtools heroku --deploy
+
+
+Updating a deployed Heroku Project
+************************************
+
+Updating a deployed project is as easy as pushing changes to the remote Heroku repository. Using the following command will update the remote 'heroku' repository and restart the application.
+
+.. code-block:: bash
+    
+    dashtools heroku --update
 
 
 Project Templates
 **********************
 
-FOo
+Todo.
