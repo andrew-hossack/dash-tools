@@ -43,11 +43,11 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
     try:
         optional_path = f" --savepath {os.path.join(destination, 'requirements.txt')}" if destination else ""
         if update:
-            subprocess.check_output(
-                f'pipreqs --encoding=utf8 --force {root_path}{optional_path}', shell=True)
+            os.system(
+                f'pipreqs --encoding=utf8 --force {root_path}{optional_path}')
         else:
-            subprocess.check_output(
-                f'pipreqs --encoding=utf8 {root_path}{optional_path}', shell=True)
+            os.system(
+                f'pipreqs --encoding=utf8 {root_path}{optional_path}')
     except subprocess.CalledProcessError as e:
         # pipreqs throws a SyntaxError if it encounters a non-ASCII character
         # One reason may be that the user is not in a valid dash app directory
