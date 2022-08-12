@@ -2,16 +2,15 @@
 init
 =======
 
-``dashtools init <project name> [project template] [--directory <alternate destination directory>]``
-
-
-Usage
-========
-
 The ``init`` command is used to create a new templated project in the current directory.
 
 .. note::
     See :doc:`Templates <templates>` for information on using Templates.
+
+Usage
+========
+
+``dashtools init <project name> [project template] [--directory <alternate destination directory>]``
 
 
 File Structure

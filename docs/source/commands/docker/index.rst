@@ -1,14 +1,14 @@
 =======
-docker
+init
 =======
 
-``dashtools docker [--init <image name>]``
+The docker init command is used to create a new docker image from the current directory.
 
 
 Usage
 ========
 
-The docker init command is used to create a new docker image from the current directory.
+``dashtools docker [--init <image name>]``
 
 
 Examples

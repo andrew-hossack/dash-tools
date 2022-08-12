@@ -19,10 +19,10 @@ Commands
 .. toctree::
     :maxdepth: 2
     
-    docker
-    heroku
-    init
-    run
-    templates
+    docker/index
+    heroku/index
+    init/index
+    run/index
+    templates/index
     other commands/index
 

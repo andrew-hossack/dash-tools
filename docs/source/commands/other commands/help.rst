@@ -2,12 +2,12 @@
 Help
 ====
 
-``dashtools --help``
+Print the help message.
 
 Usage
 ======
 
-Print the help message.
+``dashtools --help``
 
 
 Examples

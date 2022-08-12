@@ -2,12 +2,12 @@
 Report Issue
 =============
 
-``dashtools --report-issue``
+Report an issue in GitHub.
 
 Usage
 =====
 
-Report an issue in GitHub.
+``dashtools --report-issue``
 
 
 Examples
