@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.1] - 2022-08-12
+
+### Changed
+
+- Print out error message for pipreqs errors
+
 ## [1.8.0] - 2022-08-10
 
 ### Added
