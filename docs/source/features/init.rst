@@ -1,5 +1,5 @@
 =======
-Init
+init
 =======
 
 ``dashtools init <project name> [project template] [--directory <alternate destination directory>]``

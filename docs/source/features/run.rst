@@ -1,5 +1,5 @@
 =======
-Run
+run
 =======
 
 ``dashtools run [--set-py-cmd <shell command>]``

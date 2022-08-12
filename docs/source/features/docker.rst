@@ -1,5 +1,5 @@
 =======
-Docker
+docker
 =======
 
 ``dashtools docker [--init <image name>]``
