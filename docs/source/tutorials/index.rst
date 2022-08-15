@@ -13,5 +13,6 @@ Tutorials
 .. toctree::
     :maxdepth: 2
     
+    beginner examples
     configuring your app
     online resources
