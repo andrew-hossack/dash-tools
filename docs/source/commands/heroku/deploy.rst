@@ -1,5 +1,5 @@
 =======
-deploy
+heroku --deploy
 =======
 
 Deploy your app to Heroku from the project root directory.

@@ -1,5 +1,5 @@
 =======
-init
+templates --init
 =======
 
 Convert directory to a dashtools project template. 

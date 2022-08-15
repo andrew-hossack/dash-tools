@@ -50,7 +50,7 @@
 
    Visiting http://127.0.0.1:8050/ in your browser will show local changes to the app in real-time
 
-   ![iris image](../docs/templates/sidebar_theme.png)
+   ![iris image](../commands/templates/img/sidebar_theme.png)
 
 ### Deploy App to Web with Heroku
 
@@ -66,7 +66,7 @@
 
 7. Visit your app online to view what it looks like. The URL will be provided when you deploy your app after **Application Page**
 
-![deploy success message](../docs/readme/deploy_success_msg.png)
+![deploy success message](../commands/templates/img/deploy_success_msg.png)
 
 ### Make Changes
 

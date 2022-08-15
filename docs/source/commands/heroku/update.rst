@@ -1,5 +1,5 @@
 =======
-update
+heroku --update
 =======
 
 Update a previously deployed app from the project root directory.
