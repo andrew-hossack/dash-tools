@@ -1,4 +1,4 @@
-# **dashtools** Tutorial - _Making Changes and Deploying to Heroku_
+# Making Changes and Deploying to Heroku
 
 > The following tutorial will explain how `dashtools heroku --deploy` works, and how you can use `dashtools heroku --update` to push new changes to your deployed app. Check out the _[Usage Examples](../README.md#usage-examples)_ section in the Readme before you begin.
 

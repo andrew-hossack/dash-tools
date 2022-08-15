@@ -1,6 +1,6 @@
 <div align="center">
 
-![](docs/source/_static/images/logo_w.png)
+![](docs/source/_static/images/dashtools_logo_w_blk_bkg.png)
 
 <h3>
 <b><i>Create, Run and Deploy Plotly Dash Apps from Terminal</i></b>
