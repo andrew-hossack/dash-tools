@@ -66,8 +66,6 @@
 
 7. Visit your app online to view what it looks like. The URL will be provided when you deploy your app after **Application Page**
 
-![deploy success message](../commands/templates/img/deploy_success_msg.png)
-
 ### Make Changes
 
 8.  Change the tab title
@@ -161,9 +159,3 @@
     The command will create a new commit and push it to the _heroku_ remote, created in the deploy step above. After the changes are received by heroku, your project will be re-built and re-deployed to the same web URL as before.
 
 Congratulations, you have successfully made changes and updated your Heroku app!
-
-## More Resources
-
-- [Readme](../README.md)
-- [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose)
-- [Troubleshooting](../README.md#troubleshooting)

@@ -1,4 +1,4 @@
-# Usage Examples
+# Beginner Examples
 
 Example A assumes you already have a functioninig app that you would like to deploy to the web. If you do not have an app and would like to start with a dash-tools template that contains a sample app, jump to [Example B](#b-create-an-app).
 
