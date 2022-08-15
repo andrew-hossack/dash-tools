@@ -3,6 +3,7 @@ from version import __version__
 
 project = 'DashTools'
 author = 'Andrew Hossack'
+copyright = '2022, ' + author
 
 version = __version__
 release = __version__
