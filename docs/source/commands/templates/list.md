@@ -1,4 +1,4 @@
-# list
+# templates --list
 
 List all available templates.
 

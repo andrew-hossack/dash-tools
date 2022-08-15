@@ -5,7 +5,6 @@
 '''
 import os
 import re
-import subprocess
 from typing import Union
 from pipreqs import pipreqs
 

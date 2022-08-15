@@ -1,4 +1,4 @@
-# **dashtools** Tutorial - _Making Changes and Deploying to Heroku_
+# Making Changes and Deploying to Heroku
 
 > The following tutorial will explain how `dashtools heroku --deploy` works, and how you can use `dashtools heroku --update` to push new changes to your deployed app. Check out the _[Usage Examples](../README.md#usage-examples)_ section in the Readme before you begin.
 
@@ -50,7 +50,7 @@
 
    Visiting http://127.0.0.1:8050/ in your browser will show local changes to the app in real-time
 
-   ![iris image](../docs/templates/sidebar_theme.png)
+   ![iris image](../commands/templates/img/sidebar_theme.png)
 
 ### Deploy App to Web with Heroku
 
@@ -65,8 +65,6 @@
    ```
 
 7. Visit your app online to view what it looks like. The URL will be provided when you deploy your app after **Application Page**
-
-![deploy success message](../docs/readme/deploy_success_msg.png)
 
 ### Make Changes
 
@@ -161,9 +159,3 @@
     The command will create a new commit and push it to the _heroku_ remote, created in the deploy step above. After the changes are received by heroku, your project will be re-built and re-deployed to the same web URL as before.
 
 Congratulations, you have successfully made changes and updated your Heroku app!
-
-## More Resources
-
-- [Readme](../README.md)
-- [Submit an Issue Ticket](https://github.com/andrew-hossack/dash-tools/issues/new/choose)
-- [Troubleshooting](../README.md#troubleshooting)
