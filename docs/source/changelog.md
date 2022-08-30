@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- Changed heroku app name verification again. Heroku sends back a 404 if no app name is in use.
+- Changed heroku app name verification again. Heroku sends back a 404 if no app name is in use. Thanks @lanchuhuong!
 
 ## [1.8.2] - 2022-08-12
 
