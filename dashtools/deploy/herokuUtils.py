@@ -53,15 +53,14 @@ def check_heroku_app_name_available(heroku_app_name: str) -> bool:
         True if available
         False if not
     """
-    try:
-        requests.get(
+    response = requests.get(
             url=f'https://{heroku_app_name}.herokuapp.com/',
             headers={'User-Agent': 'Custom'}
         )
-        return False
-    except requests.exceptions.ConnectionError as e:
+    if response.status_code == 404:
         return True
-
+    else:
+        return False
 
 def create_app_on_heroku(app_name: str) -> bool:
     """
