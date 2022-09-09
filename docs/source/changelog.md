@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.4] - 2022-9-09
+
+### Fixed
+
+- Updated heroku default runtime to 3.10.7
+
 ## [1.8.3] - 2022-08-29
 
 ### Fixed

@@ -65,11 +65,11 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
 def create_runtime_txt(root_path: os.PathLike):
     """
     Create runtime.txt file
-    Default behavior is to use python-3.8.10
+    Default behavior is to use python-3.10.7
     """
     with open(os.path.join(root_path, 'runtime.txt'), 'w') as runtime_file:
-        runtime_file.write('python-3.8.10')
-    print('dashtools: Created runtime.txt using python-3.8.10')
+        runtime_file.write('python-3.10.7')
+    print('dashtools: Created runtime.txt using python-3.10.7')
 
 
 def app_root_path(root_path: os.PathLike) -> Union[os.PathLike, None]:
