@@ -5,8 +5,12 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html, Dash
 from dashtools import version
-import pages
-import callbacks
+try:
+    from . import pages
+    from . import callbacks
+except ImportError:
+    import pages
+    import callbacks
 
 app = Dash(
     title="DashTools - Deployment Dashboard",
@@ -21,6 +25,7 @@ server = app.server
 
 sidebar = html.Div(
     [
+        html.Div(id='hidden-div'),
         html.H2("DashTools", className="display-4"),
         html.H5(f'v{version.__version__}', className="display-10"),
         html.Hr(),
