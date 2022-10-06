@@ -15,7 +15,8 @@ except ImportError:
 app = Dash(
     title="DashTools - Deployment Dashboard",
     external_stylesheets=[dbc.themes.BOOTSTRAP],
-    suppress_callback_exceptions=True
+    suppress_callback_exceptions=True,
+    prevent_initial_callbacks=True
 )
 
 
@@ -31,7 +32,6 @@ sidebar = html.Div(
         html.Hr(),
         html.P(
             "A simple sidebar layout with navigation links",
-            # href="https://dash-tools.readthedocs.io/",
             className="lead"
         ),
         dbc.Nav(
