@@ -50,24 +50,25 @@ def file_explorer():
                 # dcc.Upload(
                 # https://www.dash-mantine-components.com/components/button
                 dmc.TextInput(
-                    placeholder="Path to Your Application; eg. /Users/Andrew/MyDashApp",
-                    style={"width": 400},
+                    placeholder="App Path; eg. /Users/Andrew/MyDashApp",
+                    style={"width": '100%'},
                     id="file-explorer-input",
                     radius=5),
                 dmc.Space(w=10),
                 dmc.Button(
                     [
                         DashIconify(
-                            icon='ant-design:file-add-outlined', width=30),
+                            icon='ant-design:file-add-outlined', width=25),
                         dmc.Text('Open File', inline=True,
                                  size='md', weight='bold')
                     ],
                     variant='subtle',
                     color='gray',
-                    style={'color': 'gray', 'text-decoration': 'none'},
+                    style={'color': 'gray',
+                           'text-decoration': 'none'},
                     id='file-explorer-button'
                 )
-            ], style={'padding-top': '15px'}),
+            ], style={'padding-top': '15px', 'padding-right': '15px', 'padding-left': '15px'}),
             dmc.Divider(variant="dotted", style={
                         'margin-left': '60px', 'margin-right': '60px'}),
             html.Textarea(
@@ -94,102 +95,107 @@ def file_explorer():
 def deploy_info():
     return html.Div([
         dmc.Text('Deployment Readiness'),
-        dmc.Space(h=5),
         html.Div(
             [
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="File Exists: app.py",
-                            checked=True,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="File Exists: Procfile",
-                            checked=True,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="File Exists: requirements.txt",
-                            checked=True,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="File Exists: runtime.txt",
-                            checked=False,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="server = app.server",
-                            checked=False,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-                dmc.Tooltip(
-                    label="This is a tooltip",
-                    position="left",
-                    placement="center",
-                    gutter=10,
-                    children=[
-                        dmc.Checkbox(
-                            id="checkbox",
-                            label="App Name Available",
-                            checked=False,
-                            disabled=True,
-                            color="green")
-                    ],
-                    style={'padding-bottom': '10px'}
-                ),
-            ],
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="File Exists: app.py",
+                                checked=True,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="File Exists: Procfile",
+                                checked=True,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="File Exists: requirements.txt",
+                                checked=True,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="File Exists: runtime.txt",
+                                checked=False,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="server = app.server",
+                                checked=False,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+                dbc.Row(
+                    dmc.Tooltip(
+                        label="This is a tooltip",
+                        position="left",
+                        placement="center",
+                        gutter=10,
+                        children=[
+                            dmc.Checkbox(
+                                id="checkbox",
+                                label="App Name Available",
+                                checked=False,
+                                disabled=True,
+                                color="green")
+                        ],
+                        style={'padding-bottom': '10px'}
+                    )),
+            ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '492px', 'padding': '10px'}
         )
-    ], style={"height": 'auto', "width": 300, "overflow": "auto"})
+    ], style={"width": '100%', "overflow": "auto"})
 
 
 def terminal_box():
@@ -221,8 +227,10 @@ def render():
 
     return html.Div(
         [
-            dbc.Row([file_explorer()]),
-            dbc.Row([deploy_info()]),
+            dbc.Row([
+                dbc.Col([file_explorer()]),
+                dbc.Col([deploy_info()]),
+            ]),
             dbc.Row([terminal_box()]),
         ],
         style={"height": "90vh", "padding": "10px"}

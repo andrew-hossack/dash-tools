@@ -9,3 +9,6 @@ pytest==6.2.2
 pandas
 yolk3k==0.9
 termcolor==1.1.0
+visdcc==0.0.50
+dash-mantine-components==0.10.2
+dash-iconify==0.1.2

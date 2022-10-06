@@ -9,7 +9,7 @@ import sys as _sys
 import webbrowser
 
 from dashtools.cli import update
-from dashtools.dashboard import dashGui
+from dashtools.dashboard import dashboard
 from dashtools.deploy import deployHeroku
 from dashtools.docker import dockerUtils
 from dashtools.runtime import runtimeUtils
@@ -133,7 +133,7 @@ def docker(args):
     ])
 def gui(args):
     """Initialize a new app."""
-    dashGui.start_dashboard()
+    dashboard.start_dashboard()
 
 
 @ subcommand(
@@ -179,6 +179,7 @@ def init(args):
     ])
 def templates(args):
     if args.list:
+        print('dashtools: View templates at https://dash-tools.readthedocs.io/en/latest/commands/templates/index.html')
         print('dashtools: Templates usage example, type: dashtools init MyApp csv')
         print('dashtools: templates: List of available templates:')
         buildAppUtils.print_templates()
