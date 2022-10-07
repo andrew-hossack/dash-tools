@@ -31,46 +31,11 @@ sidebar = html.Div(
         html.Div(id='hidden-div'),
         html.H2("DashTools",  style={'weight': 'bold', 'font-size': '50px'}),
         html.H6(
-            [
-                html.A(
-                    [
-                        DashIconify(
-                            icon='logos:pypi',
-                            width=20,
-                            style={'margin-right': '10px'}),
-                        f'PyPi v{version.__version__}',
-                    ],
-                    href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
-            ]),
-        html.H6(
-            [
-                html.A(
-                    [
-                        DashIconify(
-                            icon='file-icons:readthedocs',
-                            width=15,
-                            style={'margin-right': '10px', 'margin-left': '5px'}),
-                        f'Read the Docs',
-                    ],
-                    href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
-            ]),
-        html.H6(
-            [
-                html.A(
-                    [
-                        DashIconify(
-                            icon='ant-design:github-filled',
-                            width=20,
-                            style={'margin-right': '8px', 'margin-left': '2px'}),
-                        f'GitHub',
-                    ],
-                    href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
-            ]),
-        html.Hr(),
-        html.H6(
-            "Plotly Dash Application Dashboard",
+            "Application Management Dashboard",
             className="lead"
         ),
+
+
         dbc.Nav(
             [
                 dbc.NavLink("Create", href="/create", active="exact"),
@@ -80,6 +45,47 @@ sidebar = html.Div(
             vertical=True,
             pills=True,
         ),
+
+        dmc.Space(style={'height': '50vh'}),
+        html.Hr(),
+        html.Div([
+            html.H6(
+                [
+                    html.A(
+                        [
+                            DashIconify(
+                                icon='logos:pypi',
+                                width=20,
+                                style={'margin-right': '10px'}),
+                            f'PyPi v{version.__version__}',
+                        ],
+                        href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                ]),
+            html.H6(
+                [
+                    html.A(
+                        [
+                            DashIconify(
+                                icon='file-icons:readthedocs',
+                                width=15,
+                                style={'margin-right': '10px', 'margin-left': '5px'}),
+                            f'Read the Docs',
+                        ],
+                        href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                ]),
+            html.H6(
+                [
+                    html.A(
+                        [
+                            DashIconify(
+                                icon='ant-design:github-filled',
+                                width=20,
+                                style={'margin-right': '8px', 'margin-left': '2px'}),
+                            f'GitHub',
+                        ],
+                        href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                ]),
+        ]),
     ],
     style={
         "position": "fixed",
@@ -90,6 +96,7 @@ sidebar = html.Div(
         "padding": "2rem 1rem",
         "background-color": "#f8f9fa",
     },
+
 )
 
 content = html.Div(

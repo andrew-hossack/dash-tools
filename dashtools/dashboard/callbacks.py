@@ -47,7 +47,7 @@ def generate_callbacks(app: Dash):
     def readiness_check_callback(n, filepath):
         if filepath and n:
             if os.path.isdir(filepath):
-                # TODO fails if dir is not app
+                # TODO Check if isValidDashApp - might need to make helper function
                 return (
                     # TODO Also need to validate app name validate_heroku_app_name()
                     herokuUtils.check_heroku_app_name_available(
