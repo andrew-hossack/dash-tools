@@ -7,20 +7,20 @@ from dash_iconify import DashIconify
 import os
 
 
-class HerokuApplication:
-    def __init__(self) -> None:
-        self.hasBeenSetByUser = False  # True when file is loaded
-        self.root: os.PathLike = ''
-        self.procfileExists = False
-        self.runtimeExists = False
-        self.requirementsExists = False
-        self.appFileExists = False
-        self.serverHookExists = False
-        self.herokuNameIsAvailable = False
+# class HerokuApplication:
+#     def __init__(self) -> None:
+#         self.hasBeenSetByUser = False  # True when file is loaded
+#         self.root: os.PathLike = ''
+#         self.procfileExists = False
+#         self.runtimeExists = False
+#         self.requirementsExists = False
+#         self.appFileExists = False
+#         self.serverHookExists = False
+#         self.herokuNameIsAvailable = False
 
 
-# Global herokuApplication for user session
-herokuApplication = HerokuApplication()
+# # Global herokuApplication for user session
+# herokuApplication = HerokuApplication()
 
 
 class Terminal:
@@ -119,7 +119,11 @@ def deploy_info():
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-app-exists",
@@ -128,14 +132,19 @@ def deploy_info():
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
                 dbc.Row(
                     dmc.Tooltip(
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-procfile-exists",
@@ -144,14 +153,19 @@ def deploy_info():
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
                 dbc.Row(
                     dmc.Tooltip(
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-requirements-exists",
@@ -160,14 +174,19 @@ def deploy_info():
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
                 dbc.Row(
                     dmc.Tooltip(
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-runtime-exists",
@@ -176,40 +195,51 @@ def deploy_info():
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
                 dbc.Row(
                     dmc.Tooltip(
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-hook-exists",
-                                label="Procfile is correct and server = app.server exists",
+                                label="Procfile is correct and server = app.server exists TODO split",
                                 checked=False,
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
                 dbc.Row(
                     dmc.Tooltip(
                         label="This is a tooltip",
                         position="left",
                         placement="center",
-                        gutter=10,
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        zIndex=99999,
+                        gutter=0,
                         children=[
                             dmc.Checkbox(
                                 id="readiness-check-name-available",
-                                label="App Name Available",
+                                label="App Name Available TODO",
                                 checked=False,
                                 disabled=True,
                                 color="green")
                         ],
-                        style={'padding-bottom': '10px'}
-                    )),
+                        style={'margin-bottom': '10px',
+                               'margin-bottom': '10px'}
+                    ), style={'padding': '1px'}),
             ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '492px', 'padding': '10px'}
         )
     ], style={"width": '100%', "overflow": "auto"})

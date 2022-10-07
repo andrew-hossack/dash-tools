@@ -41,4 +41,5 @@ def tree(dir_path: Path, level: int = -1, limit_to_directories: bool = False,
         res.append(f'... length_limit, {length_limit}, reached, counted:')
     # res.append(f'\n{directories} directories' +
     #            (f', {files} files' if files else ''))
+    res.append('\nTODO: JS File Explorer')
     return res

@@ -119,9 +119,16 @@ def verify_procfile(root_path: os.PathLike) -> dict:
             'hook': Hook name
         }
     """
-    with open(os.path.join(root_path, 'Procfile'), 'r', encoding="utf8") as procfile:
-        procfile_contents = procfile.read()
-
+    try:
+        with open(os.path.join(root_path, 'Procfile'), 'r', encoding="utf8") as procfile:
+            procfile_contents = procfile.read()
+    except FileNotFoundError:
+        return {
+            'valid': False,
+            'dir': '',
+            'hook': '',
+            'module': ''
+        }
     # Look for --chdir somedir
     chdir_regex = r"--chdir [a-zA-Z\/\\]+"
     try:

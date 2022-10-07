@@ -47,6 +47,7 @@ def generate_callbacks(app: Dash):
     def readiness_check_callback(n, filepath):
         if filepath and n:
             if os.path.isdir(filepath):
+                # TODO fails if dir is not app
                 return (
                     # TODO Also need to validate app name validate_heroku_app_name()
                     herokuUtils.check_heroku_app_name_available(
@@ -79,11 +80,11 @@ def generate_callbacks(app: Dash):
             # Initial callbacks
             return '', False, '', html.Div()
         children = []
+        alertChildren = []
         if filepath:
             if os.path.isdir(filepath):
                 try:
                     children = tree.tree(filepath)
-                    deployPage.terminal.command(f'ls {filepath}')
                     return (
                         '\n'.join(children),
                         True,
@@ -92,10 +93,9 @@ def generate_callbacks(app: Dash):
                     )
                 except PermissionError as e:
                     # TODO write to error modal
-                    deployPage.terminal.writeln(
-                        f'$ {filepath}\n{e}')
+                    alertChildren.append(alerts.render(key='PermissionError'))
                     # children = [str(x) for x in list(pathlib.Path(".").rglob("*"))]
                     # TODO implement something like this
                     # https://www.cssscript.com/folder-tree-json/
-        deployPage.terminal.clear()
-        return '\n'.join(children), True, '', alerts.render()
+        alertChildren.append(alerts.render(key='FileNotFoundError'))
+        return '\n'.join(children), True, '', alertChildren
