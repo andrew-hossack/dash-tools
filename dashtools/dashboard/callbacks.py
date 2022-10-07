@@ -18,6 +18,14 @@ from dashtools.deploy import fileUtils, herokuUtils
 def generate_callbacks(app: Dash):
 
     @app.callback(
+        Output('app-control-name-input', 'value'),
+        Input('app-control-name-refresh', 'n_clicks')
+    )
+    def generate_name(n):
+        if n:
+            return herokuUtils.generate_valid_name()
+
+    @app.callback(
         [
             Output('app-control-name-status', 'children'),
         ],

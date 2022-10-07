@@ -27,20 +27,48 @@ def deploy_controller():
     return html.Div([
         dmc.Text('App Control'),
         dmc.Stack([
-            dmc.Group([
-                dmc.TextInput(label="Heroku App Name", style={
-                    "width": '400px'}, id='app-control-name-input', value=herokuUtils.generate_valid_name()),
-                html.Div(
-                    dmc.Tooltip(
-                        label=f"App name is available on Heroku",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        children=[
-                            DashIconify(icon='bi:check-circle',
-                                        width=40, color='green')
-                        ]),
-                    id='app-control-name-status', style={'margin-top': '25px'})]
+            dmc.Group(
+                [
+                    html.Div(
+                        dmc.Tooltip(
+                            label="Generate Random Name",
+                            placement="center",
+                            withArrow=True,
+                            wrapLines=True,
+                            children=[
+                                html.Button(
+                                    DashIconify(icon='ci:refresh',
+                                                width=20, color='black'),
+                                    style={
+                                        "background": "none",
+                                        "color": "inherit",
+                                        "border": "none",
+                                        "padding": "0",
+                                        "margin": "0",
+                                        "font": "inherit",
+                                        "cursor": "pointer",
+                                        "outline": "inherit",
+                                    }
+                                )
+                            ]),
+                        id='app-control-name-refresh',
+                        style={'margin-top': '-33px', 'margin-right': '-10px'}
+                    ),
+                    dmc.TextInput(label="Heroku App Name", style={
+                        "width": '380px'}, id='app-control-name-input'),
+                    html.Div(
+                        dmc.Tooltip(
+                            label="Enter an app name you would like to use.",
+                            placement="center",
+                            withArrow=True,
+                            wrapLines=True,
+                            width=220,
+                            children=[
+                                DashIconify(icon='bi:three-dots',
+                                            width=40, color='gray')
+                            ]),
+                        id='app-control-name-status', style={'margin-top': '25px'}),
+                ]
             ),
             "Bar"
         ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '253px', 'padding': '10px'})
