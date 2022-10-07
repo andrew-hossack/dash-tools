@@ -70,8 +70,27 @@ def deploy_controller():
                         id='app-control-name-status', style={'margin-top': '25px'}),
                 ]
             ),
-            "Bar"
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '253px', 'padding': '10px'})
+            dmc.Space(h=100),
+            dmc.Divider(variant="dotted"),
+            dmc.Center(
+                [
+                    dmc.Button(
+                        'Run Local',
+                        variant="gradient",
+                        leftIcon=[DashIconify(
+                            icon="bi:play")],
+                        style={'width': '200px', 'margin-right': '50px'},
+                        id='app-control-run-button'),
+                    dmc.Button(
+                        'Deploy',
+                        variant="gradient",
+                        leftIcon=[DashIconify(
+                            icon="bi:cloud-upload")],
+                        style={'width': '200px'},
+                        id='app-control-deploy-button'),
+                ]
+            ),
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '275px', 'padding': '10px'})
     ], style={"width": '100%', "overflow": "auto"})
 
 

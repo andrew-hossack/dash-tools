@@ -1,6 +1,6 @@
 import os
 
-from dash import Dash, Input, Output, State, html, no_update
+from dash import Dash, Input, Output, State, html, no_update, ctx
 import dash_mantine_components as dmc
 try:
     import alerts
@@ -16,6 +16,19 @@ from dashtools.deploy import fileUtils, herokuUtils
 
 
 def generate_callbacks(app: Dash):
+
+    @app.callback(
+        Output('hidden-div', 'children'),
+        Input('app-control-run-button', 'n_clicks'),
+        Input('app-control-deploy-button', 'n_clicks'),
+    )
+    def run_deploy_buttons(run, deploy):
+        button_clicked = ctx.triggered_id
+        if button_clicked == 'app-control-run-button' and run:
+            deployPage.terminal.writeln('Run Button Clicked')
+        if button_clicked == 'app-control-deploy-button' and deploy:
+            deployPage.terminal.writeln('Deploy Button Clicked')
+        return html.Div()
 
     @app.callback(
         Output('app-control-name-input', 'value'),
@@ -87,13 +100,13 @@ def generate_callbacks(app: Dash):
         ],
         Input('deploy-terminal-refresh-interval', 'n_intervals'),
         State('deploy-terminal', 'value'),
+
     )
-    def update_terminal_text(n, current_value):
+    def update_terminal(n, current_value):
         logCMD = '''
              var textarea = document.getElementById('deploy-terminal');
              textarea.scrollTop = textarea.scrollHeight;
              '''
-        # deployPage.terminal.command('ls')
         new_value = deployPage.terminal.read()
         if current_value != new_value:
             return new_value, logCMD
