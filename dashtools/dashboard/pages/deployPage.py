@@ -4,6 +4,23 @@ import dash_mantine_components as dmc
 import visdcc
 from dash import dcc, html
 from dash_iconify import DashIconify
+import os
+
+
+class HerokuApplication:
+    def __init__(self) -> None:
+        self.hasBeenSetByUser = False  # True when file is loaded
+        self.root: os.PathLike = ''
+        self.procfileExists = False
+        self.runtimeExists = False
+        self.requirementsExists = False
+        self.appFileExists = False
+        self.serverHookExists = False
+        self.herokuNameIsAvailable = False
+
+
+# Global herokuApplication for user session
+herokuApplication = HerokuApplication()
 
 
 class Terminal:
@@ -12,12 +29,12 @@ class Terminal:
 
     def command(self, cmd: str):
         """ Write a command to be run in subprocess """
-        # TODO spin up new thread to run commands
+        # TODO spin up new thread to runlong commands?
         # https://stackoverflow.com/questions/4514751/pipe-subprocess-standard-output-to-a-variable
         self.writeln(f'$ {cmd}')
         try:
             proc = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             self.writeln(proc.stdout.read().decode('ascii'))
         except Exception as e:
             self.writeln(e)
@@ -105,9 +122,9 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
+                                id="readiness-check-app-exists",
                                 label="File Exists: app.py",
-                                checked=True,
+                                checked=False,
                                 disabled=True,
                                 color="green")
                         ],
@@ -121,9 +138,9 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
+                                id="readiness-check-procfile-exists",
                                 label="File Exists: Procfile",
-                                checked=True,
+                                checked=False,
                                 disabled=True,
                                 color="green")
                         ],
@@ -137,9 +154,9 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
+                                id="readiness-check-requirements-exists",
                                 label="File Exists: requirements.txt",
-                                checked=True,
+                                checked=False,
                                 disabled=True,
                                 color="green")
                         ],
@@ -153,7 +170,7 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
+                                id="readiness-check-runtime-exists",
                                 label="File Exists: runtime.txt",
                                 checked=False,
                                 disabled=True,
@@ -169,8 +186,8 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
-                                label="server = app.server",
+                                id="readiness-check-hook-exists",
+                                label="Procfile is correct and server = app.server exists",
                                 checked=False,
                                 disabled=True,
                                 color="green")
@@ -185,7 +202,7 @@ def deploy_info():
                         gutter=10,
                         children=[
                             dmc.Checkbox(
-                                id="checkbox",
+                                id="readiness-check-name-available",
                                 label="App Name Available",
                                 checked=False,
                                 disabled=True,
@@ -203,8 +220,8 @@ def terminal_box():
         [
             visdcc.Run_js(id='deploy-terminal-runjs', run=""),
             dcc.Interval(id='deploy-terminal-refresh-interval',
-                         interval=1000, n_intervals=0, disabled=False),
-            dmc.Text('Terminal'),
+                         interval=500, n_intervals=0, disabled=False),
+            dmc.Text('Command Output'),
             dmc.Space(h=5),
             html.Textarea(id='deploy-terminal',
                           contentEditable="false",
@@ -212,7 +229,7 @@ def terminal_box():
                           draggable='false',
                           style={
                               "width": "100%",
-                              "height": "150px",
+                              "height": "200px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',
@@ -231,7 +248,7 @@ def render():
                 dbc.Col([file_explorer()]),
                 dbc.Col([deploy_info()]),
             ]),
-            dbc.Row([terminal_box()]),
+            dbc.Row([terminal_box()], style={'padding-top': '10px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )
