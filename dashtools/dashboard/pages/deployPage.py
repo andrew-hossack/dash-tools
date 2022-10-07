@@ -5,6 +5,7 @@ import visdcc
 from dash import dcc, html
 from dash_iconify import DashIconify
 import os
+from dashtools.deploy import herokuUtils
 
 
 # class HerokuApplication:
@@ -21,6 +22,29 @@ import os
 
 # # Global herokuApplication for user session
 # herokuApplication = HerokuApplication()
+
+def deploy_controller():
+    return html.Div([
+        dmc.Text('App Control'),
+        dmc.Stack([
+            dmc.Group([
+                dmc.TextInput(label="Heroku App Name", style={
+                    "width": '400px'}, id='app-control-name-input', value=herokuUtils.generate_valid_name()),
+                html.Div(
+                    dmc.Tooltip(
+                        label=f"App name is available on Heroku",
+                        placement="center",
+                        withArrow=True,
+                        wrapLines=True,
+                        children=[
+                            DashIconify(icon='bi:check-circle',
+                                        width=40, color='green')
+                        ]),
+                    id='app-control-name-status', style={'margin-top': '25px'})]
+            ),
+            "Bar"
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '253px', 'padding': '10px'})
+    ], style={"width": '100%', "overflow": "auto"})
 
 
 class Terminal:
@@ -219,30 +243,9 @@ def deploy_info():
                         style={'margin-bottom': '10px',
                                'margin-bottom': '10px'}
                     ), style={'padding': '1px'}),
-                dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-name-available",
-                                label="App Name Available TODO",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
-            ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '492px', 'padding': '10px'}
+            ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px'}
         )
-    ], style={"width": '100%', "overflow": "auto"})
+    ], style={"width": '100%', "overflow": "auto", "margin-bottom": "10px"})
 
 
 def terminal_box():
@@ -275,8 +278,11 @@ def render():
     return html.Div(
         [
             dbc.Row([
-                dbc.Col([file_explorer()]),
-                dbc.Col([deploy_info()]),
+                dbc.Col(file_explorer()),
+                dbc.Col([
+                    deploy_info(),
+                    deploy_controller()
+                ])
             ]),
             dbc.Row([terminal_box()], style={'padding-top': '10px'}),
         ],

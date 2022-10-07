@@ -54,13 +54,14 @@ def check_heroku_app_name_available(heroku_app_name: str) -> bool:
         False if not
     """
     response = requests.get(
-            url=f'https://{heroku_app_name}.herokuapp.com/',
-            headers={'User-Agent': 'Custom'}
-        )
+        url=f'https://{heroku_app_name}.herokuapp.com/',
+        headers={'User-Agent': 'Custom'}
+    )
     if response.status_code == 404:
         return True
     else:
         return False
+
 
 def create_app_on_heroku(app_name: str) -> bool:
     """
@@ -94,6 +95,14 @@ def _generate_app_name():
     app_name += f"-{''.join(random.choices(string.ascii_lowercase + string.digits, k=4))}"
     app_name = app_name.lower()
     return app_name
+
+
+def generate_valid_name():
+    """ Returns a valid and available app name """
+    name = _generate_app_name()
+    while not (validate_heroku_app_name(name) and check_heroku_app_name_available(name)):
+        name = _generate_app_name()
+    return name
 
 
 def get_heroku_app_name():

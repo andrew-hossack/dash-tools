@@ -1,19 +1,78 @@
 import os
-from dash import Dash, Input, Output, State, no_update, html
+
+from dash import Dash, Input, Output, State, html, no_update
+import dash_mantine_components as dmc
 try:
-    from pages import deployPage
-    import tree
     import alerts
+    import tree
+    from pages import deployPage
 except ModuleNotFoundError:
     from . import tree
     from . import alerts
     from .pages import deployPage
-from dashtools.deploy import herokuUtils, fileUtils
+
+from dash_iconify import DashIconify
+from dashtools.deploy import fileUtils, herokuUtils
 
 
 def generate_callbacks(app: Dash):
 
     @app.callback(
+        [
+            Output('app-control-name-status', 'children'),
+        ],
+        Input('app-control-name-input', 'value')
+    )
+    def validate_app_name(app_name):
+        if not app_name:
+            return [
+                dmc.Tooltip(
+                    label="Enter an app name you would like to use.",
+                    placement="center",
+                    withArrow=True,
+                    wrapLines=True,
+                    width=220,
+                    children=[
+                        DashIconify(icon='bi:three-dots',
+                                    width=40, color='gray')
+                    ])]
+        if not herokuUtils.validate_heroku_app_name(app_name):
+            return [
+                dmc.Tooltip(
+                    label="Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters. Maximum 30 characters.",
+                    placement="center",
+                    withArrow=True,
+                    wrapLines=True,
+                    width=220,
+                    children=[
+                        DashIconify(icon='bi:x-circle', width=40, color='red')
+                    ])
+            ]
+        if not herokuUtils.check_heroku_app_name_available(app_name):
+            return [
+                dmc.Tooltip(
+                    label=f"App name {app_name} is already taken on Heroku! Please choose a unique name.",
+                    placement="center",
+                    withArrow=True,
+                    wrapLines=True,
+                    width=220,
+                    children=[
+                        DashIconify(icon='bi:x-circle', width=40, color='red')
+                    ])
+            ]
+        return [
+            dmc.Tooltip(
+                label=f"App name is available on Heroku",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                children=[
+                    DashIconify(icon='bi:check-circle',
+                                width=40, color='green')
+                ])
+        ]
+
+    @ app.callback(
         [
             Output('deploy-terminal', 'value'),
             Output('deploy-terminal-runjs', 'run'),
@@ -32,9 +91,8 @@ def generate_callbacks(app: Dash):
             return new_value, logCMD
         return no_update, ""
 
-    @app.callback(
+    @ app.callback(
         [
-            Output('readiness-check-name-available', 'checked'),
             Output('readiness-check-hook-exists', 'checked'),
             Output('readiness-check-runtime-exists', 'checked'),
             Output('readiness-check-requirements-exists', 'checked'),
@@ -49,9 +107,6 @@ def generate_callbacks(app: Dash):
             if os.path.isdir(filepath):
                 # TODO Check if isValidDashApp - might need to make helper function
                 return (
-                    # TODO Also need to validate app name validate_heroku_app_name()
-                    herokuUtils.check_heroku_app_name_available(
-                        'foo-app'),
                     # TODO require 'app.py' filename?
                     # TODO break out verify procfile and verify server=app.server exists
                     fileUtils.verify_procfile(filepath)['valid'],
@@ -66,7 +121,7 @@ def generate_callbacks(app: Dash):
                 )
         return False, False, False, False, False, False
 
-    @app.callback([
+    @ app.callback([
         Output('file-explorer-output', 'value'),
         Output('file-explorer-input', 'required'),
         Output('file-explorer-input', 'value'),
@@ -80,7 +135,6 @@ def generate_callbacks(app: Dash):
             # Initial callbacks
             return '', False, '', html.Div()
         children = []
-        alertChildren = []
         if filepath:
             if os.path.isdir(filepath):
                 try:
@@ -93,9 +147,8 @@ def generate_callbacks(app: Dash):
                     )
                 except PermissionError as e:
                     # TODO write to error modal
-                    alertChildren.append(alerts.render(key='PermissionError'))
+                    return '\n'.join(children), True, '', alerts.render(key='PermissionError')
                     # children = [str(x) for x in list(pathlib.Path(".").rglob("*"))]
                     # TODO implement something like this
                     # https://www.cssscript.com/folder-tree-json/
-        alertChildren.append(alerts.render(key='FileNotFoundError'))
-        return '\n'.join(children), True, '', alertChildren
+        return '\n'.join(children), True, '', alerts.render(key='FileNotFoundError')

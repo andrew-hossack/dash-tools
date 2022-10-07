@@ -6,7 +6,7 @@ from dash_iconify import DashIconify
 def render(key: str):
     if key == 'FileNotFoundError':
         return dmc.Notification(
-            message="The file path you provided was incorrect. Please check your filepath and try again.",
+            message="The file path you provided does not exist. Please check your filepath and try again.",
             title="Warning",
             color='red',
             icon=[DashIconify(icon="ep:warning")],
