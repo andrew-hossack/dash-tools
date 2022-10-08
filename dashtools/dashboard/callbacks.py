@@ -174,7 +174,8 @@ def generate_callbacks(app: Dash):
                 try:
                     deployPage.herokuApplication.root = filepath
                     return (
-                        tree.FileTree(filepath).render(),
+                        html.Div(tree.FileTree(filepath).render(),
+                                 style={'height': '100%', 'overflow': 'scroll'}),
                         True,
                         None,
                         html.Div(),

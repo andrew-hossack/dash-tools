@@ -166,9 +166,9 @@ def file_explorer():
                         'margin-left': '60px', 'margin-right': '60px'}),
             html.Div(
                 id='file-explorer-output',
-                style={'width': '100%', 'height': '400px'}
+                style={'width': '100%', 'height': '421px', 'margin-top': '-16px'}
             )
-        ], style={'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)'})
+        ], style={'height': '492px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 
