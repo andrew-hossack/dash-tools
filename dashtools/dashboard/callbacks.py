@@ -1,6 +1,5 @@
 import os
-
-from dash import Dash, Input, Output, State, html, no_update, ctx
+from dash import Dash, Input, Output, State, html, no_update, ctx, dcc
 import dash_mantine_components as dmc
 try:
     import alerts
@@ -156,37 +155,32 @@ def generate_callbacks(app: Dash):
                 )
         return False, False, False, False, False
 
-    @ app.callback([
-        Output('file-explorer-output', 'value'),
-        Output('file-explorer-input', 'required'),
-        Output('file-explorer-input', 'error'),
-        Output('notifications-container', 'children'),
-    ],
+    @ app.callback(
+        [
+            Output('file-explorer-output', 'children'),
+            Output('file-explorer-input', 'required'),
+            Output('file-explorer-input', 'error'),
+            Output('notifications-container', 'children'),
+        ],
         Input('file-explorer-button', 'n_clicks'),
         State('file-explorer-input', 'value')
     )
     def file_explorer_callback(n, filepath: os.PathLike):
+        # Initial callbacks
         if not n:
-            # Initial callbacks
-            return '', False, None, html.Div()
-        children = []
+            return html.Div(), False, None, html.Div()
         if filepath:
             if os.path.isdir(filepath):
                 try:
-                    children = tree.tree(filepath)
                     deployPage.herokuApplication.root = filepath
                     return (
-                        '\n'.join(children),
+                        tree.FileTree(filepath).render(),
                         True,
                         None,
                         html.Div(),
                     )
-                except PermissionError as e:
-                    # TODO write to error modal
+                except PermissionError:
                     deployPage.herokuApplication.root = None
-                    return '\n'.join(children), True, 'Permission Error', alerts.render(key='PermissionError')
-                    # children = [str(x) for x in list(pathlib.Path(".").rglob("*"))]
-                    # TODO implement something like this
-                    # https://www.cssscript.com/folder-tree-json/
+                    return [], True, 'Permission Error', alerts.render(key='PermissionError')
         deployPage.herokuApplication.root = None
-        return '\n'.join(children), True, 'File Not Found', alerts.render(key='FileNotFoundError')
+        return [], True, 'File Not Found', alerts.render(key='FileNotFoundError')

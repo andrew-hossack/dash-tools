@@ -139,13 +139,9 @@ terminal = Terminal()
 
 def file_explorer():
     return html.Div([
-        # dmc.Stack()
         dmc.Text('File Explorer'),
-        # dmc.Center([
         dmc.Stack([
             dmc.Center([
-                # dcc.Upload(
-                # https://www.dash-mantine-components.com/components/button
                 dmc.TextInput(
                     placeholder="App Path; eg. /Users/Andrew/MyDashApp",
                     style={"width": '100%'},
@@ -168,23 +164,10 @@ def file_explorer():
             ], style={'padding-top': '15px', 'padding-right': '15px', 'padding-left': '15px'}),
             dmc.Divider(variant="dotted", style={
                         'margin-left': '60px', 'margin-right': '60px'}),
-            html.Textarea(
+            html.Div(
                 id='file-explorer-output',
-                contentEditable="false",
-                readOnly='true',
-                draggable='false',
-                style={
-                    'width': '100%',
-                    'height': '400px',
-                    '-moz-user-select': 'none',
-                    '-khtml-user-select': 'none',
-                    '-webkit-user-select': 'none',
-                    '-ms-user-select': 'none',
-                    'user-select': 'none',
-                    "resize": "none",
-                    'border': 'none',
-                    'outline': 'none'})
-            # ])
+                style={'width': '100%', 'height': '400px'}
+            )
         ], style={'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)'})
     ])
 
