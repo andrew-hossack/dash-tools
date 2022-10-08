@@ -59,7 +59,7 @@ sidebar = html.Div(
                                 style={'margin-right': '10px'}),
                             f'PyPi v{version.__version__}',
                         ],
-                        href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                        href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
                 ]),
             html.H6(
                 [
@@ -71,7 +71,7 @@ sidebar = html.Div(
                                 style={'margin-right': '10px', 'margin-left': '5px'}),
                             f'Read the Docs',
                         ],
-                        href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                        href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
                 ]),
             html.H6(
                 [
@@ -83,7 +83,7 @@ sidebar = html.Div(
                                 style={'margin-right': '8px', 'margin-left': '2px'}),
                             f'GitHub',
                         ],
-                        href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black'}),
+                        href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
                 ]),
         ]),
     ],

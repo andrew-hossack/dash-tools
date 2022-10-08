@@ -1,27 +1,28 @@
+import os
 import subprocess
+
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 import visdcc
 from dash import dcc, html
 from dash_iconify import DashIconify
-import os
-from dashtools.deploy import herokuUtils
 
 
-# class HerokuApplication:
-#     def __init__(self) -> None:
-#         self.hasBeenSetByUser = False  # True when file is loaded
-#         self.root: os.PathLike = ''
-#         self.procfileExists = False
-#         self.runtimeExists = False
-#         self.requirementsExists = False
-#         self.appFileExists = False
-#         self.serverHookExists = False
-#         self.herokuNameIsAvailable = False
+class HerokuApplication:
+    def __init__(self) -> None:
+        self._ready = False  # Ready to upload
+        self.appName = None
+        self.root: os.PathLike = None
+
+    def isDeployReady(self) -> bool:
+        """ Flag to tell if deploy is ready """
+        # TODO if x and y and z:
+        return self._ready
 
 
-# # Global herokuApplication for user session
-# herokuApplication = HerokuApplication()
+# Global herokuApplication for user session
+herokuApplication = HerokuApplication()
+
 
 def deploy_controller():
     return html.Div([
@@ -31,7 +32,7 @@ def deploy_controller():
                 [
                     html.Div(
                         dmc.Tooltip(
-                            label="Generate Random Name",
+                            label="Generate random name",
                             placement="center",
                             withArrow=True,
                             wrapLines=True,
@@ -54,8 +55,11 @@ def deploy_controller():
                         id='app-control-name-refresh',
                         style={'margin-top': '-33px', 'margin-right': '-10px'}
                     ),
-                    dmc.TextInput(label="Heroku App Name", style={
-                        "width": '380px'}, id='app-control-name-input'),
+                    dmc.TextInput(
+                        label="Heroku App Name",
+                        style={"width": '380px'},
+                        id='app-control-name-input',
+                        placeholder='Application Name; eg. my-example-app'),
                     html.Div(
                         dmc.Tooltip(
                             label="Enter an app name you would like to use.",
@@ -70,7 +74,7 @@ def deploy_controller():
                         id='app-control-name-status', style={'margin-top': '25px'}),
                 ]
             ),
-            dmc.Space(h=100),
+            dmc.Space(h=95),
             dmc.Divider(variant="dotted"),
             dmc.Center(
                 [
@@ -94,21 +98,26 @@ def deploy_controller():
     ], style={"width": '100%', "overflow": "auto"})
 
 
-class Terminal:
+class Terminal():
     def __init__(self) -> None:
         self.value = ''
+    #     threading.Thread.__init__(self)
+    #     self.cmd = None
 
-    def command(self, cmd: str):
+    # def command(self, cmd: str):
+    #     self.cmd = cmd
+    #     self.start()
+
+    #     self.join()
+    #     self.cmd = None
+
+    def command(self, cmd):
         """ Write a command to be run in subprocess """
-        # TODO spin up new thread to runlong commands?
-        # https://stackoverflow.com/questions/4514751/pipe-subprocess-standard-output-to-a-variable
         self.writeln(f'$ {cmd}')
-        try:
-            proc = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            self.writeln(proc.stdout.read().decode('ascii'))
-        except Exception as e:
-            self.writeln(e)
+        with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as proc:
+            self.writeln(proc.stdout.read().decode('utf-8'))
+            if proc.returncode != 0:
+                self.writeln(proc.stderr.read().decode('utf-8'))
 
     def read(self):
         return self.value
@@ -301,7 +310,36 @@ def terminal_box():
             visdcc.Run_js(id='deploy-terminal-runjs', run=""),
             dcc.Interval(id='deploy-terminal-refresh-interval',
                          interval=500, n_intervals=0, disabled=False),
-            dmc.Text('Command Output'),
+            dbc.Row(
+                [
+                    dmc.Text('Command Output'),
+                    html.Div(
+                        dmc.Tooltip(
+                            label="Clear",
+                            placement="center",
+                            withArrow=True,
+                            wrapLines=True,
+                            children=[
+                                html.Button(
+                                    DashIconify(icon='codicon:clear-all',
+                                                width=18, color='black'),
+                                    style={
+                                        "background": "none",
+                                        "color": "inherit",
+                                        "border": "none",
+                                        "padding": "0",
+                                        "margin": "0",
+                                        "font": "inherit",
+                                        "cursor": "pointer",
+                                        "outline": "inherit",
+                                    },
+                                    id='deploy-terminal-clear-button'
+                                )
+                            ]),
+                        style={'margin-top': '-26px', 'margin-left': '136px'}
+                    ),
+                ]
+            ),
             dmc.Space(h=5),
             html.Textarea(id='deploy-terminal',
                           contentEditable="false",

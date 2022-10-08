@@ -13,6 +13,7 @@ except ModuleNotFoundError:
 
 from dash_iconify import DashIconify
 from dashtools.deploy import fileUtils, herokuUtils
+from dashtools.runtime import runtimeUtils
 
 
 def generate_callbacks(app: Dash):
@@ -21,13 +22,22 @@ def generate_callbacks(app: Dash):
         Output('hidden-div', 'children'),
         Input('app-control-run-button', 'n_clicks'),
         Input('app-control-deploy-button', 'n_clicks'),
+        Input('deploy-terminal-clear-button', 'n_clicks')
     )
-    def run_deploy_buttons(run, deploy):
+    def run_deploy_buttons(run, deploy, clear_terminal):
         button_clicked = ctx.triggered_id
         if button_clicked == 'app-control-run-button' and run:
-            deployPage.terminal.writeln('Run Button Clicked')
+            # TODO if no runtime command is found then gracefully fail
+            # TODO capture stdout
+            # TODO review if this will actually work
+            deployPage.terminal.command(
+                f'{runtimeUtils._python_shell_cmd()} {os.path.join(deployPage.herokuApplication.root, "src/app.py")}')
+            # deployPage.terminal.command('python3 --help')
         if button_clicked == 'app-control-deploy-button' and deploy:
-            deployPage.terminal.writeln('Deploy Button Clicked')
+            deployPage.terminal.writeln(
+                f'Deploy Button Clicked TODO {deployPage.herokuApplication.appName} at {deployPage.herokuApplication.root}')
+        if button_clicked == 'deploy-terminal-clear-button' and clear_terminal:
+            deployPage.terminal.clear()
         return html.Div()
 
     @app.callback(
@@ -46,6 +56,7 @@ def generate_callbacks(app: Dash):
     )
     def validate_app_name(app_name):
         if not app_name:
+            deployPage.herokuApplication.appName = None
             return [
                 dmc.Tooltip(
                     label="Enter an app name you would like to use.",
@@ -58,6 +69,7 @@ def generate_callbacks(app: Dash):
                                     width=40, color='gray')
                     ])]
         if not herokuUtils.validate_heroku_app_name(app_name):
+            deployPage.herokuApplication.appName = None
             return [
                 dmc.Tooltip(
                     label="Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters. Maximum 30 characters.",
@@ -70,6 +82,7 @@ def generate_callbacks(app: Dash):
                     ])
             ]
         if not herokuUtils.check_heroku_app_name_available(app_name):
+            deployPage.herokuApplication.appName = None
             return [
                 dmc.Tooltip(
                     label=f"App name {app_name} is already taken on Heroku! Please choose a unique name.",
@@ -81,6 +94,7 @@ def generate_callbacks(app: Dash):
                         DashIconify(icon='bi:x-circle', width=40, color='red')
                     ])
             ]
+        deployPage.herokuApplication.appName = app_name
         return [
             dmc.Tooltip(
                 label=f"App name is available on Heroku",
@@ -140,12 +154,12 @@ def generate_callbacks(app: Dash):
                     True if fileUtils.app_root_path(
                         filepath) else False
                 )
-        return False, False, False, False, False, False
+        return False, False, False, False, False
 
     @ app.callback([
         Output('file-explorer-output', 'value'),
         Output('file-explorer-input', 'required'),
-        Output('file-explorer-input', 'value'),
+        Output('file-explorer-input', 'error'),
         Output('notifications-container', 'children'),
     ],
         Input('file-explorer-button', 'n_clicks'),
@@ -154,22 +168,25 @@ def generate_callbacks(app: Dash):
     def file_explorer_callback(n, filepath: os.PathLike):
         if not n:
             # Initial callbacks
-            return '', False, '', html.Div()
+            return '', False, None, html.Div()
         children = []
         if filepath:
             if os.path.isdir(filepath):
                 try:
                     children = tree.tree(filepath)
+                    deployPage.herokuApplication.root = filepath
                     return (
                         '\n'.join(children),
                         True,
-                        filepath,
+                        None,
                         html.Div(),
                     )
                 except PermissionError as e:
                     # TODO write to error modal
-                    return '\n'.join(children), True, '', alerts.render(key='PermissionError')
+                    deployPage.herokuApplication.root = None
+                    return '\n'.join(children), True, 'Permission Error', alerts.render(key='PermissionError')
                     # children = [str(x) for x in list(pathlib.Path(".").rglob("*"))]
                     # TODO implement something like this
                     # https://www.cssscript.com/folder-tree-json/
-        return '\n'.join(children), True, '', alerts.render(key='FileNotFoundError')
+        deployPage.herokuApplication.root = None
+        return '\n'.join(children), True, 'File Not Found', alerts.render(key='FileNotFoundError')
