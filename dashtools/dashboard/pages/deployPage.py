@@ -1,3 +1,4 @@
+import enum
 import os
 import subprocess
 
@@ -101,15 +102,6 @@ def deploy_controller():
 class Terminal():
     def __init__(self) -> None:
         self.value = ''
-    #     threading.Thread.__init__(self)
-    #     self.cmd = None
-
-    # def command(self, cmd: str):
-    #     self.cmd = cmd
-    #     self.start()
-
-    #     self.join()
-    #     self.cmd = None
 
     def command(self, cmd):
         """ Write a command to be run in subprocess """
@@ -172,116 +164,71 @@ def file_explorer():
     ])
 
 
+class ReadinessStatus(enum.Enum):
+    PASS = DashIconify(icon='clarity:check-circle-line',
+                       color='green', width=20, style={'margin-top': '2px'}),
+    FAIL = DashIconify(icon='clarity:error-line', color='red',
+                       width=20, style={'margin-top': '2px'}),
+    PENDING = DashIconify(icon='carbon:pending', color='gray',
+                          width=15, style={'margin-top': '2px'}),
+
+
+def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str) -> html.Div:
+    """ status: 'PASS' or 'FAIL' or 'PENDING' """
+    return dmc.Center([
+        dmc.Tooltip(
+            children=ReadinessStatus[status].value,
+            id=tooltip_id,
+            label=tooltip,
+            position="left",
+            placement="center",
+            withArrow=True,
+            wrapLines=True,
+            width=220,),
+        dmc.Text(text, style={'margin-bottom': '2px', 'margin-left': '5px'}),
+    ])
+
+
 def deploy_info():
     return html.Div([
         dmc.Text('Deployment Readiness'),
         html.Div(
             [
                 dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-app-exists",
-                                label="File Exists: app.py",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
+                    build_checkbox(
+                        'PENDING',
+                        'File Exists: src/App.py',
+                        'App.py file must exist in the src/ directory',
+                        'readiness-check-app-exists'
+                    )),
                 dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-procfile-exists",
-                                label="File Exists: Procfile",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
+                    build_checkbox(
+                        'PENDING',
+                        'File Exists: Procfile',
+                        'Procfile file must be included to deploy to Heroku',
+                        'readiness-check-procfile-exists'
+                    )),
                 dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-requirements-exists",
-                                label="File Exists: requirements.txt",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
+                    build_checkbox(
+                        'PENDING',
+                        'File Exists: requirements.txt',
+                        'requirements.txt file must be included to deploy to Heroku',
+                        'readiness-check-requirements-exists'
+                    )),
                 dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-runtime-exists",
-                                label="File Exists: runtime.txt",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
+                    build_checkbox(
+                        'PENDING',
+                        'File Exists: runtime.txt',
+                        'runtime.txt file must be included to deploy to Heroku',
+                        'readiness-check-runtime-exists'
+                    )),
                 dbc.Row(
-                    dmc.Tooltip(
-                        label="This is a tooltip",
-                        position="left",
-                        placement="center",
-                        withArrow=True,
-                        wrapLines=True,
-                        width=220,
-                        zIndex=99999,
-                        gutter=0,
-                        children=[
-                            dmc.Checkbox(
-                                id="readiness-check-hook-exists",
-                                label="Procfile is correct and server = app.server exists TODO split",
-                                checked=False,
-                                disabled=True,
-                                color="green")
-                        ],
-                        style={'margin-bottom': '10px',
-                               'margin-bottom': '10px'}
-                    ), style={'padding': '1px'}),
+                    build_checkbox(
+                        'PENDING',
+                        'server = app.server in App.py',
+                        'A server hook must be exposed to deploy to Heroku',
+                        'readiness-check-hook-exists'
+                    )),
             ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px'}
         )
     ], style={"width": '100%', "overflow": "auto", "margin-bottom": "10px"})

@@ -1,0 +1,10 @@
+
+.dashtools-logo {
+    -webkit-font-smoothing: antialiased;
+    font-family: Inter, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    /* color: rgb(73, 80, 87); */
+    font-size: 50px;
+    line-height: 1.55;
+    text-decoration: none;
+}

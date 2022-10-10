@@ -14,7 +14,7 @@ except ModuleNotFoundError:
     from .pages import createPage, deployPage, errorPage, infoPage
 
 app = Dash(
-    title="DashTools - Development Dashboard",
+    title="DashTools - Application Management Dashboard",
     update_title=None,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
@@ -29,24 +29,44 @@ server = app.server
 sidebar = html.Div(
     [
         html.Div(id='hidden-div'),
-        html.H2("DashTools",  style={'weight': 'bold', 'font-size': '50px'}),
+        dmc.Center([
+            DashIconify(icon='heroicons:command-line-20-solid',
+                        height=60, style={'margin-bottom': '8px', 'margin-right': '5px'}),
+            html.H2("DashTools", className='dashtools-logo'),
+        ]),
+        dmc.Space(h=1, style={'margin-top': '-20px'}),
         html.H6(
             "Application Management Dashboard",
-            className="lead"
+            style={'font-weight': 'inherit', 'font-size': '14px'}
         ),
 
 
         dbc.Nav(
             [
-                dbc.NavLink("Create", href="/create", active="exact"),
-                dbc.NavLink("Deploy", href="/deploy", active="exact"),
-                dbc.NavLink("Info", href="/info", active="exact"),
+                dbc.NavLink(
+                    [
+                        DashIconify(icon='akar-icons:plus',
+                                    style={'margin-right': '5px'}),
+                        "Create"
+                    ], href="/create", active="exact"),
+                dbc.NavLink(
+                    [
+                        DashIconify(icon='akar-icons:cloud',
+                                    style={'margin-right': '5px'}),
+                        "Deploy"
+                    ], href="/deploy", active="exact"),
+                dbc.NavLink(
+                    [
+                        DashIconify(icon='akar-icons:info',
+                                    style={'margin-right': '5px'}),
+                        "Info"
+                    ], href="/info", active="exact"),
             ],
             vertical=True,
             pills=True,
         ),
 
-        dmc.Space(style={'height': '50vh'}),
+        dmc.Space(style={'height': '55vh'}),
         html.Hr(),
         html.Div([
             html.H6(

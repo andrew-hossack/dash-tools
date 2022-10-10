@@ -1,6 +1,8 @@
 import os
 from dash import Dash, Input, Output, State, html, no_update, ctx, dcc
 import dash_mantine_components as dmc
+
+from dashtools.dashboard.pages.deployPage import ReadinessStatus
 try:
     import alerts
     import tree
@@ -127,11 +129,11 @@ def generate_callbacks(app: Dash):
 
     @ app.callback(
         [
-            Output('readiness-check-hook-exists', 'checked'),
-            Output('readiness-check-runtime-exists', 'checked'),
-            Output('readiness-check-requirements-exists', 'checked'),
-            Output('readiness-check-procfile-exists', 'checked'),
-            Output('readiness-check-app-exists', 'checked'),
+            Output('readiness-check-hook-exists', 'children'),
+            Output('readiness-check-runtime-exists', 'children'),
+            Output('readiness-check-requirements-exists', 'children'),
+            Output('readiness-check-procfile-exists', 'children'),
+            Output('readiness-check-app-exists', 'children'),
         ],
         Input('file-explorer-button', 'n_clicks'),
         State('file-explorer-input', 'value')
@@ -139,21 +141,19 @@ def generate_callbacks(app: Dash):
     def readiness_check_callback(n, filepath):
         if filepath and n:
             if os.path.isdir(filepath):
-                # TODO Check if isValidDashApp - might need to make helper function
                 return (
-                    # TODO require 'app.py' filename?
-                    # TODO break out verify procfile and verify server=app.server exists
-                    fileUtils.verify_procfile(filepath)['valid'],
-                    fileUtils.check_file_exists(
-                        filepath, 'runtime.txt'),
-                    fileUtils.check_file_exists(
-                        filepath, 'requirements.txt'),
-                    fileUtils.check_file_exists(
-                        filepath, 'Procfile'),
-                    True if fileUtils.app_root_path(
-                        filepath) else False
+                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.verify_procfile(
+                        filepath)['valid'] else html.Div(deployPage.ReadinessStatus.FAIL.value),
+                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
+                        filepath, 'runtime.txt') else html.Div(deployPage.ReadinessStatus.FAIL.value),
+                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
+                        filepath, 'requirements.txt') else html.Div(deployPage.ReadinessStatus.FAIL.value),
+                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
+                        filepath, 'Procfile') else html.Div(deployPage.ReadinessStatus.FAIL.value),
+                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.app_root_path(
+                        filepath) else html.Div(deployPage.ReadinessStatus.FAIL.value)
                 )
-        return False, False, False, False, False
+        return html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value)
 
     @ app.callback(
         [
