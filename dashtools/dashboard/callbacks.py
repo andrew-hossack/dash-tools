@@ -128,32 +128,30 @@ def generate_callbacks(app: Dash):
         return no_update, ""
 
     @ app.callback(
-        [
-            Output('readiness-check-hook-exists', 'children'),
-            Output('readiness-check-runtime-exists', 'children'),
-            Output('readiness-check-requirements-exists', 'children'),
-            Output('readiness-check-procfile-exists', 'children'),
-            Output('readiness-check-app-exists', 'children'),
-        ],
+        Output('readiness-check-hook-exists', 'children'),
+        Output('readiness-check-runtime-exists', 'children'),
+        Output('readiness-check-requirements-exists', 'children'),
+        Output('readiness-check-procfile-exists', 'children'),
+        Output('readiness-check-app-exists', 'children'),
         Input('file-explorer-button', 'n_clicks'),
         State('file-explorer-input', 'value')
     )
     def readiness_check_callback(n, filepath):
-        if filepath and n:
+        if (filepath and n):
             if os.path.isdir(filepath):
                 return (
-                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.verify_procfile(
-                        filepath)['valid'] else html.Div(deployPage.ReadinessStatus.FAIL.value),
-                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
-                        filepath, 'runtime.txt') else html.Div(deployPage.ReadinessStatus.FAIL.value),
-                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
-                        filepath, 'requirements.txt') else html.Div(deployPage.ReadinessStatus.FAIL.value),
-                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.check_file_exists(
-                        filepath, 'Procfile') else html.Div(deployPage.ReadinessStatus.FAIL.value),
-                    html.Div(deployPage.ReadinessStatus.PASS.value) if fileUtils.app_root_path(
-                        filepath) else html.Div(deployPage.ReadinessStatus.FAIL.value)
+                    deployPage.ReadinessStatus('PASS').get() if fileUtils.verify_procfile(
+                        filepath)['valid'] else deployPage.ReadinessStatus('FAIL').get(),
+                    deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
+                        filepath, 'runtime.txt') else deployPage.ReadinessStatus('FAIL').get(),
+                    deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
+                        filepath, 'requirements.txt') else deployPage.ReadinessStatus('FAIL').get(),
+                    deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
+                        filepath, 'Procfile') else deployPage.ReadinessStatus('FAIL').get(),
+                    deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
+                        filepath, os.path.join('src', 'app.py')) else deployPage.ReadinessStatus('FAIL').get()
                 )
-        return html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value), html.Div(deployPage.ReadinessStatus.PENDING.value)
+        return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get())
 
     @ app.callback(
         [

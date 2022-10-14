@@ -1,5 +1,6 @@
 import enum
 import os
+import random
 import subprocess
 
 import dash_bootstrap_components as dbc
@@ -164,28 +165,44 @@ def file_explorer():
     ])
 
 
-class ReadinessStatus(enum.Enum):
-    PASS = DashIconify(icon='clarity:check-circle-line',
-                       color='green', width=20, style={'margin-top': '2px'}),
-    FAIL = DashIconify(icon='clarity:error-line', color='red',
-                       width=20, style={'margin-top': '2px'}),
-    PENDING = DashIconify(icon='carbon:pending', color='gray',
-                          width=15, style={'margin-top': '2px'}),
+class ReadinessStatus():
+    def __init__(self, status: str):
+        """ 
+            Usage: ReadinessStatus('PASS').get()
+            Args: status (str): 'PASS', 'FAIL', 'PENDING' 
+        """
+        allowed_vals = ["PASS", "FAIL", "PENDING"]
+        if status not in allowed_vals:
+            raise ValueError(
+                f'ReadinessStatus must be of type {allowed_vals}, not {status}')
+        if status == "PASS":
+            self._val = DashIconify(icon='clarity:check-circle-line',
+                                    width=20, style={'margin-bottom': '2px', 'color': 'green'})
+        elif status == "FAIL":
+            self._val = DashIconify(icon='clarity:error-line',
+                                    width=20, style={'margin-bottom': '2px', 'color': 'red'})
+        elif status == "PENDING":
+            self._val = DashIconify(icon='carbon:pending',
+                                    width=15, style={'margin-bottom': '2px', 'color': 'gray'})
+
+    def get(self) -> html.Div:
+        return self._val
 
 
 def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str) -> html.Div:
     """ status: 'PASS' or 'FAIL' or 'PENDING' """
-    return dmc.Center([
+    return html.Div([
         dmc.Tooltip(
-            children=ReadinessStatus[status].value,
             id=tooltip_id,
+            children=ReadinessStatus(status).get(),
             label=tooltip,
             position="left",
             placement="center",
             withArrow=True,
             wrapLines=True,
-            width=220,),
-        dmc.Text(text, style={'margin-bottom': '2px', 'margin-left': '5px'}),
+            width=220),
+        dmc.Text(text, style={'margin-bottom': '2px',
+                 'margin-left': '10px', 'display': 'inline-block'}),
     ])
 
 
