@@ -133,6 +133,7 @@ terminal = Terminal()
 
 def file_explorer():
     return html.Div([
+        html.Div(id='readiness-check-trigger', style={'display': 'none'}),
         dcc.Interval(id='file-explorer-refresh-interval',
                      interval=500, n_intervals=0, disabled=True),
         dmc.Text('File Explorer'),

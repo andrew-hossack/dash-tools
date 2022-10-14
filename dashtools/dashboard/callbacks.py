@@ -32,11 +32,11 @@ def generate_callbacks(app: Dash):
             # TODO capture stdout
             # TODO review if this will actually work
             deployPage.terminal.command(
-                f'{runtimeUtils._python_shell_cmd()} {os.path.join(deployPage.herokuApplication.root, "src/app.py")}')
+                f'{runtimeUtils._python_shell_cmd()} {os.path.join(deployPage.fileExplorerInstance.root, "src/app.py")}')
             # deployPage.terminal.command('python3 --help')
         if button_clicked == 'app-control-deploy-button' and deploy:
             deployPage.terminal.writeln(
-                f'Deploy Button Clicked TODO {deployPage.herokuApplication.appName} at {deployPage.herokuApplication.root}')
+                f'Deploy Button Clicked TODO {deployPage.fileExplorerInstance.appName} at {deployPage.fileExplorerInstance.root}')
         if button_clicked == 'deploy-terminal-clear-button' and clear_terminal:
             deployPage.terminal.clear()
         return html.Div()
@@ -57,7 +57,7 @@ def generate_callbacks(app: Dash):
     )
     def validate_app_name(app_name):
         if not app_name:
-            deployPage.herokuApplication.appName = None
+            deployPage.fileExplorerInstance.appName = None
             return [
                 dmc.Tooltip(
                     label="Enter an app name you would like to use.",
@@ -70,7 +70,7 @@ def generate_callbacks(app: Dash):
                                     width=40, color='gray')
                     ])]
         if not herokuUtils.validate_heroku_app_name(app_name):
-            deployPage.herokuApplication.appName = None
+            deployPage.fileExplorerInstance.appName = None
             return [
                 dmc.Tooltip(
                     label="Heroku app names must start with a letter, end with a letter or digit, can only contain lowercase letters, numbers, and dashes, and have a minimum length of 3 characters. Maximum 30 characters.",
@@ -83,7 +83,7 @@ def generate_callbacks(app: Dash):
                     ])
             ]
         if not herokuUtils.check_heroku_app_name_available(app_name):
-            deployPage.herokuApplication.appName = None
+            deployPage.fileExplorerInstance.appName = None
             return [
                 dmc.Tooltip(
                     label=f"App name {app_name} is already taken on Heroku! Please choose a unique name.",
@@ -95,7 +95,7 @@ def generate_callbacks(app: Dash):
                         DashIconify(icon='bi:x-circle', width=40, color='red')
                     ])
             ]
-        deployPage.herokuApplication.appName = app_name
+        deployPage.fileExplorerInstance.appName = app_name
         return [
             dmc.Tooltip(
                 label=f"App name is available on Heroku",
@@ -129,6 +129,7 @@ def generate_callbacks(app: Dash):
 
     @ app.callback(
         Output('file-explorer-refresh-interval', 'disabled'),
+        Output('readiness-check-trigger', 'children'),
         Input('file-explorer-button', 'n_clicks',),
         State('file-explorer-input', 'value'),
         prevent_initial_call=True
@@ -136,8 +137,9 @@ def generate_callbacks(app: Dash):
     def toggle_readiness_check_refresh_interval(n, filepath):
         ENABLED = False
         if (filepath and n) and os.path.isdir(filepath):
-            return ENABLED
-        return not ENABLED
+            return ENABLED, no_update
+        # TODO need to send update to clear the readiness_check callback
+        return not ENABLED, 'update doesnt matter'
 
     @ app.callback(
         Output('readiness-check-app-exists', 'children'),
@@ -151,7 +153,7 @@ def generate_callbacks(app: Dash):
         Input('file-explorer-refresh-interval', 'n_intervals'),
         Input('readiness-check-trigger', 'children')
     )
-    def readiness_check(interval):
+    def readiness_check(interval, change):
         ON = {'display': 'inline-block'}
         OFF = {'display': 'none'}
         filepath = deployPage.fileExplorerInstance.root
