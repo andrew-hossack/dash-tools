@@ -11,6 +11,8 @@ class FileTree:
     def render(self) -> dmc.Accordion:
         return dmc.Accordion(
             self.build_tree(self.filepath, isRoot=True),
+            iconPosition='right',
+            state={'0': True},
             multiple=True)
 
     def flatten(self, l):
@@ -42,6 +44,7 @@ class FileTree:
                             children=children,
                             label=self.make_folder(os.path.basename(path)))
                     ],
+                        iconPosition='right',
                         multiple=True)
                 )
         else:

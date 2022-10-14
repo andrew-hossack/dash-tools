@@ -10,7 +10,7 @@ from dash import dcc, html
 from dash_iconify import DashIconify
 
 
-class HerokuApplication:
+class FileExplorer:
     def __init__(self) -> None:
         self._ready = False  # Ready to upload
         self.appName = None
@@ -22,8 +22,8 @@ class HerokuApplication:
         return self._ready
 
 
-# Global herokuApplication for user session
-herokuApplication = HerokuApplication()
+# Global fileExplorerInstance for user session
+fileExplorerInstance = FileExplorer()
 
 
 def deploy_controller():
@@ -92,6 +92,7 @@ def deploy_controller():
                         variant="gradient",
                         leftIcon=[DashIconify(
                             icon="bi:cloud-upload")],
+                        disabled=True,
                         style={'width': '200px'},
                         id='app-control-deploy-button'),
                 ]
@@ -132,11 +133,13 @@ terminal = Terminal()
 
 def file_explorer():
     return html.Div([
+        dcc.Interval(id='file-explorer-refresh-interval',
+                     interval=500, n_intervals=0, disabled=True),
         dmc.Text('File Explorer'),
         dmc.Stack([
             dmc.Center([
                 dmc.TextInput(
-                    placeholder="App Path; eg. /Users/Andrew/MyDashApp",
+                    placeholder="App Path; eg. /Users/MyApp",
                     style={"width": '100%'},
                     id="file-explorer-input",
                     radius=5),
@@ -165,11 +168,55 @@ def file_explorer():
     ])
 
 
+class FileGenerator():
+    def __init__(self, button_id: str, tooltip_label: str, visibility_id: str):
+        """
+        Args:
+            button_id (str): Button uuid
+            tooltip_label (str): Tooltip hover label
+            visibility_id (str): Component ID for toggling generator visibility
+
+        Usage:
+            FileGenerator('foo-id').get()
+        """
+        self._uuid = button_id
+        self._vis_id = visibility_id
+        self._tooltip_lbl = tooltip_label
+
+    def get(self) -> html.Div:
+        return html.Div(
+            dmc.Tooltip(
+                label=self._tooltip_lbl,
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                children=html.Button(
+                    DashIconify(icon='ci:refresh',
+                                width=16, color='black', style={'margin-bottom': '5px'}),
+                    style={
+                        "background": "none",
+                        "color": "inherit",
+                        "border": "none",
+                        "font": "inherit",
+                        "cursor": "pointer",
+                        "padding": "0",
+                        "outline": "inherit",
+                        "margin-bottom": "15px",
+                        'margin-left': '-5px',
+                    },
+                    id=self._uuid
+                )
+            ),
+            style={'display': 'none'},
+            id=self._vis_id
+        )
+
+
 class ReadinessStatus():
     def __init__(self, status: str):
-        """ 
+        """
             Usage: ReadinessStatus('PASS').get()
-            Args: status (str): 'PASS', 'FAIL', 'PENDING' 
+            Args: status (str): 'PASS', 'FAIL', 'PENDING'
         """
         allowed_vals = ["PASS", "FAIL", "PENDING"]
         if status not in allowed_vals:
@@ -183,7 +230,7 @@ class ReadinessStatus():
                                     width=20, style={'margin-bottom': '2px', 'color': 'red'})
         elif status == "PENDING":
             self._val = DashIconify(icon='carbon:pending',
-                                    width=15, style={'margin-bottom': '2px', 'color': 'gray'})
+                                    width=15, style={'margin-bottom': '2px', 'color': 'gray', 'margin-left': '2px', 'margin-right': '3px'})
 
     def get(self) -> html.Div:
         return self._val
@@ -201,8 +248,8 @@ def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str) -> htm
             withArrow=True,
             wrapLines=True,
             width=220),
-        dmc.Text(text, style={'margin-bottom': '2px',
-                 'margin-left': '10px', 'display': 'inline-block'}),
+        dcc.Markdown(text, style={'margin-bottom': '2px',
+                                  'margin-left': '10px', 'display': 'inline-block'}),
     ])
 
 
@@ -211,39 +258,40 @@ def deploy_info():
         dmc.Text('Deployment Readiness'),
         html.Div(
             [
-                dbc.Row(
+                dmc.Group(
                     build_checkbox(
                         'PENDING',
-                        'File Exists: src/App.py',
-                        'App.py file must exist in the src/ directory',
+                        'File exists: **src/app.py**',
+                        'app.py file must exist in the src/ directory',
                         'readiness-check-app-exists'
                     )),
-                dbc.Row(
+                dmc.Group(
+                    [
+                        build_checkbox(
+                            'PENDING',
+                            'File exists: **render.yaml**',
+                            'render.yaml file must be included to deploy to Render.com',
+                            'readiness-check-render-yaml-exists'
+                        ),
+                        FileGenerator(
+                            'readiness-check-render-yaml-generator', 'Generate render.yaml', 'readiness-check-render-yaml-generator-vis').get(),
+                    ]),
+                dmc.Group(
+                    [
+                        build_checkbox(
+                            'PENDING',
+                            'File exists: **requirements.txt**',
+                            'requirements.txt file must be included to deploy to Render.com',
+                            'readiness-check-requirements-exists'
+                        ),
+                        FileGenerator(
+                            'readiness-check-requirements-generator', 'Generate requirements.txt', 'readiness-check-requirements-generator-vis').get(),
+                    ]),
+                dmc.Group(
                     build_checkbox(
                         'PENDING',
-                        'File Exists: Procfile',
-                        'Procfile file must be included to deploy to Heroku',
-                        'readiness-check-procfile-exists'
-                    )),
-                dbc.Row(
-                    build_checkbox(
-                        'PENDING',
-                        'File Exists: requirements.txt',
-                        'requirements.txt file must be included to deploy to Heroku',
-                        'readiness-check-requirements-exists'
-                    )),
-                dbc.Row(
-                    build_checkbox(
-                        'PENDING',
-                        'File Exists: runtime.txt',
-                        'runtime.txt file must be included to deploy to Heroku',
-                        'readiness-check-runtime-exists'
-                    )),
-                dbc.Row(
-                    build_checkbox(
-                        'PENDING',
-                        'server = app.server in App.py',
-                        'A server hook must be exposed to deploy to Heroku',
+                        'Code exists: `server = app.server` in **src/app.py**',
+                        'server = app.server hook must be exposed in src/app.py to deploy to Render.com',
                         'readiness-check-hook-exists'
                     )),
             ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px'}
@@ -294,7 +342,7 @@ def terminal_box():
                           draggable='false',
                           style={
                               "width": "100%",
-                              "height": "200px",
+                              "height": "160px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',
@@ -309,6 +357,7 @@ def render():
 
     return html.Div(
         [
+
             dbc.Row([
                 dbc.Col(file_explorer()),
                 dbc.Col([
