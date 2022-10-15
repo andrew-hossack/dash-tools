@@ -12,14 +12,18 @@ from dash_iconify import DashIconify
 
 class FileExplorer:
     def __init__(self) -> None:
-        self._ready = False  # Ready to upload
+        self._deployReady = False  # Ready to upload
         self.appName = None
         self.root: os.PathLike = None
+        self.requirementsExists = False
+        self.renderYamlExists = False
+        self.serverHookExists = False
 
     def isDeployReady(self) -> bool:
-        """ Flag to tell if deploy is ready """
-        # TODO if x and y and z:
-        return self._ready
+        """ returns if app is ready to be deployed """
+        if self.appName and self.root and self.requirementsExists and self.renderYamlExists and self.serverHookExists:
+            return True
+        return False
 
 
 # Global fileExplorerInstance for user session
@@ -58,7 +62,7 @@ def deploy_controller():
                         style={'margin-top': '-33px', 'margin-right': '-10px'}
                     ),
                     dmc.TextInput(
-                        label="Heroku App Name",
+                        label="Render App Name",
                         style={"width": '380px'},
                         id='app-control-name-input',
                         placeholder='Application Name; eg. my-example-app'),
@@ -275,7 +279,7 @@ def deploy_info():
                             'readiness-check-render-yaml-exists'
                         ),
                         FileGenerator(
-                            'readiness-check-render-yaml-generator', 'Generate render.yaml', 'readiness-check-render-yaml-generator-vis').get(),
+                            'readiness-check-render-yaml-generator-button', 'Generate render.yaml', 'readiness-check-render-yaml-generator-vis').get(),
                     ]),
                 dmc.Group(
                     [
@@ -286,7 +290,7 @@ def deploy_info():
                             'readiness-check-requirements-exists'
                         ),
                         FileGenerator(
-                            'readiness-check-requirements-generator', 'Generate requirements.txt', 'readiness-check-requirements-generator-vis').get(),
+                            'readiness-check-requirements-generator-button', 'Generate requirements.txt', 'readiness-check-requirements-generator-vis').get(),
                     ]),
                 dmc.Group(
                     build_checkbox(

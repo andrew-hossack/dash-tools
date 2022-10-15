@@ -29,6 +29,24 @@ def _add_requirement(root_path: os.PathLike, requirement: str):
             requirements_file.write(f'{requirement}\n')
 
 
+def create_render_yaml(root_path: os.PathLike, app_name: str):
+    """
+    Creates render.com yaml blueprint for webservice
+    https://render.com/docs/infrastructure-as-code
+    """
+    with open(os.path.join(root_path, 'render.yaml'), 'w') as file:
+        file.write(f"""services:
+  # See https://render.com/docs/blueprint-spec for more info on render blueprints
+  - type: web
+    name: {app_name}
+    env: python
+    # A requirements.txt file must exist
+    buildCommand: "pip install -r requirements.txt"
+    # A src/app.py file must exist and contain `server=app.server`
+    startCommand: "gunicorn --chdir src app:server"
+        """)
+
+
 def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = None, update=False):
     """
     Creates requirements.txt file using pipreqs
@@ -102,6 +120,30 @@ def create_procfile(root_path: os.PathLike):
         procfile.write(
             f'web: gunicorn{chdir if len(chdir) > 0 else ""} app:server')
     print(f'dashtools: Created Procfile')
+
+
+def search_appfile_ui(app_root: os.PathLike) -> bool:
+    """
+    Look for 'server=app.server' in {app_root}/src/app.py 
+
+    Returns:
+        True if server=app.server is found, else False
+    """
+    try:
+        with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
+            appfile_contents = modfile.read()
+    except Exception as e:
+        # Dangerous to pass here, but not sure what happens if file opened by user on read
+        pass
+
+    # Look for the hook "server =" or "server=" with spaces and newlines
+    # https://regex101.com/r/Ad3TN8/2
+    try:
+        re.search(f"^[\s]*server[\s]?=.*app\.server",
+                  appfile_contents, re.MULTILINE).group(0)
+        return True
+    except (AttributeError, IndexError, UnboundLocalError):
+        return False
 
 
 def verify_procfile(root_path: os.PathLike) -> dict:

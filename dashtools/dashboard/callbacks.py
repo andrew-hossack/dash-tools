@@ -154,26 +154,38 @@ def generate_callbacks(app: Dash):
         Input('readiness-check-trigger', 'children')
     )
     def readiness_check(interval, change):
-        ON = {'display': 'inline-block'}
-        OFF = {'display': 'none'}
+        DISPLAY_ON = {'display': 'inline-block'}
+        DISPLAY_OFF = {'display': 'none'}
         filepath = deployPage.fileExplorerInstance.root
         if filepath:
+            app_exists = fileUtils.check_file_exists(
+                filepath, os.path.join('src', 'app.py'))
+            render_yaml_exists = fileUtils.check_file_exists(
+                filepath, 'render.yaml')
+            requirements_exists = fileUtils.check_file_exists(
+                filepath, 'requirements.txt')
+            hook_exists = fileUtils.search_appfile_ui(
+                filepath)
+            deployPage.fileExplorerInstance.renderYamlExists = render_yaml_exists
+            deployPage.fileExplorerInstance.requirementsExists = requirements_exists
+            deployPage.fileExplorerInstance.serverHookExists = hook_exists
             return (
-                deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
-                    filepath, os.path.join('src', 'app.py')) else deployPage.ReadinessStatus('FAIL').get(),
-                deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
-                    filepath, 'render.yaml') else deployPage.ReadinessStatus('FAIL').get(),
-                deployPage.ReadinessStatus('PASS').get() if fileUtils.check_file_exists(
-                    filepath, 'requirements.txt') else deployPage.ReadinessStatus('FAIL').get(),
-                deployPage.ReadinessStatus('PASS').get() if fileUtils.verify_procfile(
-                    filepath)['valid'] else deployPage.ReadinessStatus('FAIL').get(),
-                ON if not fileUtils.check_file_exists(
-                    filepath, 'render.yaml') else OFF,
-                ON if not fileUtils.check_file_exists(
-                    filepath, 'requirements.txt') else OFF
+                deployPage.ReadinessStatus('PASS').get(
+                ) if app_exists else deployPage.ReadinessStatus('FAIL').get(),
+                deployPage.ReadinessStatus('PASS').get(
+                ) if render_yaml_exists else deployPage.ReadinessStatus('FAIL').get(),
+                deployPage.ReadinessStatus('PASS').get(
+                ) if requirements_exists else deployPage.ReadinessStatus('FAIL').get(),
+                deployPage.ReadinessStatus('PASS').get(
+                ) if hook_exists else deployPage.ReadinessStatus('FAIL').get(),
+                DISPLAY_ON if not render_yaml_exists else DISPLAY_OFF,
+                DISPLAY_ON if not requirements_exists else DISPLAY_OFF
             )
         else:
-            return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), OFF, OFF)
+            deployPage.fileExplorerInstance.renderYamlExists = False
+            deployPage.fileExplorerInstance.requirementsExists = False
+            deployPage.fileExplorerInstance.serverHookExists = False
+            return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), DISPLAY_OFF, DISPLAY_OFF)
 
     @ app.callback(
         [
@@ -198,10 +210,36 @@ def generate_callbacks(app: Dash):
                                  style={'height': '100%', 'overflow': 'scroll'}),
                         True,
                         None,
-                        html.Div(),
+                        html.Div()
                     )
                 except PermissionError:
                     deployPage.fileExplorerInstance.root = None
                     return [], True, 'Permission Error', alerts.render(key='PermissionError')
         deployPage.fileExplorerInstance.root = None
         return [], True, 'File Not Found', alerts.render(key='FileNotFoundError')
+
+    @ app.callback(
+        Output('hidden-div', 'style'),
+        Input('readiness-check-render-yaml-generator-button', 'n_clicks'),
+        Input('readiness-check-requirements-generator-button', 'n_clicks'),
+        prevent_initial_callback=True
+    )
+    def run_file_gen_function(n_1, n_2):
+        button_id = ctx.triggered_id
+        filepath = deployPage.fileExplorerInstance.root
+        if filepath is not None:
+            if button_id == 'readiness-check-render-yaml-generator-button':
+                deployPage.terminal.writeln('$ Generating render.yaml ...')
+                # TODO need to HAVE an app name before doing this
+                # TODO also need to VALIDATE app name; update heroku name check
+                fileUtils.create_render_yaml(
+                    filepath, deployPage.fileExplorerInstance.appName)
+                deployPage.terminal.writeln(
+                    f'$ render.yaml successfully generated in {filepath}')
+
+            elif button_id == 'readiness-check-requirements-generator-button':
+                deployPage.terminal.writeln(
+                    '$ Generating requirements.txt ...')
+                fileUtils.create_requirements_txt(filepath)
+                deployPage.terminal.writeln(
+                    f'$ requirements.txt successfully generated in {filepath}')
