@@ -50,15 +50,15 @@ def deploy_controller():
         dmc.Text('App Control'),
         dmc.Stack([
             dmc.Center([
-                dmc.Text("Deployment Readiness: "),
+                dmc.Text("Deployment readiness: "),
                 dmc.Group(
                     build_checkbox('PENDING', '**Not Ready**',
                                    'Open a file in File Explorer to check deployment readiness', 'pending-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
                     id='deployment-readiness-status-output',
-                    style={'margin-top': '15px', 'margin-left': '10px'}
+                    style={'margin-top': '17px', 'margin-left': '10px'}
                 )
             ],
-                style={'margin-top': '-15px', 'margin-bottom': '-25px'}),
+                style={'margin-top': '-16px', 'margin-bottom': '-25px'}),
             dmc.Center(
                 [
                     dmc.Button(
@@ -73,7 +73,7 @@ def deploy_controller():
                 style={'margin-bottom': '-20px'}
             )
             # ]),
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '90px', 'padding': '10px'})
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '100px', 'padding': '10px'})
     ], style={"width": '100%'})
 
 
@@ -111,7 +111,7 @@ def file_explorer():
     return html.Div([
         html.Div(id='readiness-check-trigger', style={'display': 'none'}),
         dcc.Interval(id='file-explorer-refresh-interval',
-                     interval=500, n_intervals=0, disabled=True),
+                     interval=1000, n_intervals=0, disabled=True),
         dmc.Text('File Explorer'),
         dmc.Stack([
             dmc.Center([
@@ -139,9 +139,9 @@ def file_explorer():
                         'margin-left': '60px', 'margin-right': '60px'}),
             html.Div(
                 id='file-explorer-output',
-                style={'width': '100%', 'height': '330px', 'margin-top': '-16px'}
+                style={'width': '100%', 'height': '340px', 'margin-top': '-16px'}
             )
-        ], style={'height': '400px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={'height': '410px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 
@@ -395,7 +395,7 @@ def render():
                     deploy_controller()
                 ])
             ]),
-            dbc.Row([terminal_box()], style={'padding-top': '10px'}),
+            dbc.Row([terminal_box()], style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )

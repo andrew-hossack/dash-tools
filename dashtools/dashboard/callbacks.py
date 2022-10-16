@@ -220,6 +220,7 @@ def generate_callbacks(app: Dash):
     )
     def deployment_readiness(n_intervals, trigger, disabled):
         if deployPage.fileExplorerInstance.isDeployReady():
+            # TODO trigger global readiness callback. Updates deploy button.
             return (
                 deployPage.build_checkbox('PASS', '**Ready**',
                                           'Your application is ready to be deployed to Render.com', 'pass-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
