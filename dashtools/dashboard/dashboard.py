@@ -130,7 +130,9 @@ content = html.Div(
 app.layout = dmc.NotificationsProvider(
     html.Div(
         [
-            html.Div(id="notifications-container"),
+            html.Div(id="notifications-container-file-explorer"),
+            html.Div(id="notifications-container-file-generator"),
+            # html.Div(id="notifications-container-deploy-button"), # TODO
             dcc.Location(id="url"),
             sidebar,
             content

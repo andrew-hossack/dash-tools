@@ -14,26 +14,17 @@ except ModuleNotFoundError:
 
 from dash_iconify import DashIconify
 from dashtools.deploy import fileUtils, herokuUtils
-from dashtools.runtime import runtimeUtils
 
 
 def generate_callbacks(app: Dash):
 
     @app.callback(
         Output('hidden-div', 'children'),
-        Input('app-control-run-button', 'n_clicks'),
         Input('app-control-deploy-button', 'n_clicks'),
         Input('deploy-terminal-clear-button', 'n_clicks')
     )
-    def run_deploy_buttons(run, deploy, clear_terminal):
+    def deploy_button(deploy, clear_terminal):
         button_clicked = ctx.triggered_id
-        if button_clicked == 'app-control-run-button' and run:
-            # TODO if no runtime command is found then gracefully fail
-            # TODO capture stdout
-            # TODO review if this will actually work
-            deployPage.terminal.command(
-                f'{runtimeUtils._python_shell_cmd()} {os.path.join(deployPage.fileExplorerInstance.root, "src/app.py")}')
-            # deployPage.terminal.command('python3 --help')
         if button_clicked == 'app-control-deploy-button' and deploy:
             deployPage.terminal.writeln(
                 f'Deploy Button Clicked TODO {deployPage.fileExplorerInstance.appName} at {deployPage.fileExplorerInstance.root}')
@@ -56,7 +47,30 @@ def generate_callbacks(app: Dash):
         Input('app-control-name-input', 'value')
     )
     def save_app_name(app_name):
-        deployPage.fileExplorerInstance.appName = app_name
+        if app_name:
+            deployPage.fileExplorerInstance.appName = app_name
+            return [dmc.Tooltip(
+                label=f"Looks great! Render may change this name if it is not unique.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:check-circle',
+                                width=30, color='green')
+                ])]
+        else:
+            deployPage.fileExplorerInstance.appName = None
+            return [dmc.Tooltip(
+                label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:three-dots',
+                                width=30, color='gray')
+                ])]
 
     @ app.callback(
         [
@@ -141,7 +155,7 @@ def generate_callbacks(app: Dash):
             Output('file-explorer-output', 'children'),
             Output('file-explorer-input', 'required'),
             Output('file-explorer-input', 'error'),
-            Output('notifications-container', 'children'),
+            Output('notifications-container-file-explorer', 'children'),
         ],
         Input('file-explorer-button', 'n_clicks'),
         State('file-explorer-input', 'value')
@@ -170,19 +184,20 @@ def generate_callbacks(app: Dash):
         return [], True, 'File Not Found', alerts.render(key='FileNotFoundError')
 
     @ app.callback(
-        Output('hidden-div', 'style'),
+        Output('notifications-container-file-generator', 'children'),
         Input('readiness-check-render-yaml-generator-button', 'n_clicks'),
         Input('readiness-check-requirements-generator-button', 'n_clicks'),
+        State('app-control-name-input', 'value'),
         prevent_initial_callback=True
     )
-    def run_file_gen_function(n_1, n_2):
+    def run_file_gen_function(n_1, n_2, app_name):
         button_id = ctx.triggered_id
         filepath = deployPage.fileExplorerInstance.root
         if filepath is not None:
             if button_id == 'readiness-check-render-yaml-generator-button':
+                if not app_name:
+                    return alerts.render(key="NameRequiredError")
                 deployPage.terminal.writeln('$ Generating render.yaml ...')
-                # TODO need to HAVE an app name before doing this
-                # TODO also need to VALIDATE app name; update heroku name check
                 fileUtils.create_render_yaml(
                     filepath, deployPage.fileExplorerInstance.appName)
                 deployPage.terminal.writeln(
@@ -194,3 +209,29 @@ def generate_callbacks(app: Dash):
                 fileUtils.create_requirements_txt(filepath)
                 deployPage.terminal.writeln(
                     f'$ requirements.txt successfully generated in {filepath}')
+
+    @app.callback(
+        Output('deployment-readiness-status-output', 'children'),
+        # Output('app-control-deploy-button', 'disabled'),
+        Input('file-explorer-refresh-interval', 'n_intervals'),
+        Input('readiness-check-trigger', 'children'),
+        State('app-control-deploy-button', 'disabled'),
+        prevent_initial_call=True
+    )
+    def deployment_readiness(n_intervals, trigger, disabled):
+        if deployPage.fileExplorerInstance.isDeployReady():
+            return (
+                deployPage.build_checkbox('PASS', '**Ready**',
+                                          'Your application is ready to be deployed to Render.com', 'pass-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
+                # not disabled if disabled else no_update
+                # no_update
+            )
+        else:
+            _, status = deployPage.fileExplorerInstance.isDeployReadyWithStatus()
+            status_str = [key for key, val in status.items() if not val]
+            return (
+                deployPage.build_checkbox("FAIL", '**Not Ready**',
+                                          f'Required Items: {", ".join(status_str)}', 'fail-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
+                # disabled if not disabled else no_update
+                # no_update
+            )

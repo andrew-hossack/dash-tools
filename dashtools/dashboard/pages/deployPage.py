@@ -1,7 +1,6 @@
-import enum
 import os
-import random
 import subprocess
+from typing import Union
 
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
@@ -25,6 +24,22 @@ class FileExplorer:
             return True
         return False
 
+    def isDeployReadyWithStatus(self) -> Union[bool, dict]:
+        """ 
+        returns if app is ready to be deployed
+        returns a list of items with their status
+        """
+        status = {
+            "render app name": self.appName is not None,
+            "src/app.py file": self.root is not None,
+            "requirements.txt file": self.requirementsExists,
+            "render.yaml file": self.renderYamlExists,
+            "server=app.server code in src/app.py": self.serverHookExists
+        }
+        if self.isDeployReady():
+            return status
+        return (False, status)
+
 
 # Global fileExplorerInstance for user session
 fileExplorerInstance = FileExplorer()
@@ -34,63 +49,32 @@ def deploy_controller():
     return html.Div([
         dmc.Text('App Control'),
         dmc.Stack([
-            dmc.Group(
-                [
-                    html.Div(
-                        dmc.Tooltip(
-                            label="Generate random name",
-                            placement="center",
-                            withArrow=True,
-                            wrapLines=True,
-                            children=[
-                                html.Button(
-                                    DashIconify(icon='ci:refresh',
-                                                width=20, color='black'),
-                                    style={
-                                        "background": "none",
-                                        "color": "inherit",
-                                        "border": "none",
-                                        "padding": "0",
-                                        "margin": "0",
-                                        "font": "inherit",
-                                        "cursor": "pointer",
-                                        "outline": "inherit",
-                                    }
-                                )
-                            ]),
-                        id='app-control-name-refresh',
-                        style={'margin-top': '-33px', 'margin-right': '-10px'}
-                    ),
-                    dmc.TextInput(
-                        label="Render App Name",
-                        style={"width": '400px'},
-                        id='app-control-name-input',
-                        placeholder='Web Name; eg. my-example-app'),
-                ]
-            ),
-            dmc.Space(h=95),
-            dmc.Divider(variant="dotted"),
+            dmc.Center([
+                dmc.Text("Deployment Readiness: "),
+                dmc.Group(
+                    build_checkbox('PENDING', '**Not Ready**',
+                                   'Open a file in File Explorer to check deployment readiness', 'pending-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
+                    id='deployment-readiness-status-output',
+                    style={'margin-top': '15px', 'margin-left': '10px'}
+                )
+            ],
+                style={'margin-top': '-15px', 'margin-bottom': '-25px'}),
             dmc.Center(
                 [
-                    dmc.Button(
-                        'Run Local',
-                        variant="gradient",
-                        leftIcon=[DashIconify(
-                            icon="bi:play")],
-                        style={'width': '200px', 'margin-right': '50px'},
-                        id='app-control-run-button'),
                     dmc.Button(
                         'Deploy',
                         variant="gradient",
                         leftIcon=[DashIconify(
-                            icon="bi:cloud-upload")],
+                                icon="bi:cloud-upload")],
                         disabled=True,
                         style={'width': '200px'},
                         id='app-control-deploy-button'),
-                ]
-            ),
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '275px', 'padding': '10px'})
-    ], style={"width": '100%', "overflow": "auto"})
+                ],
+                style={'margin-bottom': '-20px'}
+            )
+            # ]),
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '90px', 'padding': '10px'})
+    ], style={"width": '100%'})
 
 
 class Terminal():
@@ -155,9 +139,9 @@ def file_explorer():
                         'margin-left': '60px', 'margin-right': '60px'}),
             html.Div(
                 id='file-explorer-output',
-                style={'width': '100%', 'height': '421px', 'margin-top': '-16px'}
+                style={'width': '100%', 'height': '330px', 'margin-top': '-16px'}
             )
-        ], style={'height': '492px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={'height': '400px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 
@@ -229,26 +213,26 @@ class ReadinessStatus():
         return self._val
 
 
-def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str) -> html.Div:
+def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str, text_margin_l='10px', tooltip_pos='left') -> html.Div:
     """ status: 'PASS' or 'FAIL' or 'PENDING' """
     return html.Div([
         dmc.Tooltip(
             id=tooltip_id,
             children=ReadinessStatus(status).get(),
             label=tooltip,
-            position="left",
+            position=tooltip_pos,
             placement="center",
             withArrow=True,
             wrapLines=True,
             width=220),
         dcc.Markdown(text, style={'margin-bottom': '2px',
-                                  'margin-left': '10px', 'display': 'inline-block'}),
+                                  'margin-left': text_margin_l, 'display': 'inline-block'}),
     ])
 
 
 def deploy_info():
     return html.Div([
-        dmc.Text('Deployment Readiness'),
+        dmc.Text('Deployment Requirements'),
         html.Div(
             [
                 dmc.Group(
@@ -287,6 +271,59 @@ def deploy_info():
                         'server = app.server hook must be exposed in src/app.py to deploy to Render.com',
                         'readiness-check-hook-exists'
                     )),
+                # dmc.Divider(variant="dotted"),
+                dmc.Divider(variant="dotted", style={
+                    'margin-left': '60px', 'margin-right': '60px'}),
+                dmc.Group(
+                    [
+                        html.Div(
+                            dmc.Tooltip(
+                                label="Generate random name",
+                                placement="center",
+                                withArrow=True,
+                                wrapLines=True,
+                                children=[
+                                    html.Button(
+                                        DashIconify(icon='ci:refresh',
+                                                    width=20, color='black'),
+                                        style={
+                                            "background": "none",
+                                            "color": "inherit",
+                                            "border": "none",
+                                            "padding": "0",
+                                            "margin": "0",
+                                            "font": "inherit",
+                                            "cursor": "pointer",
+                                            "outline": "inherit",
+                                        }
+                                    )
+                                ]),
+                            id='app-control-name-refresh',
+                            style={'margin-top': '-33px',
+                                   'margin-right': '-5px',
+                                   'margin-left': '1px'}
+                        ),
+                        dmc.TextInput(
+                            label="Render App Name",
+                            style={"width": '360px', 'margin-right': '10px'},
+                            id='app-control-name-input',
+                            placeholder='Web Name; eg. my-example-app'),
+                        html.Div(
+                            dmc.Tooltip(
+                                label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                                placement="center",
+                                withArrow=True,
+                                wrapLines=True,
+                                width=220,
+                                children=[
+                                    DashIconify(icon='bi:three-dots',
+                                                width=30, color='gray')
+                                ]),
+                            id='app-control-name-status', style={'margin-top': '25px'}),
+                    ],
+                    style={'margin-top': '10px', 'margin-bottom': '12px'}
+                )
+
             ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px'}
         )
     ], style={"width": '100%', "overflow": "auto", "margin-bottom": "10px"})

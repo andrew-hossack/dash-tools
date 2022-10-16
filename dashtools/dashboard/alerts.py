@@ -26,3 +26,23 @@ def render(key: str):
             # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-permissions'
         )
+    elif key == 'FileRequiredError':
+        return dmc.Notification(
+            message="You must have an Open File in File Explorer to do this action!",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            # autoClose=NOTIFICATION_DURATION_SECONDS,
+            id='error-permissions'
+        )
+    elif key == 'NameRequiredError':
+        return dmc.Notification(
+            message="A Render App Name is needed to do this action!",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            # autoClose=NOTIFICATION_DURATION_SECONDS,
+            id='error-permissions'
+        )
