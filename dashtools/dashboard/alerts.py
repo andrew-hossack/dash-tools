@@ -2,6 +2,8 @@ import dash_mantine_components as dmc
 from dash import html
 from dash_iconify import DashIconify
 
+# NOTIFICATION_DURATION_SECONDS = 8
+
 
 def render(key: str):
     if key == 'FileNotFoundError':
@@ -11,6 +13,7 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
+            # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-file-not-found'
         )
     elif key == 'PermissionError':
@@ -20,5 +23,6 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
+            # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-permissions'
         )

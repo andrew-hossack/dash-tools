@@ -40,6 +40,7 @@ def create_render_yaml(root_path: os.PathLike, app_name: str):
   - type: web
     name: {app_name}
     env: python
+    plan: free
     # A requirements.txt file must exist
     buildCommand: "pip install -r requirements.txt"
     # A src/app.py file must exist and contain `server=app.server`

@@ -63,21 +63,9 @@ def deploy_controller():
                     ),
                     dmc.TextInput(
                         label="Render App Name",
-                        style={"width": '380px'},
+                        style={"width": '400px'},
                         id='app-control-name-input',
-                        placeholder='Application Name; eg. my-example-app'),
-                    html.Div(
-                        dmc.Tooltip(
-                            label="Enter an app name you would like to use.",
-                            placement="center",
-                            withArrow=True,
-                            wrapLines=True,
-                            width=220,
-                            children=[
-                                DashIconify(icon='bi:three-dots',
-                                            width=40, color='gray')
-                            ]),
-                        id='app-control-name-status', style={'margin-top': '25px'}),
+                        placeholder='Web Name; eg. my-example-app'),
                 ]
             ),
             dmc.Space(h=95),
