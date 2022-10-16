@@ -25,7 +25,7 @@ class FileExplorer:
         return False
 
     def isDeployReadyWithStatus(self) -> Union[bool, dict]:
-        """ 
+        """
         returns if app is ready to be deployed
         returns a list of items with their status
         """
@@ -64,16 +64,19 @@ def deploy_controller():
                     dmc.Button(
                         'Deploy',
                         variant="gradient",
-                        leftIcon=[DashIconify(
-                                icon="bi:cloud-upload")],
+                        leftIcon=[
+                            html.Img(
+                                src='https://render.com/images/deploy-to-render-button.svg', alt="Deploy to Render")
+                        ],
                         disabled=True,
-                        style={'width': '200px'},
-                        id='app-control-deploy-button'),
+                        style={'width': '200px', 'opacity': '0.6'},
+                        id='app-control-deploy-button')
                 ],
-                style={'margin-bottom': '-20px'}
+                id='app-control-deploy-button-container',
+                style={'margin-bottom': '-10px'}
             )
             # ]),
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '100px', 'padding': '10px'})
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '110px', 'padding': '10px'})
     ], style={"width": '100%'})
 
 
@@ -139,9 +142,9 @@ def file_explorer():
                         'margin-left': '60px', 'margin-right': '60px'}),
             html.Div(
                 id='file-explorer-output',
-                style={'width': '100%', 'height': '340px', 'margin-top': '-16px'}
+                style={'width': '100%', 'height': '350px', 'margin-top': '-16px'}
             )
-        ], style={'height': '410px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={'height': '420px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 

@@ -1,7 +1,7 @@
 import os
 
 import dash_mantine_components as dmc
-from dash import Dash, Input, Output, State, ctx, html, no_update
+from dash import Dash, Input, Output, State, ctx, html, no_update, dcc
 
 try:
     import alerts
@@ -212,20 +212,33 @@ def generate_callbacks(app: Dash):
 
     @app.callback(
         Output('deployment-readiness-status-output', 'children'),
-        # Output('app-control-deploy-button', 'disabled'),
+        Output('app-control-deploy-button-container', 'children'),
         Input('file-explorer-refresh-interval', 'n_intervals'),
         Input('readiness-check-trigger', 'children'),
-        State('app-control-deploy-button', 'disabled'),
         prevent_initial_call=True
     )
-    def deployment_readiness(n_intervals, trigger, disabled):
+    def deployment_readiness(n_intervals, trigger):
         if deployPage.fileExplorerInstance.isDeployReady():
             # TODO trigger global readiness callback. Updates deploy button.
             return (
                 deployPage.build_checkbox('PASS', '**Ready**',
                                           'Your application is ready to be deployed to Render.com', 'pass-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
-                # not disabled if disabled else no_update
-                # no_update
+                dmc.Button(
+                    'Deploy',
+                    variant="gradient",
+                    leftIcon=[
+                        dcc.Link(
+                            [
+                                html.Img(
+                                    src='https://render.com/images/deploy-to-render-button.svg', alt="Deploy to Render")
+                            ],
+                            target="_blank",
+                            # TODO repo URL
+                            href=f"https://render.com/deploy?repo=FOO_TODO")
+                    ],
+                    disabled=False,
+                    style={'width': '200px'},
+                    id='app-control-deploy-button')
             )
         else:
             _, status = deployPage.fileExplorerInstance.isDeployReadyWithStatus()
@@ -233,6 +246,14 @@ def generate_callbacks(app: Dash):
             return (
                 deployPage.build_checkbox("FAIL", '**Not Ready**',
                                           f'Required Items: {", ".join(status_str)}', 'fail-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
-                # disabled if not disabled else no_update
-                # no_update
+                dmc.Button(
+                    'Deploy',
+                    variant="gradient",
+                    leftIcon=[
+                        html.Img(
+                            src='https://render.com/images/deploy-to-render-button.svg', alt="Deploy to Render")
+                    ],
+                    disabled=True,
+                    style={'width': '200px', 'opacity': '0.6'},
+                    id='app-control-deploy-button')
             )
