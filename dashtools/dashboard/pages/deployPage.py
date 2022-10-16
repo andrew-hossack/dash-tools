@@ -17,6 +17,7 @@ class FileExplorer:
         self.requirementsExists = False
         self.renderYamlExists = False
         self.serverHookExists = False
+        self.githubUrl = None
 
     def isDeployReady(self) -> bool:
         """ returns if app is ready to be deployed """
@@ -53,12 +54,12 @@ def deploy_controller():
                 dmc.Text("Deployment readiness: "),
                 dmc.Group(
                     build_checkbox('PENDING', '**Not Ready**',
-                                   'Open a file in File Explorer to check deployment readiness', 'pending-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
+                                   'Open a dash app in File Explorer to check deployment readiness', 'pending-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
                     id='deployment-readiness-status-output',
                     style={'margin-top': '17px', 'margin-left': '10px'}
                 )
             ],
-                style={'margin-top': '-16px', 'margin-bottom': '-25px'}),
+                style={'margin-top': '-14px', 'margin-bottom': '-25px'}),
             dmc.Center(
                 [
                     dmc.Button(
@@ -76,7 +77,7 @@ def deploy_controller():
                 style={'margin-bottom': '-10px'}
             )
             # ]),
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '110px', 'padding': '10px'})
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '109px', 'padding': '10px'})
     ], style={"width": '100%'})
 
 
@@ -140,6 +141,8 @@ def file_explorer():
             ], style={'padding-top': '15px', 'padding-right': '15px', 'padding-left': '15px'}),
             dmc.Divider(variant="dotted", style={
                         'margin-left': '60px', 'margin-right': '60px'}),
+            html.Div(id='update-filetree-hidden',
+                     style={'display': 'none'}),
             html.Div(
                 id='file-explorer-output',
                 style={'width': '100%', 'height': '350px', 'margin-top': '-16px'}
@@ -387,10 +390,10 @@ def terminal_box():
 
 
 def render():
-
+    terminal.writeln(
+        '$ Select a file in File Explorer to deploy your app to Render.com ...')
     return html.Div(
         [
-
             dbc.Row([
                 dbc.Col(file_explorer()),
                 dbc.Col([

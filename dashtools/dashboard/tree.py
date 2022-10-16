@@ -5,15 +5,17 @@ import dash_mantine_components as dmc
 
 class FileTree:
 
-    def __init__(self, filepath: os.PathLike):
+    def __init__(self, filepath: os.PathLike, initial_state={'0': True}):
         self.filepath = filepath
+        self.state = initial_state
 
     def render(self) -> dmc.Accordion:
         return dmc.Accordion(
             self.build_tree(self.filepath, isRoot=True),
             iconPosition='right',
-            state={'0': True},
-            multiple=True)
+            state=self.state,
+            multiple=True,
+            id='filetree-accordion-id')
 
     def flatten(self, l):
         return [item for sublist in l for item in sublist]

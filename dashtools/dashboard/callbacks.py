@@ -27,7 +27,7 @@ def generate_callbacks(app: Dash):
         button_clicked = ctx.triggered_id
         if button_clicked == 'app-control-deploy-button' and deploy:
             deployPage.terminal.writeln(
-                f'Deploy Button Clicked TODO {deployPage.fileExplorerInstance.appName} at {deployPage.fileExplorerInstance.root}')
+                '$ Follow instructions on Render.com to finish deployment')
         if button_clicked == 'deploy-terminal-clear-button' and clear_terminal:
             deployPage.terminal.clear()
         return html.Div()
@@ -158,9 +158,10 @@ def generate_callbacks(app: Dash):
             Output('notifications-container-file-explorer', 'children'),
         ],
         Input('file-explorer-button', 'n_clicks'),
-        State('file-explorer-input', 'value')
+        Input('update-filetree-hidden', 'children'),
+        State('file-explorer-input', 'value'),
     )
-    def file_explorer_callback(n, filepath: os.PathLike):
+    def file_explorer_callback(n, force_tree_update, filepath: os.PathLike):
         # Initial callbacks
         if not n:
             return html.Div(), False, None, html.Div()
@@ -169,10 +170,11 @@ def generate_callbacks(app: Dash):
                 try:
                     deployPage.fileExplorerInstance.root = filepath
                     deployPage.terminal.writeln(
-                        'TODO update file tree when Deployment Readiness changes')
+                        f'$ opened {filepath} successfully')
                     return (
-                        html.Div(tree.FileTree(filepath).render(),
-                                 style={'height': '100%', 'overflow': 'scroll'}),
+                        html.Div(
+                            tree.FileTree(filepath).render(),
+                            style={'height': '100%', 'overflow': 'scroll'}),
                         True,
                         None,
                         html.Div()
@@ -185,6 +187,7 @@ def generate_callbacks(app: Dash):
 
     @ app.callback(
         Output('notifications-container-file-generator', 'children'),
+        Output('update-filetree-hidden', 'children'),
         Input('readiness-check-render-yaml-generator-button', 'n_clicks'),
         Input('readiness-check-requirements-generator-button', 'n_clicks'),
         State('app-control-name-input', 'value'),
@@ -196,12 +199,13 @@ def generate_callbacks(app: Dash):
         if filepath is not None:
             if button_id == 'readiness-check-render-yaml-generator-button':
                 if not app_name:
-                    return alerts.render(key="NameRequiredError")
+                    return (alerts.render(key="NameRequiredError"), no_update)
                 deployPage.terminal.writeln('$ Generating render.yaml ...')
                 fileUtils.create_render_yaml(
                     filepath, deployPage.fileExplorerInstance.appName)
                 deployPage.terminal.writeln(
                     f'$ render.yaml successfully generated in {filepath}')
+                return (no_update, 'update doesnt matter')
 
             elif button_id == 'readiness-check-requirements-generator-button':
                 deployPage.terminal.writeln(
@@ -209,6 +213,9 @@ def generate_callbacks(app: Dash):
                 fileUtils.create_requirements_txt(filepath)
                 deployPage.terminal.writeln(
                     f'$ requirements.txt successfully generated in {filepath}')
+                # return no_update, 'update doesnt matter'
+                return (no_update, 'different update dont matter')
+        return (no_update, no_update)
 
     @app.callback(
         Output('deployment-readiness-status-output', 'children'),
@@ -233,8 +240,7 @@ def generate_callbacks(app: Dash):
                                     src='https://render.com/images/deploy-to-render-button.svg', alt="Deploy to Render")
                             ],
                             target="_blank",
-                            # TODO repo URL
-                            href=f"https://render.com/deploy?repo=FOO_TODO")
+                            href=f"https://render.com/deploy?repo={deployPage.fileExplorerInstance.githubUrl}")
                     ],
                     disabled=False,
                     style={'width': '200px'},
