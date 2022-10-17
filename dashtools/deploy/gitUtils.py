@@ -55,7 +55,7 @@ def commit_and_push(cwd: os.PathLike, commit_message: str = '') -> bool:
     commit_message = commit_message.replace('"', '').replace("'", '')
     try:
         subprocess.check_output(
-            f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master')
+            f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master', shell=True)
         return True
     except subprocess.CalledProcessError:
         return False

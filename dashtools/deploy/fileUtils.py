@@ -46,9 +46,7 @@ def get_render_yaml_service_name(yaml_filepath) -> str:
 def set_render_yaml_service_name(yaml_filepath, name):
     config, ind, bsi = ruamel.yaml.util.load_yaml_guess_indent(
         open(yaml_filepath))
-
     config['services'][0]['name'] = name
-
     yaml = ruamel.yaml.YAML()
     yaml.indent(mapping=ind, sequence=ind, offset=bsi)
     with open(yaml_filepath, 'w') as fp:

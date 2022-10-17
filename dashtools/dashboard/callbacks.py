@@ -43,7 +43,7 @@ def generate_callbacks(app: Dash):
             fileUtils.set_render_yaml_service_name(
                 os.path.join(deployPage.fileExplorerInstance.root, 'render.yaml'), deployPage.fileExplorerInstance.appName)
             gitUtils.commit_and_push(
-                cwd=deployPage.fileExplorerInstance.root, commit_message=f'dashtools automatic push at {time.time()}')
+                cwd=deployPage.fileExplorerInstance.root, commit_message=f'DashTools Automatic Push - {time.strftime("%m/%d/%Y @ %H:%M:%S")}')
             deployPage.terminal.writeln(
                 '$ Follow instructions on Render.com to finish deployment')
         if button_clicked == 'deploy-terminal-clear-button' and clear_terminal:
