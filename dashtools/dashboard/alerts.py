@@ -34,7 +34,7 @@ def render(key: str):
         )
     elif key == 'NameRequiredError':
         return dmc.Notification(
-            message="A Render App Name is needed to do this action!",
+            message="A Render App Name is required to do this action!",
             title="Warning",
             color='red',
             icon=[DashIconify(icon="ep:warning")],

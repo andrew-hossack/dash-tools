@@ -209,7 +209,7 @@ def generate_callbacks(app: Dash):
                         gitUtils.get_remote_url(cwd=filepath))
                     if not deployPage.fileExplorerInstance.githubUrl:
                         deployPage.terminal.writeln(
-                            "$ Error: You must init and publish your project with 'git init' and 'git push' before continuing! Check out https://kbroman.org/github_tutorial/pages/init.html for more details.")
+                            "$ Error: You must init and publish your project with 'git init' and 'git push' before continuing! Go to https://github.com/new and create a new, public project.  Check out https://kbroman.org/github_tutorial/pages/init.html for more details.")
                         deployPage.terminal.writeln(
                             "$ After doing so, press the Open File button again to continue")
                         alerts_list.append(
@@ -240,7 +240,7 @@ def generate_callbacks(app: Dash):
         button_id = ctx.triggered_id
         filepath = deployPage.fileExplorerInstance.root
         if filepath is not None:
-            if button_id == 'readiness-check-render-yaml-generator-button':
+            if button_id == 'readiness-check-render-yaml-generator-button' and n_1:
                 if not app_name:
                     return (alerts.render(key="NameRequiredError"), no_update)
                 deployPage.terminal.writeln('$ Generating render.yaml ...')
@@ -250,7 +250,7 @@ def generate_callbacks(app: Dash):
                     f'$ render.yaml successfully generated in {filepath}')
                 return (no_update, 'update doesnt matter')
 
-            elif button_id == 'readiness-check-requirements-generator-button':
+            elif button_id == 'readiness-check-requirements-generator-button' and n_2:
                 deployPage.terminal.writeln(
                     '$ Generating requirements.txt ...')
                 fileUtils.create_requirements_txt(filepath)
@@ -269,10 +269,13 @@ def generate_callbacks(app: Dash):
     )
     def deployment_readiness(n_intervals, trigger):
         if deployPage.fileExplorerInstance.isDeployReady():
-            # TODO trigger global readiness callback. Updates deploy button.
+            if not deployPage.fileExplorerInstance.deployReadyFlagCallback:
+                deployPage.terminal.writeln(
+                    '$ Your application is ready to be deployed! Press the DEPLOY TO RENDER button and follow on-screen instructions to deploy your app.')
+            deployPage.fileExplorerInstance.deployReadyFlagCallback = True
             return (
                 deployPage.build_checkbox('PASS', '**Ready**',
-                                          'Your application is ready to be deployed to Render.com', 'pass-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
+                                          'Your application is ready to be deployed to Render.com!', 'pass-deploy-status-id', text_margin_l='5px', tooltip_pos='top'),
                 dmc.Button(
                     'Deploy',
                     variant="gradient",
@@ -291,6 +294,7 @@ def generate_callbacks(app: Dash):
             )
         else:
             _, status = deployPage.fileExplorerInstance.isDeployReadyWithStatus()
+            deployPage.fileExplorerInstance.deployReadyFlagCallback = False
             status_str = [key for key, val in status.items() if not val]
             return (
                 deployPage.build_checkbox("FAIL", '**Not Ready**',

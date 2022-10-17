@@ -18,6 +18,7 @@ class FileExplorer:
         self.renderYamlExists = False
         self.serverHookExists = False
         self.githubUrl = None
+        self.deployReadyFlagCallback = False  # Only to be set by callback
 
     def setGithubUrl(self, config_remote_origin_url_raw: str):
         if not config_remote_origin_url_raw:

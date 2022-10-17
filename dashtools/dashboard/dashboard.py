@@ -131,7 +131,6 @@ app.layout = dmc.NotificationsProvider(
         [
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
-            # html.Div(id="notifications-container-deploy-button"), # TODO
             dcc.Location(id="url"),
             sidebar,
             content
@@ -141,7 +140,6 @@ callbacks.generate_callbacks(app)
 
 
 def start_dashboard(**args):
-    # app.logger.setLevel(logging.FATAL) # TODO - Turn off logging
     app.run_server(**args)
 
 
