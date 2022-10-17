@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] - 2022-10-17
+
+### Added
+
+- Added `dashtools gui` render deploy dashboard
+
 ## [1.8.4] - 2022-9-09
 
 ### Fixed

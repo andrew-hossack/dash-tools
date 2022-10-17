@@ -44,6 +44,15 @@ Creating a new dash project is simple. Here we choose to name it "MyApp". Doing 
 Deploying a Project
 **********************
 
+You can deploy any project containing a src/app.py file that is published to a GitHub Public repository. Run the DashTools Render GUI for a seamless experience.
+
+.. code-block:: bash
+    
+    dashtools gui
+
+
+Update: Heroku is not supporting free-tier hosting anymore. Check out Render.com for a great alternative!
+
 You can deploy any project containing an app.py file. Running the following command will create Procfile, requirements.txt, and runtime.txt if they are not found. Follow the on-screen prompts to complete the deployment to Heroku.
 
 .. code-block:: bash
