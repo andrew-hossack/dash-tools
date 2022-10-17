@@ -6,6 +6,7 @@
 import os
 import re
 import subprocess
+from typing import Union
 
 
 def git_is_installed() -> bool:
@@ -24,12 +25,37 @@ def git_is_installed() -> bool:
     return isInstalled
 
 
-def is_git_repository() -> bool:
+def is_git_repository(cwd: os.PathLike = None) -> bool:
     """
     Check that the current location is a git repository or not
     by checking .git directory
     """
-    isGitRepo = False
-    if os.path.isdir('.git'):
-        isGitRepo = True
-    return isGitRepo
+    path = '.git'
+    if cwd:
+        path = os.path.join(cwd, '.git')
+    if os.path.isdir(path):
+        return True
+    return False
+
+
+def get_remote_url(cwd: os.PathLike) -> Union[str, None]:
+    """
+    returns git config --get remote.origin.url (str or None if not found)
+    recommended to check git is installed before calling this
+    """
+    try:
+        return subprocess.check_output(
+            [f'cd {cwd} && git config --get remote.origin.url'], shell=True).decode('utf-8')
+    except subprocess.CalledProcessError:
+        return None
+
+
+def commit_and_push(cwd: os.PathLike, commit_message: str = '') -> bool:
+    """return success or failure boolean"""
+    commit_message = commit_message.replace('"', '').replace("'", '')
+    try:
+        subprocess.check_output(
+            f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master', shell=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False

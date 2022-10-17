@@ -2,11 +2,13 @@ global-include *.json
 global-include *.include
 global-include *.html
 global-include *.ini
+global-include *.ico
 global-include *.css
 global-include *.csv
 global-include *.eot
 global-include *.tff
 global-include *.woff
+global-include *.png
 global-include *.woff2
 global-include *.sh
 global-include requirements.txt
@@ -19,5 +21,6 @@ global-include *.js
 global-include *.ts
 global-include *.template
 global-include packages.txt
-graft dash_tools/templating/templates
+graft dashtools/dashboard/*
 global-exclude docs/*
+global include dashtools/assets/*

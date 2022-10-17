@@ -9,6 +9,7 @@ import sys as _sys
 import webbrowser
 
 from dashtools.cli import update
+from dashtools.dashboard import dashboard
 from dashtools.deploy import deployHeroku
 from dashtools.docker import dockerUtils
 from dashtools.runtime import runtimeUtils
@@ -22,12 +23,14 @@ class MyArgumentParser(argparse.ArgumentParser):
     def print_help(self, file=None):
         if file is None:
             file = _sys.stdout
-        message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://github.com/andrew-hossack/dash-tools for more details.
+        message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://dash-tools.readthedocs.io/ for more details.
 \nUsage:
     {'dashtools <command> [options]':<29}
 \nCommands and Options:
     {'docker':<29}Handle Docker creation. Choose option:
         {'--init <image name>':<25}Creates a docker image in current directory
+
+    {'gui':<29}Starts the DashTools UI.
 
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku
@@ -122,6 +125,20 @@ def docker(args):
 @ subcommand(
     [
         argument(
+            "gui",
+            help='Starts the deploy UI.',
+            action='store_true',
+            default=False
+        ),
+    ])
+def gui(args):
+    """Initialize a new app."""
+    dashboard.start_dashboard(debug=True)
+
+
+@ subcommand(
+    [
+        argument(
             "init",
             help='Create a new Dash app. Args: REQUIRED: <app name> OPTIONAL: <template> (Default: "default").',
             metavar='<app name> [<template>]',
@@ -162,6 +179,7 @@ def init(args):
     ])
 def templates(args):
     if args.list:
+        print('dashtools: View templates at https://dash-tools.readthedocs.io/en/latest/commands/templates/index.html')
         print('dashtools: Templates usage example, type: dashtools init MyApp csv')
         print('dashtools: templates: List of available templates:')
         buildAppUtils.print_templates()
@@ -169,7 +187,6 @@ def templates(args):
         createTemplate.create_template(src=args.init[0], dest=os.getcwd())
     else:
         print('dashtools: templates error: too few arguments')
-        print('dashtools: For more information on templates, see https://github.com/andrew-hossack/dash-tools#templates')
         exit('dashtools: Available templates options: --list, --init')
 
 

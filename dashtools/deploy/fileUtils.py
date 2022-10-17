@@ -6,6 +6,8 @@
 import os
 import re
 from typing import Union
+
+import ruamel.yaml
 from pipreqs import pipreqs
 
 
@@ -27,6 +29,58 @@ def _add_requirement(root_path: os.PathLike, requirement: str):
     with open(os.path.join(root_path, 'requirements.txt'), 'r+') as requirements_file:
         if requirement not in requirements_file.read():
             requirements_file.write(f'{requirement}\n')
+
+
+def get_render_yaml_service_name(yaml_filepath) -> str:
+    """
+    returns 'name' from render.yaml:
+        services:
+            - type: web
+                name: dipstick-hippodrome-lack-l0if
+    """
+    config, _, _ = ruamel.yaml.util.load_yaml_guess_indent(
+        open(yaml_filepath))
+    return config['services'][0]['name']
+
+
+def set_render_yaml_service_name(yaml_filepath, name):
+    config, ind, bsi = ruamel.yaml.util.load_yaml_guess_indent(
+        open(yaml_filepath))
+    config['services'][0]['name'] = name
+    yaml = ruamel.yaml.YAML()
+    yaml.indent(mapping=ind, sequence=ind, offset=bsi)
+    with open(yaml_filepath, 'w') as fp:
+        yaml.dump(config, fp)
+
+
+def handle_render_yaml(root_path: os.PathLike, app_name: str):
+    """
+    updates render yaml if it exists with new name else create new
+    """
+    render_filepath = os.path.join(root_path, 'render.yaml')
+    if os.path.exists(render_filepath):
+        set_render_yaml_service_name(render_filepath, app_name)
+    else:
+        create_render_yaml(root_path=root_path, app_name=app_name)
+
+
+def create_render_yaml(root_path: os.PathLike, app_name: str):
+    """
+    Creates render.com yaml blueprint for webservice
+    https://render.com/docs/infrastructure-as-code
+    """
+    with open(os.path.join(root_path, 'render.yaml'), 'w') as file:
+        file.write(f"""services:
+  # See https://render.com/docs/blueprint-spec for more info on render blueprints
+  - type: web
+    name: {app_name}
+    env: python
+    plan: free
+    # A requirements.txt file must exist
+    buildCommand: "pip install -r requirements.txt"
+    # A src/app.py file must exist and contain `server=app.server`
+    startCommand: "gunicorn --chdir src app:server"
+        """)
 
 
 def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = None, update=False):
@@ -104,6 +158,30 @@ def create_procfile(root_path: os.PathLike):
     print(f'dashtools: Created Procfile')
 
 
+def search_appfile_ui(app_root: os.PathLike) -> bool:
+    """
+    Look for 'server=app.server' in {app_root}/src/app.py 
+
+    Returns:
+        True if server=app.server is found, else False
+    """
+    try:
+        with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
+            appfile_contents = modfile.read()
+    except Exception as e:
+        # Dangerous to pass here, but not sure what happens if file opened by user on read
+        pass
+
+    # Look for the hook "server =" or "server=" with spaces and newlines
+    # https://regex101.com/r/Ad3TN8/2
+    try:
+        re.search(f"^[\s]*server[\s]?=.*app\.server",
+                  appfile_contents, re.MULTILINE).group(0)
+        return True
+    except (AttributeError, IndexError, UnboundLocalError):
+        return False
+
+
 def verify_procfile(root_path: os.PathLike) -> dict:
     """
     Verifies that the Procfile is correct:
@@ -119,9 +197,16 @@ def verify_procfile(root_path: os.PathLike) -> dict:
             'hook': Hook name
         }
     """
-    with open(os.path.join(root_path, 'Procfile'), 'r', encoding="utf8") as procfile:
-        procfile_contents = procfile.read()
-
+    try:
+        with open(os.path.join(root_path, 'Procfile'), 'r', encoding="utf8") as procfile:
+            procfile_contents = procfile.read()
+    except FileNotFoundError:
+        return {
+            'valid': False,
+            'dir': '',
+            'hook': '',
+            'module': ''
+        }
     # Look for --chdir somedir
     chdir_regex = r"--chdir [a-zA-Z\/\\]+"
     try:
