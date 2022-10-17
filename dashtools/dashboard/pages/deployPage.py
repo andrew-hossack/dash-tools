@@ -19,9 +19,15 @@ class FileExplorer:
         self.serverHookExists = False
         self.githubUrl = None
 
+    def setGithubUrl(self, config_remote_origin_url_raw: str):
+        if not config_remote_origin_url_raw:
+            self.githubUrl = None
+            return
+        self.githubUrl = f'https://github.com/{config_remote_origin_url_raw.split(":")[1].split(".git")[0]}'
+
     def isDeployReady(self) -> bool:
         """ returns if app is ready to be deployed """
-        if self.appName and self.root and self.requirementsExists and self.renderYamlExists and self.serverHookExists:
+        if self.appName and self.root and self.requirementsExists and self.renderYamlExists and self.serverHookExists and self.githubUrl:
             return True
         return False
 
@@ -35,7 +41,8 @@ class FileExplorer:
             "src/app.py file": self.root is not None,
             "requirements.txt file": self.requirementsExists,
             "render.yaml file": self.renderYamlExists,
-            "server=app.server code in src/app.py": self.serverHookExists
+            "server=app.server code in src/app.py": self.serverHookExists,
+            "project is published to git": self.githubUrl is not None,
         }
         if self.isDeployReady():
             return status
@@ -84,14 +91,6 @@ def deploy_controller():
 class Terminal():
     def __init__(self) -> None:
         self.value = ''
-
-    def command(self, cmd):
-        """ Write a command to be run in subprocess """
-        self.writeln(f'$ {cmd}')
-        with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True) as proc:
-            self.writeln(proc.stdout.read().decode('utf-8'))
-            if proc.returncode != 0:
-                self.writeln(proc.stderr.read().decode('utf-8'))
 
     def read(self):
         return self.value
@@ -391,7 +390,7 @@ def terminal_box():
 
 def render():
     terminal.writeln(
-        '$ Select a file in File Explorer to deploy your app to Render.com ...')
+        '$ Select a dash project in File Explorer to deploy your app to Render.com ...')
     return html.Div(
         [
             dbc.Row([

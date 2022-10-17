@@ -3,15 +3,14 @@
 '''
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
-from dash import Dash, Input, Output, dcc, html
+from dash import Dash, dcc, html
 from dash_iconify import DashIconify
 from dashtools import version
+
 try:
     import callbacks
-    from pages import createPage, deployPage, errorPage, infoPage
 except ModuleNotFoundError:
     from . import callbacks
-    from .pages import createPage, deployPage, errorPage, infoPage
 
 app = Dash(
     title="DashTools - Application Management Dashboard",
@@ -139,20 +138,6 @@ app.layout = dmc.NotificationsProvider(
         ]))
 
 callbacks.generate_callbacks(app)
-
-
-@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
-def render_page_content(pathname):
-    # Clear data
-    if pathname == "/deploy" or pathname == '/':
-        deployPage.terminal.clear()
-        return deployPage.render()
-    elif pathname == "/info":
-        return infoPage.render()
-    elif pathname == "/create":
-        return createPage.render()
-    else:
-        return errorPage.render()
 
 
 def start_dashboard(**args):

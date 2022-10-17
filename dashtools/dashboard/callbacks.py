@@ -1,22 +1,36 @@
 import os
 
 import dash_mantine_components as dmc
-from dash import Dash, Input, Output, State, ctx, html, no_update, dcc
+from dash import Dash, Input, Output, State, ctx, dcc, html, no_update
 
 try:
     import alerts
     import tree
-    from pages import deployPage
+    from pages import createPage, deployPage, errorPage, infoPage
 except ModuleNotFoundError:
+    from .pages import createPage, deployPage, errorPage, infoPage
     from . import tree
     from . import alerts
     from .pages import deployPage
 
 from dash_iconify import DashIconify
-from dashtools.deploy import fileUtils, herokuUtils
+from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 
 def generate_callbacks(app: Dash):
+
+    @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+    def render_page_content(pathname):
+        # Clear data
+        if pathname == "/deploy" or pathname == '/':
+            deployPage.terminal.clear()
+            return deployPage.render()
+        elif pathname == "/info":
+            return infoPage.render()
+        elif pathname == "/create":
+            return createPage.render()
+        else:
+            return errorPage.render()
 
     @app.callback(
         Output('hidden-div', 'children'),
@@ -169,15 +183,29 @@ def generate_callbacks(app: Dash):
             if os.path.isdir(filepath):
                 try:
                     deployPage.fileExplorerInstance.root = filepath
-                    deployPage.terminal.writeln(
-                        f'$ opened {filepath} successfully')
+                    deployPage.terminal.writeln(f'$ Selected file {filepath}')
+                    alerts_list = []
+                    if not gitUtils.git_is_installed():
+                        deployPage.terminal.writeln(
+                            "$ Error: Git must be installed on your machine before continuing! Check out https://git-scm.com/book/en/v2/Getting-Started-Installing-Git for more details.")
+                        alerts_list.append(alerts.render(
+                            key='GitNotInstalledError'))
+                    deployPage.fileExplorerInstance.setGithubUrl(
+                        gitUtils.get_remote_url(cwd=filepath))
+                    if not deployPage.fileExplorerInstance.githubUrl:
+                        deployPage.terminal.writeln(
+                            "$ Error: You must init and publish your project with 'git init' and 'git push' before continuing! Check out https://kbroman.org/github_tutorial/pages/init.html for more details.")
+                        deployPage.terminal.writeln(
+                            "$ After doing so, press the Open File button again to continue")
+                        alerts_list.append(
+                            alerts.render(key='NotGitRepoError'))
                     return (
                         html.Div(
                             tree.FileTree(filepath).render(),
                             style={'height': '100%', 'overflow': 'scroll'}),
                         True,
                         None,
-                        html.Div()
+                        html.Div(alerts_list)
                     )
                 except PermissionError:
                     deployPage.fileExplorerInstance.root = None

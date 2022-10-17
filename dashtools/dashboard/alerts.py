@@ -1,5 +1,4 @@
 import dash_mantine_components as dmc
-from dash import html
 from dash_iconify import DashIconify
 
 # NOTIFICATION_DURATION_SECONDS = 8
@@ -13,7 +12,6 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
-            # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-file-not-found'
         )
     elif key == 'PermissionError':
@@ -23,7 +21,6 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
-            # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-permissions'
         )
     elif key == 'FileRequiredError':
@@ -33,7 +30,6 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
-            # autoClose=NOTIFICATION_DURATION_SECONDS,
             id='error-permissions'
         )
     elif key == 'NameRequiredError':
@@ -43,6 +39,23 @@ def render(key: str):
             color='red',
             icon=[DashIconify(icon="ep:warning")],
             action='show',
-            # autoClose=NOTIFICATION_DURATION_SECONDS,
+            id='error-permissions'
+        )
+    elif key == 'GitNotInstalledError':
+        return dmc.Notification(
+            message="Git must be installed on your system to deploy to Render.com!",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            id='error-permissions'
+        )
+    elif key == 'NotGitRepoError':
+        return dmc.Notification(
+            message="You must publish your project to Git before continuing!",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
             id='error-permissions'
         )
