@@ -2,7 +2,7 @@ import os
 
 import dash_mantine_components as dmc
 from dash import Dash, Input, Output, State, ctx, dcc, html, no_update
-
+import time
 try:
     import alerts
     import tree
@@ -40,6 +40,10 @@ def generate_callbacks(app: Dash):
     def deploy_button(deploy, clear_terminal):
         button_clicked = ctx.triggered_id
         if button_clicked == 'app-control-deploy-button' and deploy:
+            fileUtils.set_render_yaml_service_name(
+                os.path.join(deployPage.fileExplorerInstance.root, 'render.yaml'), deployPage.fileExplorerInstance.appName)
+            gitUtils.commit_and_push(
+                cwd=deployPage.fileExplorerInstance.root, commit_message=f'dashtools automatic push at {time.time()}')
             deployPage.terminal.writeln(
                 '$ Follow instructions on Render.com to finish deployment')
         if button_clicked == 'deploy-terminal-clear-button' and clear_terminal:
@@ -48,16 +52,26 @@ def generate_callbacks(app: Dash):
 
     @app.callback(
         Output('app-control-name-input', 'value'),
-        Input('app-control-name-refresh', 'n_clicks')
+        Input('app-control-name-refresh', 'n_clicks'),
+        Input('file-explorer-button', 'n_clicks'),
+        background=True
     )
-    def generate_name(n):
-        if n:
+    def app_control_name_input(gen_button, file_explorer_button):
+        callback_ctx = ctx.triggered_id
+        if gen_button and callback_ctx == 'app-control-name-refresh':
             return herokuUtils.generate_valid_name()
+        if file_explorer_button and callback_ctx == 'file-explorer-button':
+            # update current value to render.yaml value
+            # time.sleep is not ideal, but we need to wait for other
+            # values to populate first
+            time.sleep(2)
+            if deployPage.fileExplorerInstance.renderYamlExists:
+                render_yaml_path = os.path.join(
+                    deployPage.fileExplorerInstance.root, 'render.yaml')
+                return fileUtils.get_render_yaml_service_name(render_yaml_path)
 
     @app.callback(
-        [
-            Output('app-control-name-status', 'children'),
-        ],
+        Output('app-control-name-status', 'children'),
         Input('app-control-name-input', 'value')
     )
     def save_app_name(app_name):
@@ -108,7 +122,7 @@ def generate_callbacks(app: Dash):
     @ app.callback(
         Output('file-explorer-refresh-interval', 'disabled'),
         Output('readiness-check-trigger', 'children'),
-        Input('file-explorer-button', 'n_clicks',),
+        Input('file-explorer-button', 'n_clicks'),
         State('file-explorer-input', 'value'),
         prevent_initial_call=True
     )
@@ -162,6 +176,7 @@ def generate_callbacks(app: Dash):
             deployPage.fileExplorerInstance.renderYamlExists = False
             deployPage.fileExplorerInstance.requirementsExists = False
             deployPage.fileExplorerInstance.serverHookExists = False
+            deployPage.fileExplorerInstance.renderYamlServiceName = None
             return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), DISPLAY_OFF, DISPLAY_OFF)
 
     @ app.callback(

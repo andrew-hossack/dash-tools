@@ -6,6 +6,8 @@
 import os
 import re
 from typing import Union
+
+import ruamel.yaml
 from pipreqs import pipreqs
 
 
@@ -27,6 +29,41 @@ def _add_requirement(root_path: os.PathLike, requirement: str):
     with open(os.path.join(root_path, 'requirements.txt'), 'r+') as requirements_file:
         if requirement not in requirements_file.read():
             requirements_file.write(f'{requirement}\n')
+
+
+def get_render_yaml_service_name(yaml_filepath) -> str:
+    """
+    returns 'name' from render.yaml:
+        services:
+            - type: web
+                name: dipstick-hippodrome-lack-l0if
+    """
+    config, _, _ = ruamel.yaml.util.load_yaml_guess_indent(
+        open(yaml_filepath))
+    return config['services'][0]['name']
+
+
+def set_render_yaml_service_name(yaml_filepath, name):
+    config, ind, bsi = ruamel.yaml.util.load_yaml_guess_indent(
+        open(yaml_filepath))
+
+    config['services'][0]['name'] = name
+
+    yaml = ruamel.yaml.YAML()
+    yaml.indent(mapping=ind, sequence=ind, offset=bsi)
+    with open(yaml_filepath, 'w') as fp:
+        yaml.dump(config, fp)
+
+
+def handle_render_yaml(root_path: os.PathLike, app_name: str):
+    """
+    updates render yaml if it exists with new name else create new
+    """
+    render_filepath = os.path.join(root_path, 'render.yaml')
+    if os.path.exists(render_filepath):
+        set_render_yaml_service_name(render_filepath, app_name)
+    else:
+        create_render_yaml(root_path=root_path, app_name=app_name)
 
 
 def create_render_yaml(root_path: os.PathLike, app_name: str):

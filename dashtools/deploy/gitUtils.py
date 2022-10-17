@@ -48,3 +48,14 @@ def get_remote_url(cwd: os.PathLike) -> Union[str, None]:
             [f'cd {cwd} && git config --get remote.origin.url'], shell=True).decode('utf-8')
     except subprocess.CalledProcessError:
         return None
+
+
+def commit_and_push(cwd: os.PathLike, commit_message: str = '') -> bool:
+    """return success or failure boolean"""
+    commit_message = commit_message.replace('"', '').replace("'", '')
+    try:
+        subprocess.check_output(
+            f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master')
+        return True
+    except subprocess.CalledProcessError:
+        return False
