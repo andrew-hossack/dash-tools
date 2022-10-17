@@ -43,24 +43,24 @@ sidebar = html.Div(
 
         dbc.Nav(
             [
-                dbc.NavLink(
-                    [
-                        DashIconify(icon='akar-icons:plus',
-                                    style={'margin-right': '5px'}),
-                        "Create"
-                    ], href="/create", active="exact"),
+                # dbc.NavLink( # TODO
+                #     [
+                #         DashIconify(icon='akar-icons:plus',
+                #                     style={'margin-right': '5px'}),
+                #         "Create"
+                #     ], href="/create", active="exact"),
                 dbc.NavLink(
                     [
                         DashIconify(icon='akar-icons:cloud',
                                     style={'margin-right': '5px'}),
                         "Deploy"
                     ], href="/deploy", active="exact"),
-                dbc.NavLink(
-                    [
-                        DashIconify(icon='akar-icons:info',
-                                    style={'margin-right': '5px'}),
-                        "Info"
-                    ], href="/info", active="exact"),
+                # dbc.NavLink(  # TODO
+                #     [
+                #         DashIconify(icon='akar-icons:info',
+                #                     style={'margin-right': '5px'}),
+                #         "Info"
+                #     ], href="/info", active="exact"),
             ],
             vertical=True,
             pills=True,

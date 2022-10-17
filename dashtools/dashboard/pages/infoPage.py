@@ -1,11 +1,32 @@
-from dash import html
+import dash_mantine_components as dmc
+from dash import html, dcc
 
 
 def render():
     return html.Div(
         [
-            html.H1("404: Not found", className="text-danger"),
-            html.Hr(),
-            html.P(f"The pathname x was not recognised..."),
+            dmc.Header(
+                [
+                    html.H3("About")
+                ], height=50,),
+            # dmc.Divider(variant="dotted", style={
+            #     'margin-left': '60px', 'margin-right': '60px'}),
+            dmc.Stack(
+                [
+                    html.Div(
+                        dcc.Link(
+                            'GitHub', href='https://github.com/andrew-hossack/dash-tools')
+                    ),
+                    html.Div(
+                        dcc.Link(
+                            'Foo', href='https://github.com/andrew-hossack/dash-tools')
+                    ),
+                    html.Div(
+                        dcc.Link(
+                            'Foo', href='https://github.com/andrew-hossack/dash-tools')
+                    ),
+                ]
+            )
+
         ]
     )
