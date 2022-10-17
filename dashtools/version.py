@@ -1,1 +1,3 @@
-__version__ = '1.9.0'
+# Version in this file must match version for docs/source/version.py!
+
+__version__ = '1.9.1'
