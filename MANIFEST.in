@@ -8,6 +8,7 @@ global-include *.csv
 global-include *.eot
 global-include *.tff
 global-include *.woff
+global-include *.png
 global-include *.woff2
 global-include *.sh
 global-include requirements.txt
@@ -22,3 +23,4 @@ global-include *.template
 global-include packages.txt
 graft dashtools/dashboard/*
 global-exclude docs/*
+global include dashtools/assets/*

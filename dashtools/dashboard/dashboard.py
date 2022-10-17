@@ -1,6 +1,7 @@
 '''
  # @ Create Time: 2022-10-04 15:30:29.442976
 '''
+from pathlib import Path
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
@@ -18,8 +19,8 @@ app = Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=True,
+    assets_folder=Path(__file__).parent.absolute().joinpath('assets')
 )
-
 
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server

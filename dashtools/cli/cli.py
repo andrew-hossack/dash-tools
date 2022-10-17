@@ -133,7 +133,7 @@ def docker(args):
     ])
 def gui(args):
     """Initialize a new app."""
-    dashboard.start_dashboard()
+    dashboard.start_dashboard(debug=True)
 
 
 @ subcommand(
