@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.2] - 2022-10-18
+
+### Fixed
+
+- Made published to github a project requirement instead of an error
+
 ## [1.9.1] - 2022-10-17
 
 ### Fixed
