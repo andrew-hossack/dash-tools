@@ -137,6 +137,7 @@ def generate_callbacks(app: Dash):
         Output('readiness-check-render-yaml-exists', 'children'),
         Output('readiness-check-requirements-exists', 'children'),
         Output('readiness-check-hook-exists', 'children'),
+        Output('readiness-check-on-github', 'children'),
         Output('readiness-check-render-yaml-generator-vis',
                component_property='style'),
         Output('readiness-check-requirements-generator-vis',
@@ -157,6 +158,9 @@ def generate_callbacks(app: Dash):
                 filepath, 'requirements.txt')
             hook_exists = fileUtils.search_appfile_ui(
                 filepath)
+            deployPage.fileExplorerInstance.setGithubUrl(
+                gitUtils.get_remote_url(cwd=filepath))
+            githubUrlExists = deployPage.fileExplorerInstance.githubUrl
             deployPage.fileExplorerInstance.renderYamlExists = render_yaml_exists
             deployPage.fileExplorerInstance.requirementsExists = requirements_exists
             deployPage.fileExplorerInstance.serverHookExists = hook_exists
@@ -169,6 +173,8 @@ def generate_callbacks(app: Dash):
                 ) if requirements_exists else deployPage.ReadinessStatus('FAIL').get(),
                 deployPage.ReadinessStatus('PASS').get(
                 ) if hook_exists else deployPage.ReadinessStatus('FAIL').get(),
+                deployPage.ReadinessStatus('PASS').get(
+                ) if githubUrlExists else deployPage.ReadinessStatus('FAIL').get(),
                 DISPLAY_ON if not render_yaml_exists else DISPLAY_OFF,
                 DISPLAY_ON if not requirements_exists else DISPLAY_OFF
             )
@@ -176,8 +182,7 @@ def generate_callbacks(app: Dash):
             deployPage.fileExplorerInstance.renderYamlExists = False
             deployPage.fileExplorerInstance.requirementsExists = False
             deployPage.fileExplorerInstance.serverHookExists = False
-            deployPage.fileExplorerInstance.renderYamlServiceName = None
-            return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), DISPLAY_OFF, DISPLAY_OFF)
+            return (deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), deployPage.ReadinessStatus('PENDING').get(), DISPLAY_OFF, DISPLAY_OFF)
 
     @ app.callback(
         [
@@ -189,11 +194,16 @@ def generate_callbacks(app: Dash):
         Input('file-explorer-button', 'n_clicks'),
         Input('update-filetree-hidden', 'children'),
         State('file-explorer-input', 'value'),
+        prevent_initial_callback=True
     )
     def file_explorer_callback(n, force_tree_update, filepath: os.PathLike):
         # Initial callbacks
+        empty_div = dmc.Center([
+            html.H3("Open a File to Continue", style={
+                    'opacity': '10%', 'padding-top': '50px'})
+        ])
         if not n:
-            return html.Div(), False, None, html.Div()
+            return empty_div, False, None, html.Div()
         if filepath:
             if os.path.isdir(filepath):
                 try:
@@ -205,15 +215,6 @@ def generate_callbacks(app: Dash):
                             "$ Error: Git must be installed on your machine before continuing! Check out https://git-scm.com/book/en/v2/Getting-Started-Installing-Git for more details.")
                         alerts_list.append(alerts.render(
                             key='GitNotInstalledError'))
-                    deployPage.fileExplorerInstance.setGithubUrl(
-                        gitUtils.get_remote_url(cwd=filepath))
-                    if not deployPage.fileExplorerInstance.githubUrl:
-                        deployPage.terminal.writeln(
-                            "$ Error: You must init and publish your project with 'git init' and 'git push' before continuing! Go to https://github.com/new and create a new, public project.  Check out https://kbroman.org/github_tutorial/pages/init.html for more details.")
-                        deployPage.terminal.writeln(
-                            "$ After doing so, press the Open File button again to continue")
-                        alerts_list.append(
-                            alerts.render(key='NotGitRepoError'))
                     return (
                         html.Div(
                             tree.FileTree(filepath).render(),
@@ -224,9 +225,9 @@ def generate_callbacks(app: Dash):
                     )
                 except PermissionError:
                     deployPage.fileExplorerInstance.root = None
-                    return [], True, 'Permission Error', alerts.render(key='PermissionError')
+                    return empty_div, True, 'Permission Error', alerts.render(key='PermissionError')
         deployPage.fileExplorerInstance.root = None
-        return [], True, 'File Not Found', alerts.render(key='FileNotFoundError')
+        return empty_div, True, 'File Not Found', alerts.render(key='FileNotFoundError')
 
     @ app.callback(
         Output('notifications-container-file-generator', 'children'),

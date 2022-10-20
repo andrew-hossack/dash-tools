@@ -66,7 +66,7 @@ sidebar = html.Div(
             pills=True,
         ),
 
-        dmc.Space(style={'height': '55vh'}),
+        dmc.Space(style={'height': '460px'}),
         html.Hr(),
         html.Div([
             html.H6(

@@ -43,7 +43,7 @@ class FileExplorer:
             "requirements.txt file": self.requirementsExists,
             "render.yaml file": self.renderYamlExists,
             "server=app.server code in src/app.py": self.serverHookExists,
-            "project is published to git": self.githubUrl is not None,
+            "project is pushed to public github": self.githubUrl is not None,
         }
         if self.isDeployReady():
             return status
@@ -85,7 +85,7 @@ def deploy_controller():
                 style={'margin-bottom': '-10px'}
             )
             # ]),
-        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '109px', 'padding': '10px'})
+        ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": '106px', 'padding': '10px'})
     ], style={"width": '100%'})
 
 
@@ -147,7 +147,7 @@ def file_explorer():
                 id='file-explorer-output',
                 style={'width': '100%', 'height': '350px', 'margin-top': '-16px'}
             )
-        ], style={'height': '420px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 
@@ -257,7 +257,7 @@ def deploy_info():
                             'readiness-check-render-yaml-exists'
                         ),
                         FileGenerator(
-                            'readiness-check-render-yaml-generator-button', 'Generate render.yaml', 'readiness-check-render-yaml-generator-vis').get(),
+                            'readiness-check-render-yaml-generator-button', 'Generate render.yaml', 'readiness-check-render-yaml-generator-vis').get()
                     ]),
                 dmc.Group(
                     [
@@ -268,7 +268,16 @@ def deploy_info():
                             'readiness-check-requirements-exists'
                         ),
                         FileGenerator(
-                            'readiness-check-requirements-generator-button', 'Generate requirements.txt', 'readiness-check-requirements-generator-vis').get(),
+                            'readiness-check-requirements-generator-button', 'Generate requirements.txt', 'readiness-check-requirements-generator-vis').get()
+                    ]),
+                dmc.Group(
+                    [
+                        build_checkbox(
+                            'PENDING',
+                            'Project Requirement: **Pushed to GitHub**',
+                            'Your project directory must be pushed to Github in a public git repo',
+                            'readiness-check-on-github'
+                        )
                     ]),
                 dmc.Group(
                     build_checkbox(
