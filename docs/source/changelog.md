@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0] - 2022-10-23
+
+### Changed
+
+- Turn off logging and debug mode for gui server
+- Address bug where server opens twice
+- Open web url in browser when server starts
+
 ## [1.9.2] - 2022-10-18
 
 ### Fixed
