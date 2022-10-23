@@ -4,8 +4,12 @@
 '''
 import argparse
 import unittest
-from dashtools.templating import Templates
-from dashtools.templating.buildAppUtils import _convert_to_template_or_error, get_template_from_args
+try:
+    from dashtools.templating import Templates
+    from dashtools.templating.buildAppUtils import _convert_to_template_or_error, get_template_from_args
+except ModuleNotFoundError:
+    from ..dashtools.templating import Templates
+    from ..dashtools.templating.buildAppUtils import _convert_to_template_or_error, get_template_from_args
 
 
 class TemplatesTest(unittest.TestCase):

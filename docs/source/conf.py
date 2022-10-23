@@ -1,5 +1,6 @@
-from version import __version__
 # -- Project information
+
+__version__ = '1.10.0'
 
 project = 'DashTools'
 author = 'Andrew Hossack'

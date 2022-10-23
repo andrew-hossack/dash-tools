@@ -3,7 +3,10 @@
  # @ Create Time: 2022-04-28 22:09:23
 '''
 import unittest
-from dashtools.deploy import herokuUtils
+try:
+    from dashtools.deploy import herokuUtils
+except ModuleNotFoundError:
+    from ..dashtools.deploy import herokuUtils
 
 
 class HerokuUtilsTest(unittest.TestCase):

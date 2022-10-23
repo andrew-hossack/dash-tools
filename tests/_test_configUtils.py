@@ -4,7 +4,10 @@
 '''
 import configparser
 import unittest
-from dashtools.data import configUtils
+try:
+    from dashtools.data import configUtils
+except ModuleNotFoundError:
+    from ..dashtools.data import configUtils
 
 
 class ConfigUtilsTest(unittest.TestCase):

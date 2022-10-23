@@ -3,7 +3,10 @@
  # @ Create Time: 2022-04-28 23:09:06
 '''
 import unittest
-from dashtools.runtime import runtimeUtils
+try:
+    from dashtools.runtime import runtimeUtils
+except ModuleNotFoundError:
+    from ..dashtools.runtime import runtimeUtils
 
 
 class RuntimeUtilsTest(unittest.TestCase):

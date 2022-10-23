@@ -3,7 +3,11 @@
  # @ Create Time: 2022-04-28 23:09:06
 '''
 import unittest
-from dashtools.data import randomWords
+
+try:
+    from dashtools.data import randomWords
+except ModuleNotFoundError:
+    from ..dashtools.data import randomWords
 
 
 class RandomWordsTest(unittest.TestCase):
