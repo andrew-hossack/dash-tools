@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 meta = {}
 
-with open('./dashtools/version.py') as f:
+with open('./src/dashtools/version.py') as f:
     exec(f.read(), meta)
 
 with open('requirements.txt') as f:
@@ -28,7 +28,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=setuptools.find_packages(),
     python_requires=">=3.6",
     include_package_data=True,
     install_requires=requirements,

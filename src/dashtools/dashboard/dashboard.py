@@ -1,7 +1,13 @@
 '''
  # @ Create Time: 2022-10-04 15:30:29.442976
 '''
+import logging
+import os
+import sys
+import webbrowser
+from contextlib import contextmanager
 from pathlib import Path
+
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
@@ -19,7 +25,8 @@ app = Dash(
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=True,
-    assets_folder=Path(__file__).parent.absolute().joinpath('assets')
+    assets_folder=Path(__file__).parent.absolute().joinpath('assets'),
+    name=__name__
 )
 
 # Declare server for Heroku deployment. Needed for Procfile.
@@ -126,7 +133,6 @@ content = html.Div(
         "padding": "2rem 1rem",
     })
 
-
 app.layout = dmc.NotificationsProvider(
     html.Div(
         [
@@ -141,8 +147,23 @@ callbacks.generate_callbacks(app)
 
 
 def start_dashboard(**args):
-    app.run_server(**args)
+    """
+    Execute plotly server with only ERROR level logging
+    """
 
+    @contextmanager
+    def silence_stdout():
+        old_target = sys.stdout
+        try:
+            with open(os.devnull, "w") as new_target:
+                sys.stdout = new_target
+                yield new_target
+        finally:
+            sys.stdout = old_target
 
-if __name__ == "__main__":
-    start_dashboard(debug=True)
+    logging.getLogger('werkzeug').setLevel(logging.ERROR)
+    logging.getLogger(__name__).setLevel(logging.ERROR)
+
+    with silence_stdout():
+        webbrowser.open('http://127.0.0.1:8050/')
+        app.run_server(**args)

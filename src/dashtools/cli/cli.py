@@ -5,7 +5,8 @@
 '''
 import argparse
 import os
-import sys as _sys
+import sys
+import threading
 import webbrowser
 
 from dashtools.cli import update
@@ -22,7 +23,7 @@ class MyArgumentParser(argparse.ArgumentParser):
 
     def print_help(self, file=None):
         if file is None:
-            file = _sys.stdout
+            file = sys.stdout
         message = f"""The dashtools v{__version__} CLI for Plotly Dash. See https://dash-tools.readthedocs.io/ for more details.
 \nUsage:
     {'dashtools <command> [options]':<29}
@@ -30,7 +31,7 @@ class MyArgumentParser(argparse.ArgumentParser):
     {'docker':<29}Handle Docker creation. Choose option:
         {'--init <image name>':<25}Creates a docker image in current directory
 
-    {'gui':<29}Starts the DashTools UI.
+    {'gui':<29}Starts the DashTools UI at http://127.0.0.1:8050/
 
     {'heroku':<29}Handle Heroku deployment. Choose option:
         {'--deploy':<25}Deploys the current project to Heroku
@@ -115,25 +116,17 @@ def docker(args):
     if args.init:
         dockerUtils.create_image(
             image_name=args.init[0],
-            cwd=os.getcwd()
-        )
+            cwd=os.getcwd())
     else:
         print('dashtools: docker: error: Too few arguments')
         exit('dashtools: Available docker options: --init [--dir, -d]')
 
 
-@ subcommand(
-    [
-        argument(
-            "gui",
-            help='Starts the deploy UI.',
-            action='store_true',
-            default=False
-        ),
-    ])
+@ subcommand()
 def gui(args):
     """Initialize a new app."""
-    dashboard.start_dashboard(debug=True)
+    print('dashtools: Dashboard started on http://127.0.0.1:8050/\ndashtools: Press Ctrl+C to stop')
+    threading.Thread(target=dashboard.start_dashboard).start()
 
 
 @ subcommand(
