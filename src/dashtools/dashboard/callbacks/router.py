@@ -8,7 +8,7 @@ from dash import Dash, Input, Output, dcc
 try:
     from pages import createPage, deployPage, errorPage, infoPage
 except ModuleNotFoundError:
-    from ..pages import createPage, deployPage, errorPage, infoPage
+    from dashtools.dashboard.pages import createPage, deployPage, errorPage, infoPage
 
 
 def generate_callbacks(app: Dash):

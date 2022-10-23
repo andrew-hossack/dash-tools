@@ -6,7 +6,7 @@
 
 from dash import Dash, Input, Output, State, no_update, ctx, html
 try:
-    from pages import createPage
+    from dashtools.dashboard.pages import createPage
 except ModuleNotFoundError:
     from ..pages import createPage
 

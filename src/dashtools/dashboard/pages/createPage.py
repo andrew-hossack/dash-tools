@@ -83,14 +83,101 @@ def terminal_box():
     )
 
 
+def preview_box():
+    return html.Div([
+        dmc.Text('Preview'),
+        html.Div([
+            dmc.Group("Foo"),
+            dmc.Group("Bar"),
+        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+    ])
+
+
+def create_box():
+    return html.Div([
+        dmc.Text('App Settings'),
+        html.Div([
+            dmc.Group([
+                dmc.TextInput(
+                    label="App Name",
+                    style={"width": '360px', 'margin-right': '10px'},
+                    placeholder='App Filename; eg. my-app'),
+                html.Div(
+                    dmc.Tooltip(
+                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        placement="center",
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        children=[
+                            DashIconify(icon='bi:three-dots',
+                                        width=30, color='gray')
+                        ]),
+                    style={'margin-top': '25px'})
+            ]),
+            dmc.Group([
+                dmc.TextInput(
+                    label="File Location",
+                    style={"width": '360px', 'margin-right': '10px'},
+                    placeholder='Location To Create App; eg. ~/Desktop'),
+                html.Div(
+                    dmc.Tooltip(
+                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        placement="center",
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        children=[
+                            DashIconify(icon='bi:three-dots',
+                                        width=30, color='gray')
+                        ]),
+                    style={'margin-top': '25px'})
+            ]),
+            dmc.Group(
+                [
+                    dmc.Select(
+                        label="Template",
+                        placeholder="Select one",
+                        id="framework-select",
+                        value="ng",
+                        data=[
+                            {"value": "react", "label": "React"},
+                            {"value": "ng", "label": "Angular"},
+                            {"value": "svelte", "label": "Svelte"},
+                            {"value": "vue", "label": "Vue"},
+                        ],
+                        style={"width": 200, "marginBottom": 10},
+                    ),
+                    dmc.Text(id="selected-value"),
+                ]
+            ),
+            dmc.Center(
+                [
+                    dmc.Button(
+                        'Create',
+                        variant="gradient",
+                        leftIcon=[
+                            DashIconify(icon='gridicons:create',
+                                        width=20, color='light-gray')
+                        ],
+                        disabled=True,
+                        style={'width': '200px', 'opacity': '1.0'},
+                    )
+                ],
+                style={'margin-bottom': '-10px'}
+            ),
+        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+    ])
+
+
 def render():
     terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            # dbc.Row([
-            #     dbc.Col(),
-            #     dbc.Col()
-            # ]),
+            dbc.Row([
+                dbc.Col(preview_box()),
+                dbc.Col(create_box()),
+            ]),
             dbc.Row(terminal_box(), style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
