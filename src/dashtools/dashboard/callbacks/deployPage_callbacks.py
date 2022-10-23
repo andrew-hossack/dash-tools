@@ -19,19 +19,6 @@ from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 def generate_callbacks(app: Dash):
 
-    @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
-    def render_page_content(pathname):
-        # Clear data
-        if pathname == "/deploy" or pathname == '/':
-            deployPage.terminal.clear()
-            return deployPage.render()
-        elif pathname == "/info":
-            return infoPage.render()
-        elif pathname == "/create":
-            return createPage.render()
-        else:
-            return errorPage.render()
-
     @app.callback(
         Output('hidden-div', 'children'),
         Input('app-control-deploy-button', 'n_clicks'),

@@ -11,13 +11,14 @@ from pathlib import Path
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
-from dash_iconify import DashIconify
-from dashtools import version
 
 try:
-    import callbacks
+    from callbacks import createPage_callbacks, deployPage_callbacks, router
+    from components import sidebar
 except ModuleNotFoundError:
-    from . import callbacks
+    from . import createPage_callbacks, deployPage_callbacks
+    from .callbacks import createPage_callbacks, deployPage_callbacks, router
+    from .components import sidebar
 
 app = Dash(
     title="DashTools - Application Management Dashboard",
@@ -32,100 +33,6 @@ app = Dash(
 # Declare server for Heroku deployment. Needed for Procfile.
 server = app.server
 
-
-sidebar = html.Div(
-    [
-        html.Div(id='hidden-div'),
-        dmc.Center([
-            DashIconify(icon='heroicons:command-line-20-solid',
-                        height=60, style={'margin-bottom': '8px', 'margin-right': '5px'}),
-            html.H2("DashTools", className='dashtools-logo'),
-        ]),
-        dmc.Space(h=1, style={'margin-top': '-20px'}),
-        html.H6(
-            "Application Management Dashboard",
-            style={'font-weight': 'inherit', 'font-size': '14px'}
-        ),
-
-
-        dbc.Nav(
-            [
-                # dbc.NavLink( # TODO
-                #     [
-                #         DashIconify(icon='akar-icons:plus',
-                #                     style={'margin-right': '5px'}),
-                #         "Create"
-                #     ], href="/create", active="exact"),
-                dbc.NavLink(
-                    [
-                        DashIconify(icon='akar-icons:cloud',
-                                    style={'margin-right': '5px'}),
-                        "Deploy"
-                    ], href="/deploy", active="exact"),
-                # dbc.NavLink(  # TODO
-                #     [
-                #         DashIconify(icon='akar-icons:info',
-                #                     style={'margin-right': '5px'}),
-                #         "Info"
-                #     ], href="/info", active="exact"),
-            ],
-            vertical=True,
-            pills=True,
-        ),
-
-        dmc.Space(style={'height': '460px'}),
-        html.Hr(),
-        html.Div([
-            html.H6(
-                [
-                    html.A(
-                        [
-                            DashIconify(
-                                icon='logos:pypi',
-                                width=20,
-                                style={'margin-right': '10px'}),
-                            f'PyPi v{version.__version__}',
-                        ],
-                        href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                ]),
-            html.H6(
-                [
-                    html.A(
-                        [
-                            DashIconify(
-                                icon='file-icons:readthedocs',
-                                width=15,
-                                style={'margin-right': '10px', 'margin-left': '5px'}),
-                            f'Read the Docs',
-                        ],
-                        href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                ]),
-            html.H6(
-                [
-                    html.A(
-                        [
-                            DashIconify(
-                                icon='ant-design:github-filled',
-                                width=20,
-                                style={'margin-right': '8px', 'margin-left': '2px'}),
-                            f'GitHub',
-                        ],
-                        href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                ]),
-        ]),
-    ],
-    style={
-        "position": "fixed",
-        "top": 0,
-        "left": 0,
-        "bottom": 0,
-        "width": "20rem",
-        "padding": "2rem 1rem",
-        "background-color": "#f8f9fa",
-    },
-
-)
-
 content = html.Div(
     id="page-content", style={
         "margin-left": "22rem",
@@ -139,11 +46,13 @@ app.layout = dmc.NotificationsProvider(
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
             dcc.Location(id="url"),
-            sidebar,
+            sidebar.render(),
             content
         ]))
 
-callbacks.generate_callbacks(app)
+deployPage_callbacks.generate_callbacks(app)
+createPage_callbacks.generate_callbacks(app)
+router.generate_callbacks(app)
 
 
 def start_dashboard(**args):
@@ -167,3 +76,7 @@ def start_dashboard(**args):
     with silence_stdout():
         webbrowser.open('http://127.0.0.1:8050/')
         app.run_server(**args)
+
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
