@@ -1,17 +1,17 @@
 import os
+import time
 
 import dash_mantine_components as dmc
 from dash import Dash, Input, Output, State, ctx, dcc, html, no_update
-import time
+
 try:
     import alerts
     import tree
-    from pages import createPage, deployPage, errorPage, infoPage
+    from dashtools.dashboard.pages import deployPage
 except ModuleNotFoundError:
-    from .pages import createPage, deployPage, errorPage, infoPage
-    from . import tree
-    from . import alerts
-    from .pages import deployPage
+    from .. import tree
+    from .. import alerts
+    from ..pages import deployPage
 
 from dash_iconify import DashIconify
 from dashtools.deploy import fileUtils, gitUtils, herokuUtils
