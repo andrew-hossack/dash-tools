@@ -24,7 +24,7 @@ class FileExplorer:
         if not config_remote_origin_url_raw:
             self.githubUrl = None
             return
-        self.githubUrl = f'https://github.com/{config_remote_origin_url_raw.split(":")[1].split(".git")[0]}'
+        self.githubUrl = f'https:{config_remote_origin_url_raw.split(":")[1].split(".git")[0]}'
 
     def isDeployReady(self) -> bool:
         """ returns if app is ready to be deployed """
