@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.2] - 2022-10-26
+
+### Fixed
+
+- Fixed bug https://github.com/andrew-hossack/dash-tools/issues/65 where using http for git remote url doesn't work; thanks [@mtzirkel](https://github.com/mtzirkel) for support!
+
 ## [1.10.1] - 2022-10-23
 
 ### Changed
