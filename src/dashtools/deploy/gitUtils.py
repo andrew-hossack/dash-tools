@@ -4,7 +4,6 @@
  # Git util functions
 '''
 import os
-import platform
 import re
 import subprocess
 from typing import Union
