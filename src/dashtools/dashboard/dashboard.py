@@ -12,8 +12,12 @@ import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
 
-from callbacks import createPage_callbacks, deployPage_callbacks, router
-from components import sidebar
+try:
+    from callbacks import createPage_callbacks, deployPage_callbacks, router
+    from components import sidebar
+except ModuleNotFoundError:
+    from .callbacks import createPage_callbacks, deployPage_callbacks, router
+    from .components import sidebar
 
 app = Dash(
     title="DashTools - Application Management Dashboard",
