@@ -9,8 +9,6 @@ import re
 import subprocess
 from typing import Union
 
-SPACER = ';' if platform.system() == 'Windows' else '&&'
-
 
 def git_is_installed() -> bool:
     """
@@ -46,13 +44,11 @@ def get_remote_url(cwd: os.PathLike) -> Union[str, None]:
     returns git config --get remote.origin.url (str or None if not found)
     recommended to check git is installed before calling this
     """
-
-    return os.popen(f'cd {cwd} {SPACER} git config --get remote.origin.url').read().replace('\n', '')
+    return os.popen(f'cd {cwd} && git config --get remote.origin.url').read().replace('\n', '')
 
 
 def commit_and_push(cwd: os.PathLike, commit_message: str = ''):
     """return success or failure boolean"""
-
     commit_message = commit_message.replace('"', '').replace("'", '')
     os.popen(
-        f'cd {cwd} {SPACER} git add . {SPACER} git commit -m "{commit_message}" {SPACER} git push --set-upstream origin master').read()
+        f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master').read()
