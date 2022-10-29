@@ -4,6 +4,7 @@
  # Git util functions
 '''
 import os
+import platform
 import re
 import subprocess
 from typing import Union
@@ -43,19 +44,11 @@ def get_remote_url(cwd: os.PathLike) -> Union[str, None]:
     returns git config --get remote.origin.url (str or None if not found)
     recommended to check git is installed before calling this
     """
-    try:
-        return subprocess.check_output(
-            [f'cd {cwd} && git config --get remote.origin.url'], shell=True).decode('utf-8')
-    except subprocess.CalledProcessError:
-        return None
+    return os.popen(f'cd {cwd} && git config --get remote.origin.url').read().replace('\n', '')
 
 
-def commit_and_push(cwd: os.PathLike, commit_message: str = '') -> bool:
+def commit_and_push(cwd: os.PathLike, commit_message: str = ''):
     """return success or failure boolean"""
     commit_message = commit_message.replace('"', '').replace("'", '')
-    try:
-        subprocess.check_output(
-            f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master', shell=True)
-        return True
-    except subprocess.CalledProcessError:
-        return False
+    os.popen(
+        f'cd {cwd} && git add . && git commit -m "{commit_message}" && git push --set-upstream origin master').read()
