@@ -1,5 +1,4 @@
 import os
-import subprocess
 from typing import Union
 
 import dash_bootstrap_components as dbc

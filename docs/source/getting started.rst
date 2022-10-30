@@ -8,10 +8,10 @@ Prerequisites
 ----------------------------
 
 - **Git CLI** - `Download Here <https://git-scm.com/downloads>`_
-- **Heroku CLI** - `Download Here <https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli>`_
 - **OS** - Linux, MacOS, Windows
 - **Python Version** ≥ 3.6
 
+- **[OPTIONAL] Heroku CLI** - `Download Here <https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli>`_
 
 PyPI
 -------
@@ -30,7 +30,7 @@ Using dash-tools is similar to other popular command line clients for creating a
 .. note::
     Some Windows users may need to run dashtools with ``.\dashtools`` in the following examples.
 
-
+|
 Creating a Project
 **********************
 
@@ -40,27 +40,30 @@ Creating a new dash project is simple. Here we choose to name it "MyApp". Doing 
 
     dashtools init MyApp
 
-
+|
 Deploying a Project
 **********************
 
 You can deploy any project containing a src/app.py file that is published to a GitHub Public repository. Run the DashTools Render GUI for a seamless experience.
 
+
+You can deploy your application to Render.com with the easy to use UI. You can deploy any project containing a src/app.py file! Running the following command will start the dashtools gui at http://127.0.0.1:8050/
+
 .. code-block:: bash
     
     dashtools gui
 
+Running the following command will create Procfile, requirements.txt, and runtime.txt if they are not found. Follow the on-screen prompts to complete the deployment to Heroku.
 
-Update: Heroku is not supporting free-tier hosting anymore. Check out Render.com for a great alternative!
-
-You can deploy any project containing an app.py file. Running the following command will create Procfile, requirements.txt, and runtime.txt if they are not found. Follow the on-screen prompts to complete the deployment to Heroku.
+.. note::
+    Heroku has stopped supporting free-tier hosting on their platform. Check out Render.com for a great alternative!
 
 .. code-block:: bash
     
     dashtools heroku --deploy
 
-
-Updating a deployed Project
+|
+Updating a Deployed Project on Heroku
 ************************************
 
 Updating a deployed project is as easy as pushing changes to the remote Heroku repository. Using the following command from the project root will update the remote 'heroku' repository and restart the application.
@@ -69,7 +72,7 @@ Updating a deployed project is as easy as pushing changes to the remote Heroku r
     
     dashtools heroku --update
 
-
+|
 Running a Project
 **********************
 
@@ -79,7 +82,7 @@ Running the app.py file is as simple as running the following command from the p
     
     dashtools run
 
-
+|
 Dockerizing a Project
 **********************
 
