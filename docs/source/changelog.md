@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.3] - 2022-10-30
+
+### Fixed
+
+- Fixed bug with running os commands on windows; thanks [@Coding-with-Adam](https://github.com/Coding-with-Adam) for support!
+
 ## [1.10.2] - 2022-10-26
 
 ### Fixed

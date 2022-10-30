@@ -1,4 +1,4 @@
-from dash import html, dcc
+from dash import html, dcc, Dash
 import dash_bootstrap_components as dbc
 import visdcc
 import dash_mantine_components as dmc
@@ -174,9 +174,13 @@ def render():
     terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            dmc.Center(
-                dmc.Title(["Under Construction"], order=1)
-            )
+            dmc.Center([
+                DashIconify(icon='emojione:hammer-and-wrench',
+                            width=35, color='light-gray', style={'margin-right': '20px'}),
+                dmc.Title(["Under Construction"], order=1),
+                DashIconify(icon='emojione:hammer-and-wrench',
+                            width=35, color='light-gray', style={'margin-left': '20px'})
+            ]),
             # dbc.Row([
             #     dbc.Col(preview_box()),
             #     dbc.Col(create_box()),
@@ -185,3 +189,9 @@ def render():
         ],
         style={"height": "90vh", "padding": "10px"}
     )
+
+
+if __name__ == "__main__":
+    app = Dash()
+    app.layout = render()
+    app.run_server(debug=True)
