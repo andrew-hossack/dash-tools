@@ -20,6 +20,7 @@ Commands
     :maxdepth: 2
     
     docker/index
+    gui/index
     heroku/index
     init/index
     run/index
