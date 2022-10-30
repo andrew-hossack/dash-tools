@@ -174,11 +174,14 @@ def render():
     terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            dbc.Row([
-                dbc.Col(preview_box()),
-                dbc.Col(create_box()),
-            ]),
-            dbc.Row(terminal_box(), style={'padding-top': '20px'}),
+            dmc.Center(
+                dmc.Title(["Under Construction"], order=1)
+            )
+            # dbc.Row([
+            #     dbc.Col(preview_box()),
+            #     dbc.Col(create_box()),
+            # ]),
+            # dbc.Row(terminal_box(), style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )
