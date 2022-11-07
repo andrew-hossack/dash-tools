@@ -15,7 +15,7 @@ DashTools is an open-source command line toolchain for Plotly Dash that makes cr
 ## Use dashtools to...
 
 - **Create templated dash apps** with one command
-- **Deploy your app** to Heroku in under a minute
+- **Deploy your app** to Heroku and Render.com in under a minute
 - **Generate Procfile, requirements.txt and runtime.txt** automatically on deploy
 - **Many boilerplate templates** for creating apps
 - **Dockerize your app** in a single step
