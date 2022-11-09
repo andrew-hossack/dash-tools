@@ -116,24 +116,24 @@ def create_box():
                         ]),
                     style={'margin-top': '25px'})
             ]),
-            # dmc.Group([
-            #     dmc.TextInput(
-            #         label="File Location",
-            #         style={"width": '360px', 'margin-right': '10px'},
-            #         placeholder='Location To Create App; eg. ~/Desktop'),
-            #     html.Div(
-            #         dmc.Tooltip(
-            #             label="Enter an app name you would like to use. Render may change this name if it is not unique.",
-            #             placement="center",
-            #             withArrow=True,
-            #             wrapLines=True,
-            #             width=220,
-            #             children=[
-            #                 DashIconify(icon='bi:three-dots',
-            #                             width=30, color='gray')
-            #             ]),
-            #         style={'margin-top': '25px'})
-            # ]),
+            dmc.Group([
+                dmc.TextInput(
+                    label="File Location",
+                    style={"width": '360px', 'margin-right': '10px'},
+                    placeholder='Location To Create App; eg. ~/Desktop'),
+                html.Div(
+                    dmc.Tooltip(
+                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        placement="center",
+                        withArrow=True,
+                        wrapLines=True,
+                        width=220,
+                        children=[
+                            DashIconify(icon='bi:three-dots',
+                                        width=30, color='gray')
+                        ]),
+                    style={'margin-top': '25px'})
+            ]),
             dmc.Group(
                 [
                     dmc.Select(
@@ -141,9 +141,12 @@ def create_box():
                         placeholder="Select one",
                         id="framework-select",
                         value="ng",
-                        data=sorted([
-                            {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
-                        ], key=lambda x: x['label']),
+                        data=[
+                            {"value": "react", "label": "React"},
+                            {"value": "ng", "label": "Angular"},
+                            {"value": "svelte", "label": "Svelte"},
+                            {"value": "vue", "label": "Vue"},
+                        ],
                         style={"width": 200, "marginBottom": 10},
                     ),
                     dmc.Text(id="selected-value"),
