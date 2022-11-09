@@ -41,7 +41,6 @@ def generate_callbacks(app: Dash):
         Output('app-control-name-input', 'value'),
         Input('app-control-name-refresh', 'n_clicks'),
         Input('file-explorer-button', 'n_clicks'),
-        background=True
     )
     def app_control_name_input(gen_button, file_explorer_button):
         callback_ctx = ctx.triggered_id
