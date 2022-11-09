@@ -141,12 +141,9 @@ def create_box():
                         placeholder="Select one",
                         id="framework-select",
                         value="ng",
-                        data=[
-                            {"value": "react", "label": "React"},
-                            {"value": "ng", "label": "Angular"},
-                            {"value": "svelte", "label": "Svelte"},
-                            {"value": "vue", "label": "Vue"},
-                        ],
+                        data=sorted([
+                            {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
+                        ], key=lambda x: x['label']),
                         style={"width": 200, "marginBottom": 10},
                     ),
                     dmc.Text(id="selected-value"),
