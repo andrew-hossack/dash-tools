@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.4] - 2022-11-8
+
+### Fixed
+
+- Fixed bug with background callback requiring cellery worker or diskcache, due to Dash 2.7.0 upgrade
+- Fixed read the docs templates list accordions not displaying
+
 ## [1.10.3] - 2022-10-30
 
 ### Fixed
