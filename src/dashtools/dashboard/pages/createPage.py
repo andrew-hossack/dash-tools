@@ -3,7 +3,6 @@ import dash_bootstrap_components as dbc
 import visdcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-from dashtools.templating import Templates
 
 
 class Terminal():
