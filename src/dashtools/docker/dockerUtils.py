@@ -39,10 +39,14 @@ def _write_dockerfile(root_dir: os.PathLike, destination_dir: os.PathLike) -> No
     rel_path = os.path.relpath(fileUtils.app_root_path(root_dir), root_dir)
     # TODO test if app.py file changes locations
     contents = f"""FROM python:3.9-slim
-                COPY requirements.txt ./requirements.txt
-                RUN pip install -r requirements.txt
-                COPY . ./
-                CMD gunicorn -b 0.0.0.0:80 {rel_path}.app:server"""
+            RUN addgroup --gid 1001 --system dash && \
+                adduser --no-create-home --shell /bin/false --disabled-password --uid 1001 --system --group dash
+            WORKDIR /app
+            COPY --chown=dash:dash requirements.txt ./requirements.txt
+            RUN pip install -r requirements.txt
+            USER dash
+            COPY --chown=dash:dash . ./
+            CMD gunicorn -b 0.0.0.0:80 {rel_path}.app:server"""
     with open(os.path.join(destination_dir, 'Dockerfile'), 'w') as f:
         for line in contents.split('\n'):
             f.write(line.strip() + '\n')
