@@ -6,7 +6,7 @@ Run command from root dashtools to build: `sphinx-build -b html docs/source/ doc
 
 ### Run
 
-Open _docs/build/index.html_ in browser
+Open _docs/build/html/index.html_ in browser
 
 ### Deploy
 

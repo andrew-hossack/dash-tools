@@ -165,12 +165,8 @@ def search_appfile_ui(app_root: os.PathLike) -> bool:
     Returns:
         True if server=app.server is found, else False
     """
-    try:
-        with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
-            appfile_contents = modfile.read()
-    except Exception as e:
-        # Dangerous to pass here, but not sure what happens if file opened by user on read
-        pass
+    with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
+        appfile_contents = modfile.read()
 
     # Look for the hook "server =" or "server=" with spaces and newlines
     # https://regex101.com/r/Ad3TN8/2
