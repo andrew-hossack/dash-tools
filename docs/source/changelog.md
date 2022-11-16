@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.5] - 2022-11-14
+
+### Added
+
+- Added pysa vulnerability scan to cicd
+
 ## [1.10.4] - 2022-11-8
 
 ### Fixed
