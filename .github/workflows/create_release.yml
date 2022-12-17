@@ -9,6 +9,10 @@ jobs:
   build:
     name: Create Tag & Release
     runs-on: ubuntu-latest
+    env:
+      # Allows triggering pypi release workflow
+      # See https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+      GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: |
