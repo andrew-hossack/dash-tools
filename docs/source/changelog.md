@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.5] - 2022-12-16
+
+### Fixed
+
+- Fixed background callbacks printing warnings on new version of plotly dash
+- Update pypa publish to use v1 release
+- Fixed issue with deploypage callbacks not working in some cases
+- Update gitlab runner to python version 3.10.9
+
 ## [1.10.4] - 2022-11-8
 
 ### Fixed
