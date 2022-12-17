@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.6] - 2022-12-16
+
+### Modified
+
+- Updated naming on github workflows
+- Added a create tag and release action on push to main. Takes current version and latest stuff from the changelog in the release. Currently set to NOT RELEASE AUTOMATICALLY.
+
 ## [1.10.5] - 2022-12-16
 
 ### Fixed
@@ -159,9 +166,8 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4] - 2022-05-22
 
-**dash-tools command is now dashtools via command line**
-
-Major changes are an overhaul to the CLI entry to use subcommands. This looks like a change from this: `dashtools --init MyApp tabs` to `dashtools init MyApp tabs`. Also added a few new commands.
+- **dash-tools command is now dashtools via command line**
+- Major changes are an overhaul to the CLI entry to use subcommands. This looks like a change from this: `dashtools --init MyApp tabs` to `dashtools init MyApp tabs`. Also added a few new commands.
 
 ### Added / Changed
 
