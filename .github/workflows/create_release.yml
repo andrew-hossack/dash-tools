@@ -9,10 +9,6 @@ jobs:
   build:
     name: Create Tag & Release
     runs-on: ubuntu-latest
-    env:
-      # Allows triggering pypi release workflow
-      # See https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
-      GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - run: |
@@ -23,12 +19,12 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           custom_tag: ${{ env.DASHTOOLS_VERSION }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
           release_name: Version ${{ env.DASHTOOLS_VERSION }}
