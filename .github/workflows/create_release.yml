@@ -2,6 +2,8 @@ name: Create Tag & Release
 on: 
   push:
     branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,6 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           echo DASHTOOLS_VERSION=$(awk -F'=' '/^__version__/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' src/dashtools/version.py | sed "s/'//g") >> $GITHUB_ENV
+          echo CHANGELOG_VERSION="$(./docs/source/print_version.sh)"  >> $GITHUB_ENV
       - name: Push new tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
@@ -25,7 +28,6 @@ jobs:
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
           release_name: Version ${{ env.DASHTOOLS_VERSION }}
-          run: echo CHANGELOG_VERSION="$(./docs/source/print_version.sh)"  >> $GITHUB_ENV
           body: ${{ env.CHANGELOG_VERSION }}
           draft: true # Set to false to auto publish
           prerelease: false
