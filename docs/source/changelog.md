@@ -2,12 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.6] - 2022-12-16
+
+### Modified
+
+- Updated naming on github workflows
+- Added a create tag and release action on push to main. Takes current version and latest stuff from the changelog in the release notes.
+
+## [1.10.5] - 2022-12-16
+
+### Fixed
+
+- Fixed background callbacks printing warnings on new version of plotly dash
+- Update pypa publish to use v1 release
+- Fixed issue with deploypage callbacks not working in some cases
+- Update gitlab runner to python version 3.10.9
+
 ## [1.10.4] - 2022-11-8
 
 ### Fixed
 
 - Fixed bug with background callback requiring cellery worker or diskcache, due to Dash 2.7.0 upgrade
 - Fixed read the docs templates list accordions not displaying
+- Changed dockerfile to use non root user; credit [@jasonwashburn](https://github.com/jasonwashburn)
+- Fixed CI/CD build process to install dashtools tar file; credit [@jasonwashburn](https://github.com/jasonwashburn)
 
 ## [1.10.3] - 2022-10-30
 
@@ -148,9 +166,8 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4] - 2022-05-22
 
-**dash-tools command is now dashtools via command line**
-
-Major changes are an overhaul to the CLI entry to use subcommands. This looks like a change from this: `dashtools --init MyApp tabs` to `dashtools init MyApp tabs`. Also added a few new commands.
+- **dash-tools command is now dashtools via command line**
+- Major changes are an overhaul to the CLI entry to use subcommands. This looks like a change from this: `dashtools --init MyApp tabs` to `dashtools init MyApp tabs`. Also added a few new commands.
 
 ### Added / Changed
 

@@ -1,0 +1,33 @@
+name: Create Tag & Release
+on: 
+  push:
+    branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Create Tag & Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo DASHTOOLS_VERSION=$(awk -F'=' '/^__version__/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' src/dashtools/version.py | sed "s/'//g") >> $GITHUB_ENV
+          ./docs/source/print_version.sh > ./tmp_changelog.md
+      - name: Push new tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          custom_tag: ${{ env.DASHTOOLS_VERSION }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{ env.DASHTOOLS_VERSION }}
+          release_name: Version ${{ env.DASHTOOLS_VERSION }}
+          body_path: ./tmp_changelog.md
+          draft: false # Set to false to auto publish / true to keep as draft
+          prerelease: false
