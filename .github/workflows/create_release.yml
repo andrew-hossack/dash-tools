@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           echo DASHTOOLS_VERSION=$(awk -F'=' '/^__version__/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' src/dashtools/version.py | sed "s/'//g") >> $GITHUB_ENV
-          echo CHANGELOG_VERSION="$(./docs/source/print_version.sh)" >> $GITHUB_ENV
+          echo CHANGELOG_VERSION=$(./docs/source/print_version.sh) >> $GITHUB_ENV
       - name: Push new tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
