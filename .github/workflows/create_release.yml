@@ -28,6 +28,8 @@ jobs:
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
           release_name: Version ${{ env.DASHTOOLS_VERSION }}
-          body: "${{ env.CHANGELOG_VERSION }}" # TODO why do this get rid of newlines and formatting?
+          # TODO why do this get rid of newlines and formatting?
+          body: | 
+            "${{ env.CHANGELOG_VERSION }}" 
           draft: true # Set to false to auto publish
           prerelease: false
