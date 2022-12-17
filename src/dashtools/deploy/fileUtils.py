@@ -165,16 +165,15 @@ def search_appfile_ui(app_root: os.PathLike) -> bool:
     Returns:
         True if server=app.server is found, else False
     """
-    with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
-        appfile_contents = modfile.read()
-
     # Look for the hook "server =" or "server=" with spaces and newlines
     # https://regex101.com/r/Ad3TN8/2
     try:
+        with open(os.path.join(app_root, 'src', 'app.py'), 'r', encoding="utf8") as modfile:
+            appfile_contents = modfile.read()
         re.search(f"^[\s]*server[\s]?=.*app\.server",
                   appfile_contents, re.MULTILINE).group(0)
         return True
-    except (AttributeError, IndexError, UnboundLocalError):
+    except (AttributeError, IndexError, UnboundLocalError, FileNotFoundError):
         return False
 
 
