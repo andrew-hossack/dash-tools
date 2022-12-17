@@ -1,4 +1,4 @@
-name: Create new Tag and Release
+name: Create Tag & Release
 on: 
   push:
     branches: [main]
@@ -15,7 +15,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
-          custom_tag: v${{ env.DASHTOOLS_VERSION }}
+          custom_tag: ${{ env.DASHTOOLS_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
         id: create_release
@@ -24,7 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
-          release_name: Release ${{ github.ref }}
+          release_name: Version ${{ env.DASHTOOLS_VERSION }}
           run: echo CHANGELOG_VERSION="$(./docs/source/print_version.sh)"  >> $GITHUB_ENV
           body: ${{ env.CHANGELOG_VERSION }}
           draft: true # Set to false to auto publish
