@@ -28,7 +28,6 @@ jobs:
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
           release_name: Version ${{ env.DASHTOOLS_VERSION }}
-          # TODO why do this get rid of newlines and formatting?
           body_path: ./tmp_changelog.md
-          draft: true # Set to false to auto publish
+          draft: false # Set to false to auto publish / true to keep as draft
           prerelease: false

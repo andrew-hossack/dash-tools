@@ -2,8 +2,6 @@ name: Build and Test on Push or PR
 on: 
   pull_request:
     branches: [main, dev]
-  push:
-    branches: [dev]
 
 jobs:
   test:
