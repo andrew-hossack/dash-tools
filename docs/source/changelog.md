@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Modified
 
 - Updated naming on github workflows
-- Added a create tag and release action on push to main. Takes current version and latest stuff from the changelog in the release. Currently set to NOT RELEASE AUTOMATICALLY.
+- Added a create tag and release action on push to main. Takes current version and latest stuff from the changelog in the release notes.
 
 ## [1.10.5] - 2022-12-16
 
