@@ -1,4 +1,4 @@
-name: Build, Test and Upload to PyPi on Release
+name: Upload to PyPi on Release
 on: 
   release:
     types: [created]
@@ -9,10 +9,6 @@ jobs:
  upload-pypi-on-release:
     name: Upload to PyPi on release
     runs-on: ubuntu-latest
-    env:
-      # Allows triggering a workflow from another workflow
-      # See https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
-      GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@master
       - name: Set up Python 3.10.9
