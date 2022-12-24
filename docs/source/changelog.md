@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.7] - 2022-12-24
+
+### Modified
+
+- Upgraded PYTHON_VERSION to 3.10.0 for Render blueprint
+
 ## [1.10.6] - 2022-12-16
 
 ### Modified
