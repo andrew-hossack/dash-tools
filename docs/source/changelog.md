@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.8] - 2023-1-29
+
+### Added
+
+- Added github star link
+
 ## [1.10.7] - 2022-12-24
 
 ### Modified

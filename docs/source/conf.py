@@ -1,6 +1,6 @@
 # -- Project information
 
-__version__ = '1.10.7'
+__version__ = '1.10.8'
 
 project = 'DashTools'
 author = 'Andrew Hossack'
