@@ -20,7 +20,7 @@ except ModuleNotFoundError:
     from .components import sidebar
 
 app = Dash(
-    title="DashTools - Application Management Dashboard",
+    title="DashTools - Application Dashboard",
     update_title=None,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,
@@ -34,13 +34,14 @@ app.layout = dmc.NotificationsProvider(
         [
             dmc.Header(id="gh-header", children=[
                 dcc.Markdown(
-                    "_Thank you for using DashTools!_ If you like it, consider leaving the project a [⭐ on GitHub](https://github.com/andrew-hossack/dash-tools).",
+                    '_Thank you for using DashTools!_ If you like it, consider leaving the project a [⭐ on GitHub](https://github.com/andrew-hossack/dash-tools).',
+                    link_target="_blank",
                     style={
                         "backgroundColor": "#202020",
                         "color": "white",
                         "text-align": "center",
                     })
-            ], class_name='white-link', fixed=True),
+            ], class_name='white-link', fixed=True, height=0),
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
             dcc.Location(id="url"),
