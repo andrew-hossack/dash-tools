@@ -32,6 +32,15 @@ app = Dash(
 app.layout = dmc.NotificationsProvider(
     html.Div(
         [
+            dmc.Header(id="gh-header", children=[
+                dcc.Markdown(
+                    "_Thank you for using DashTools!_ If you like it, consider leaving the project a [⭐ on GitHub](https://github.com/andrew-hossack/dash-tools).",
+                    style={
+                        "backgroundColor": "#202020",
+                        "color": "white",
+                        "text-align": "center",
+                    })
+            ], class_name='white-link', fixed=True),
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
             dcc.Location(id="url"),
