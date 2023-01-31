@@ -409,7 +409,7 @@ def render():
                     deploy_controller()
                 ])
             ]),
-            dbc.Row([terminal_box()]),
+            dbc.Row([terminal_box()], style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px", 'width':'auto'}
     )

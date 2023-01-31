@@ -7,17 +7,18 @@ import sys
 import webbrowser
 from contextlib import contextmanager
 from pathlib import Path
-
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
 
 try:
-    from dashtools.dashboard.callbacks import createPage_callbacks, deployPage_callbacks, router
+    from dashtools.dashboard.callbacks import (createPage_callbacks,
+                                               deployPage_callbacks, router)
     from dashtools.dashboard.components import sidebar
 except ModuleNotFoundError:
-    from callbacks import createPage_callbacks, deployPage_callbacks, router
+    from callbacks import (createPage_callbacks, deployPage_callbacks, router)
     from components import sidebar
+
 
 app = Dash(
     title="DashTools - Application Dashboard",
@@ -26,9 +27,8 @@ app = Dash(
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=True,
     assets_folder=Path(__file__).parent.absolute().joinpath('assets'),
-    name=__name__
+    name=__name__,
 )
-
 
 app.layout = dmc.NotificationsProvider(
     html.Div(
@@ -52,13 +52,16 @@ app.layout = dmc.NotificationsProvider(
                     "margin-left": "22rem",
                     "margin-right": "2rem",
                     "padding": "2rem 1rem",
-                })
+                    'overflow-x': "hidden",
+                }),
+            # terminal.render()
         ]))
 
 
 ### Generate necessary callbacks here ###
 deployPage_callbacks.generate_callbacks(app)
 createPage_callbacks.generate_callbacks(app)
+# terminal_callbacks.generate_callbacks(app)
 router.generate_callbacks(app)
 
 

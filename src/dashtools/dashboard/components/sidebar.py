@@ -26,7 +26,7 @@ def render() -> html.Div:
                     dbc.NavLink(
                         [
                             DashIconify(icon='akar-icons:plus',
-                                        style={'margin-right': '5px'}),
+                                        style={'margin-right': '5px', 'margin-bottom':'5px'}),
                             "Create"
                         ], href="/create", active="exact"),
                     dbc.NavLink(
