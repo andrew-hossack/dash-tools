@@ -395,7 +395,7 @@ def terminal_box():
                               'background-color': '#000000',
                               'color': '#ffffff',
                           })
-        ]
+        ],
     )
 
 
@@ -409,7 +409,7 @@ def render():
                     deploy_controller()
                 ])
             ]),
-            dbc.Row([terminal_box()], style={'padding-top': '20px'}),
+            dbc.Row([terminal_box()]),
         ],
-        style={"height": "90vh", "padding": "10px"}
+        style={"height": "90vh", "padding": "10px", 'width':'auto'}
     )

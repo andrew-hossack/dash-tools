@@ -29,6 +29,7 @@ app = Dash(
     name=__name__
 )
 
+
 app.layout = dmc.NotificationsProvider(
     html.Div(
         [

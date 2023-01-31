@@ -46,46 +46,60 @@ def render() -> html.Div:
                 pills=True,
             ),
 
-            dmc.Space(style={'height': '460px'}),
-            html.Hr(),
             html.Div([
-                html.H6(
-                    [
-                        html.A(
-                            [
-                                DashIconify(
-                                    icon='logos:pypi',
-                                    width=20,
-                                    style={'margin-right': '10px'}),
-                                f'PyPi v{version.__version__}',
-                            ],
-                            href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                    ]),
-                html.H6(
-                    [
-                        html.A(
-                            [
-                                DashIconify(
-                                    icon='file-icons:readthedocs',
-                                    width=15,
-                                    style={'margin-right': '10px', 'margin-left': '5px'}),
-                                f'Read the Docs',
-                            ],
-                            href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                    ]),
-                html.H6(
-                    [
-                        html.A(
-                            [
-                                DashIconify(
-                                    icon='ant-design:github-filled',
-                                    width=20,
-                                    style={'margin-right': '8px', 'margin-left': '2px'}),
-                                f'GitHub',
-                            ],
-                            href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
-                    ]),
-            ]),
+                html.Hr(style={'width':'200%'}),
+                html.Div([
+                    html.H6(
+                        [
+                            html.A(
+                                [
+                                    DashIconify(
+                                        icon='logos:pypi',
+                                        width=20,
+                                        style={'margin-right': '10px'}),
+                                    f'PyPi v{version.__version__}',
+                                ],
+                                href="https://pypi.org/project/dash-tools/", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
+                        ]),
+                    html.H6(
+                        [
+                            html.A(
+                                [
+                                    DashIconify(
+                                        icon='file-icons:readthedocs',
+                                        width=15,
+                                        style={'margin-right': '10px', 'margin-left': '5px'}),
+                                    f'Read the Docs',
+                                ],
+                                href="https://dash-tools.readthedocs.io/en/latest/index.html", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
+                        ]),
+                    html.H6(
+                        [
+                            html.A(
+                                [
+                                    DashIconify(
+                                        icon='ant-design:github-filled',
+                                        width=20,
+                                        style={'margin-right': '8px', 'margin-left': '2px'}),
+                                    f'GitHub',
+                                ],
+                                href="https://github.com/andrew-hossack/dash-tools", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
+                        ]),
+                    html.H6(
+                        [
+                            html.A(
+                                [
+                                    DashIconify(
+                                        icon='material-symbols:bug-report-outline-rounded',
+                                        width=20,
+                                        style={'margin-right': '8px', 'margin-left': '2px'}),
+                                    f'Report Bugs',
+                                ],
+                                href="https://github.com/andrew-hossack/dash-tools/issues/new/choose", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
+                        ]),
+                ]),
+            ], style={'position':'absolute','bottom':'0'})
+
         ],
         style={
             "position": "fixed",

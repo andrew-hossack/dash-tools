@@ -83,7 +83,7 @@ def terminal_box():
                               'background-color': '#000000',
                               'color': '#ffffff',
                           })
-        ]
+        ],
     )
 
 
