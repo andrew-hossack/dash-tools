@@ -3,12 +3,15 @@
  # @ Create Time: 2022-04-01 13:57:48
  # Build dash apps with dashtools
 '''
-
+import sys
+from dash import html
 import datetime
 import os
 import shutil
-
-from dashtools.templating import buildAppUtils, pipUtils
+from typing import Union
+import importlib
+from pathlib import Path
+from dashtools.templating import Templates, buildAppUtils, pipUtils
 
 
 def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
@@ -30,12 +33,12 @@ def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
                 f.write(content)
 
 
-def _get_template_path(template_value: str) -> str:
+def get_template_path(template_value: str) -> str:
     """
     Get path to template directory
     """
     template_dir = os.path.join('templates', template_value)
-    return buildAppUtils.get_templates_data_path(template_dir)
+    return buildAppUtils.get_templates_data_path(os.path.normpath(template_dir))
 
 
 def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.Template):
@@ -54,7 +57,7 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
         exit(f'dashtools: init: Failed')
 
     # Copy files from template directory
-    template_base_path = _get_template_path(template.value)
+    template_base_path = get_template_path(template.value)
     for path, _, files in os.walk(template_base_path):
         for name in files:
             # Skip non .template files
@@ -86,3 +89,15 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
     pipUtils.handle_template_requirements(template.value)
     print(
         f'dashtools: init: Created new app {app_name} at {os.path.join(target_dir, app_name)} with {template.name} template')
+
+
+def try_get_template_preview(template_value:str) -> Union[html.Div, None]:
+    temp_path = get_template_path(Templates.Template(template_value).value)
+    sys.path.append(temp_path)
+    try:
+        import preview
+        sys.path.remove(temp_path)
+        del sys.modules["preview"]
+        return preview.render()
+    except ModuleNotFoundError:
+        return None

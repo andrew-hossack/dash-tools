@@ -4,8 +4,7 @@ import visdcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-from dashtools.templating import Templates
-
+from dashtools.templating import Templates, buildApp
 
 class Terminal():
     def __init__(self) -> None:
@@ -90,10 +89,10 @@ def terminal_box():
 def preview_box():
     return html.Div([
         dmc.Text('Preview'),
-        html.Div([
-            dmc.Group("Foo"),
-            dmc.Group("Bar"),
-        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        html.Div(
+            id='preview-output',
+            children=buildApp.try_get_template_preview('default'), 
+            style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
     ])
 
 

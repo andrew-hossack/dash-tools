@@ -4,9 +4,12 @@
 '''
 
 
+import sys
 from dash import Dash, Input, Output, State, no_update, ctx, html
+import dash_mantine_components as dmc
 try:
     from dashtools.dashboard.pages import createPage
+    from dashtools.templating import buildApp
 except ModuleNotFoundError:
     from ..pages import createPage
 import threading
@@ -78,4 +81,16 @@ def generate_callbacks(app: Dash):
             threading.Thread(target=run, daemon=True).run()
             createPage.terminal.writeln(f'$ Created new app {appName} at {appDir} with {appTemplate.capitalize()} template!')
         return html.Div()
-
+        
+    @app.callback(
+        Output('preview-output', 'children'),
+        Input('app-template-input-createpage', 'value'),
+    )
+    def preview_app(template):
+        template_preview = buildApp.try_get_template_preview(template)
+        if not template_preview:
+            return dmc.Center([
+            html.H3("Preview Not Found", style={
+                    'opacity': '10%', 'padding-top': '50px'})
+            ])
+        return template_preview
