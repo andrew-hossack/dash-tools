@@ -69,14 +69,13 @@ def generate_callbacks(app: Dash):
         State('app-location-input-createpage', 'value'),
         State('app-template-input-createpage', 'value'),
     )
-    def create_app(create_button, appName, appDir, appTemplate):
+    def create_app(create_button, appName, appDir, appTemplate:str):
         button_clicked = ctx.triggered_id
         if button_clicked == 'create-button-createpage' and create_button:
-            print("TEST")
             def run():
                 import os
                 os.system(f"dashtools init {appName} {appTemplate} --dir {appDir}")
             threading.Thread(target=run, daemon=True).run()
-            createPage.terminal.writeln('App created')
+            createPage.terminal.writeln(f'$ Created new app {appName} at {appDir} with {appTemplate.capitalize()} template!')
         return html.Div()
 

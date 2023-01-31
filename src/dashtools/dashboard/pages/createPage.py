@@ -9,7 +9,7 @@ from dashtools.templating import Templates
 
 class Terminal():
     def __init__(self) -> None:
-        self.value = ''
+        self.value = '$ Create a new dash application. Choose app name, template and location to create your project ...'
 
     def read(self):
         return self.value
@@ -106,7 +106,7 @@ def create_box():
                     id='app-name-input-createpage',
                     label="App Name",
                     style={"width": '360px', 'margin-right': '10px'},
-                    placeholder='App Filename; eg. my-app'),
+                    placeholder='App Filename; eg. MyApp'),
                 html.Div(
                     dmc.Tooltip(
                         label="Enter an app name you would like to use. Render may change this name if it is not unique.",
@@ -122,10 +122,10 @@ def create_box():
             ]),
             dmc.Group([
                 dmc.TextInput(
-                    label="File Location",
+                    label="Create Location",
                     id='app-location-input-createpage',
                     style={"width": '360px', 'margin-right': '10px'},
-                    placeholder='Location To Create App; eg. ~/Desktop'),
+                    placeholder='App Path; eg. /Users/MyApp'),
                 html.Div(
                     dmc.Tooltip(
                         label="Enter an app name you would like to use. Render may change this name if it is not unique.",
@@ -170,12 +170,20 @@ def create_box():
                 ],
                 style={'margin-bottom': '-10px'}
             ),
-        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={
+            'height': '460px',
+            'width': '100%',
+            'border-radius': '10px',
+            'border': '1px solid rgb(233, 236, 239)',
+            'overflow': 'clip',
+            'padding-left':'20px',
+            'padding-right':'20px',
+            'padding-top':'10px',
+        })
     ])
 
 
 def render():
-    terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
             html.Div(id='create-check-trigger', style={'display': 'none'}),

@@ -191,8 +191,8 @@ def generate_callbacks(app: Dash):
         ])
         if not n:
             return empty_div, False, None, html.Div()
-        filepath = os.path.normpath(filepath)
         if filepath:
+            filepath = os.path.normpath(filepath)
             if os.path.isdir(filepath):
                 try:
                     deployPage.fileExplorerInstance.root = filepath

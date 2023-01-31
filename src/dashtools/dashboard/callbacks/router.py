@@ -18,12 +18,10 @@ def generate_callbacks(app: Dash):
             # Setup url redirect to default page
             return dcc.Location(id="url", pathname='/deploy')
         elif pathname == "/deploy":
-            deployPage.terminal.clear()
             return deployPage.render()
         elif pathname == "/info":
             return infoPage.render()
         elif pathname == "/create":
-            createPage.terminal.clear()
             return createPage.render()
         else:
             return errorPage.render()

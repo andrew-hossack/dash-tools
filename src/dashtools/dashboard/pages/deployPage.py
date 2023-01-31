@@ -92,7 +92,7 @@ def deploy_controller():
 
 class Terminal():
     def __init__(self) -> None:
-        self.value = ''
+        self.value = '$ Select a dash project in File Explorer to deploy your app to Render.com ...'
 
     def read(self):
         return self.value
@@ -148,7 +148,7 @@ def file_explorer():
                 id='file-explorer-output',
                 style={'width': '100%', 'height': '350px', 'margin-top': '-16px'}
             )
-        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'min-width':'400px'})
     ])
 
 
@@ -340,7 +340,7 @@ def deploy_info():
                     style={'margin-top': '10px', 'margin-bottom': '12px'}
                 )
 
-            ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px'}
+            ], style={'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', "height": 'auto', 'padding': '10px', 'min-width':'500px'}
         )
     ], style={"width": '100%', "overflow": "auto", "margin-bottom": "10px"})
 
@@ -400,8 +400,6 @@ def terminal_box():
 
 
 def render():
-    terminal.writeln(
-        '$ Select a dash project in File Explorer to deploy your app to Render.com ...')
     return html.Div(
         [
             dbc.Row([
