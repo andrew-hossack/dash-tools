@@ -35,12 +35,32 @@ def generate_callbacks(app: Dash):
         Output('create-terminal-hidden-div', 'children'),
         Input('create-terminal-clear-button', 'n_clicks'),
     )
-    def output_no_update(clear_terminal, create_button):
+    def output_no_update(clear_terminal):
         button_clicked = ctx.triggered_id
         if button_clicked == 'create-terminal-clear-button' and clear_terminal:
             createPage.terminal.clear()
         return html.Div()
 
+    @app.callback(
+        Output('create-button-createpage', 'disabled'),
+        Input('create-check-trigger', 'children'),
+        State('create-button-createpage', 'disabled'),
+    )
+    def button_state(trigger, buttonDisabled):
+        return not buttonDisabled
+        
+
+    @app.callback(
+        Output('create-check-trigger', 'children'),
+        Input('app-name-input-createpage', 'value'),
+        Input('app-location-input-createpage', 'value'),
+        Input('app-template-input-createpage', 'value'),
+        State('create-button-createpage', 'disabled'),
+    )
+    def button_state(appName, appLoc, appTmp, buttonIsDisabled):
+        if appName and appLoc and appTmp:
+            return 'False' if buttonIsDisabled else no_update
+        return 'True' if not buttonIsDisabled else no_update
         
     @app.callback(
         Output('create-terminal-hidden-div2', 'children'),

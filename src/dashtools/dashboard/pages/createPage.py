@@ -164,8 +164,7 @@ def create_box():
                             DashIconify(icon='gridicons:create',
                                         width=20, color='light-gray')
                         ],
-                        # disabled=True,
-                        disabled=False,
+                        disabled=True,
                         style={'width': '200px', 'opacity': '1.0'},
                     )
                 ],
@@ -179,24 +178,7 @@ def render():
     terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            # dmc.Center([
-            #     DashIconify(icon='emojione:hammer-and-wrench',
-            #                 width=35, color='light-gray', style={'margin-right': '20px'}),
-            #     dmc.Title(["Under Construction"], order=1),
-            #     DashIconify(icon='emojione:hammer-and-wrench',
-            #                 width=35, color='light-gray', style={'margin-left': '20px'})
-            # ], style={'margin-top':'30px'}),
-            # html.Div([
-            #     dmc.Text([""]),
-            #     dcc.Markdown(
-            #         'Developers wanted! Please check out [https://github.com/andrew-hossack/dash-tools/pull/77](https://github.com/andrew-hossack/dash-tools/pull/77) for more details.',
-            #         link_target="_blank",
-            #         style={
-            #             "color": "black",
-            #             "text-align": "center",
-            #         })
-            #         ],
-            # ),
+            html.Div(id='create-check-trigger', style={'display': 'none'}),
             dbc.Row([
                 dbc.Col(preview_box()),
                 dbc.Col(create_box()),
