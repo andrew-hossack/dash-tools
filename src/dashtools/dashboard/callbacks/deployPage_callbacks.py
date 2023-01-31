@@ -8,13 +8,14 @@ try:
     import alerts
     import tree
     from dashtools.dashboard.pages import deployPage
+    from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 except ModuleNotFoundError:
     from .. import tree
     from .. import alerts
     from ..pages import deployPage
+    from ...deploy import fileUtils, gitUtils, herokuUtils
 
 from dash_iconify import DashIconify
-from dashtools.deploy import fileUtils, gitUtils, herokuUtils
 
 
 def generate_callbacks(app: Dash):

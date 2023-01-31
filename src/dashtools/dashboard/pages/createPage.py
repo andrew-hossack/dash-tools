@@ -4,6 +4,8 @@ import visdcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
+from dashtools.templating import Templates
+
 
 class Terminal():
     def __init__(self) -> None:
@@ -31,6 +33,8 @@ def terminal_box():
     return html.Div(
         [
             html.Div(id='create-terminal-hidden-div',
+                     style={'display': 'none'}),
+            html.Div(id='create-terminal-hidden-div2',
                      style={'display': 'none'}),
             visdcc.Run_js(id='create-terminal-runjs', run=""),
             dcc.Interval(id='create-terminal-refresh-interval',
@@ -99,6 +103,7 @@ def create_box():
         html.Div([
             dmc.Group([
                 dmc.TextInput(
+                    id='app-name-input-createpage',
                     label="App Name",
                     style={"width": '360px', 'margin-right': '10px'},
                     placeholder='App Filename; eg. my-app'),
@@ -118,6 +123,7 @@ def create_box():
             dmc.Group([
                 dmc.TextInput(
                     label="File Location",
+                    id='app-location-input-createpage',
                     style={"width": '360px', 'margin-right': '10px'},
                     placeholder='Location To Create App; eg. ~/Desktop'),
                 html.Div(
@@ -138,8 +144,8 @@ def create_box():
                     dmc.Select(
                         label="Template",
                         placeholder="Select one",
-                        id="framework-select",
-                        value="ng",
+                        id='app-template-input-createpage',
+                        value="default",
                         data=sorted([
                             {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
                         ], key=lambda x: x['label']),
@@ -152,12 +158,14 @@ def create_box():
                 [
                     dmc.Button(
                         'Create',
+                        id='create-button-createpage',
                         variant="gradient",
                         leftIcon=[
                             DashIconify(icon='gridicons:create',
                                         width=20, color='light-gray')
                         ],
-                        disabled=True,
+                        # disabled=True,
+                        disabled=False,
                         style={'width': '200px', 'opacity': '1.0'},
                     )
                 ],
@@ -171,29 +179,29 @@ def render():
     terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            dmc.Center([
-                DashIconify(icon='emojione:hammer-and-wrench',
-                            width=35, color='light-gray', style={'margin-right': '20px'}),
-                dmc.Title(["Under Construction"], order=1),
-                DashIconify(icon='emojione:hammer-and-wrench',
-                            width=35, color='light-gray', style={'margin-left': '20px'})
-            ], style={'margin-top':'30px'}),
-            html.Div([
-                dmc.Text([""]),
-                dcc.Markdown(
-                    'Developers wanted! Please check out [https://github.com/andrew-hossack/dash-tools/pull/77](https://github.com/andrew-hossack/dash-tools/pull/77) for more details.',
-                    link_target="_blank",
-                    style={
-                        "color": "black",
-                        "text-align": "center",
-                    })
-                    ],
-            ),
-            # dbc.Row([
-            #     dbc.Col(preview_box()),
-            #     dbc.Col(create_box()),
-            # ]),
-            # dbc.Row(terminal_box(), style={'padding-top': '20px'}),
+            # dmc.Center([
+            #     DashIconify(icon='emojione:hammer-and-wrench',
+            #                 width=35, color='light-gray', style={'margin-right': '20px'}),
+            #     dmc.Title(["Under Construction"], order=1),
+            #     DashIconify(icon='emojione:hammer-and-wrench',
+            #                 width=35, color='light-gray', style={'margin-left': '20px'})
+            # ], style={'margin-top':'30px'}),
+            # html.Div([
+            #     dmc.Text([""]),
+            #     dcc.Markdown(
+            #         'Developers wanted! Please check out [https://github.com/andrew-hossack/dash-tools/pull/77](https://github.com/andrew-hossack/dash-tools/pull/77) for more details.',
+            #         link_target="_blank",
+            #         style={
+            #             "color": "black",
+            #             "text-align": "center",
+            #         })
+            #         ],
+            # ),
+            dbc.Row([
+                dbc.Col(preview_box()),
+                dbc.Col(create_box()),
+            ]),
+            dbc.Row(terminal_box(), style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )

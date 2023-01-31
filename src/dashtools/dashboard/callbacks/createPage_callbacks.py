@@ -9,6 +9,7 @@ try:
     from dashtools.dashboard.pages import createPage
 except ModuleNotFoundError:
     from ..pages import createPage
+import threading
 
 
 def generate_callbacks(app: Dash):
@@ -32,10 +33,30 @@ def generate_callbacks(app: Dash):
 
     @app.callback(
         Output('create-terminal-hidden-div', 'children'),
-        Input('create-terminal-clear-button', 'n_clicks')
+        Input('create-terminal-clear-button', 'n_clicks'),
     )
-    def deploy_button(clear_terminal):
+    def output_no_update(clear_terminal, create_button):
         button_clicked = ctx.triggered_id
         if button_clicked == 'create-terminal-clear-button' and clear_terminal:
             createPage.terminal.clear()
         return html.Div()
+
+        
+    @app.callback(
+        Output('create-terminal-hidden-div2', 'children'),
+        Input('create-button-createpage', 'n_clicks'),
+        State('app-name-input-createpage', 'value'),
+        State('app-location-input-createpage', 'value'),
+        State('app-template-input-createpage', 'value'),
+    )
+    def create_app(create_button, appName, appDir, appTemplate):
+        button_clicked = ctx.triggered_id
+        if button_clicked == 'create-button-createpage' and create_button:
+            print("TEST")
+            def run():
+                import os
+                os.system(f"dashtools init {appName} {appTemplate} --dir {appDir}")
+            threading.Thread(target=run, daemon=True).run()
+            createPage.terminal.writeln('App created')
+        return html.Div()
+
