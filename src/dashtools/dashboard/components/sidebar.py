@@ -13,7 +13,7 @@ def render() -> html.Div:
                 DashIconify(icon='heroicons:command-line-20-solid',
                             height=60, style={'margin-bottom': '8px', 'margin-right': '5px'}),
                 html.H2("DashTools", className='dashtools-logo'),
-            ]),
+            ], style={"margin-top": "5px",}),
             dmc.Space(h=1, style={'margin-top': '-20px'}),
             html.H6(
                 "Application Management Dashboard",
@@ -98,7 +98,7 @@ def render() -> html.Div:
                                 href="https://github.com/andrew-hossack/dash-tools/issues/new/choose", target='_blank', style={'text-decoration': 'none', 'color': 'black', 'font-weight': 'lighter'}),
                         ]),
                 ]),
-            ], style={'position':'absolute','bottom':'0'})
+            ], style={'position':'absolute','bottom':'0', 'margin-bottom':'10px'})
 
         ],
         style={

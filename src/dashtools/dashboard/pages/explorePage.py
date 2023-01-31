@@ -24,6 +24,14 @@ def render():
                     })
                     ],
             ),
+            dmc.Center([
+                dmc.Image(
+                    src='https://cdn.thenewstack.io/media/2022/06/2baa04d0-help-wanted-sign.jpg', alt='Help Wanted',
+                    width=800,
+                    radius=10,
+                    withPlaceholder=True,
+                    placeholder=[dmc.Loader(color="gray", size="sm")])
+            ]),
         ],
         style={"height": "90vh", "padding": "10px"}
     )

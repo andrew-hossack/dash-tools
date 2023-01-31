@@ -49,6 +49,7 @@ app.layout = dmc.NotificationsProvider(
             sidebar.render(),
             html.Div(
                 id="page-content", style={
+                    "margin-top": "10px",
                     "margin-left": "22rem",
                     "margin-right": "2rem",
                     "padding": "2rem 1rem",

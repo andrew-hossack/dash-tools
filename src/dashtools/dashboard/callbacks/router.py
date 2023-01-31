@@ -28,4 +28,5 @@ def generate_callbacks(app: Dash):
         elif pathname == "/create":
             return createPage.render()
         else:
-            return errorPage.render()
+            # Can also implement custom error page here
+            return dcc.Location(id="url", pathname='/')
