@@ -4,3 +4,7 @@ code {
     padding: .1rem .3rem .2rem;
     border-radius: .2rem;
 }
+
+.white-link a{
+    color: white;
+}

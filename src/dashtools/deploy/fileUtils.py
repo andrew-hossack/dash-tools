@@ -80,6 +80,9 @@ def create_render_yaml(root_path: os.PathLike, app_name: str):
     buildCommand: "pip install -r requirements.txt"
     # A src/app.py file must exist and contain `server=app.server`
     startCommand: "gunicorn --chdir src app:server"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
         """)
 
 

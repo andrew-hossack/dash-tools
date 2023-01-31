@@ -1,4 +1,4 @@
-name: Build, Test and Upload to PyPi on Release
+name: Upload to PyPi on Release
 on: 
   release:
     types: [created]

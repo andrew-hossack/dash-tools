@@ -13,3 +13,4 @@ visdcc==0.0.50
 dash-mantine-components==0.10.2
 dash-iconify==0.1.2
 ruamel.yaml==0.17.21
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability

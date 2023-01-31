@@ -19,12 +19,12 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           custom_tag: ${{ env.DASHTOOLS_VERSION }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
         with:
           tag_name: v${{ env.DASHTOOLS_VERSION }}
           release_name: Version ${{ env.DASHTOOLS_VERSION }}

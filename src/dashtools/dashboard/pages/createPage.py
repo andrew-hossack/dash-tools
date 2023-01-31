@@ -17,7 +17,7 @@ class Terminal():
 
     def writeln(self, message):
         message = str(message)
-        if self.value is not '':
+        if self.value != '':
             self.value = f'{self.value}\n{message}'
         else:
             self.value = message
@@ -177,7 +177,18 @@ def render():
                 dmc.Title(["Under Construction"], order=1),
                 DashIconify(icon='emojione:hammer-and-wrench',
                             width=35, color='light-gray', style={'margin-left': '20px'})
-            ]),
+            ], style={'margin-top':'30px'}),
+            html.Div([
+                dmc.Text([""]),
+                dcc.Markdown(
+                    'Developers wanted! Please check out [https://github.com/andrew-hossack/dash-tools/pull/77](https://github.com/andrew-hossack/dash-tools/pull/77) for more details.',
+                    link_target="_blank",
+                    style={
+                        "color": "black",
+                        "text-align": "center",
+                    })
+                    ],
+            ),
             # dbc.Row([
             #     dbc.Col(preview_box()),
             #     dbc.Col(create_box()),
