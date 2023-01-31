@@ -5,10 +5,14 @@
 
 from dash import Dash, Input, Output, dcc
 
+from dashtools.dashboard.pages import explorePage
+
+from ..pages import explorePage
+
 try:
-    from dashtools.dashboard.pages import createPage, deployPage, errorPage, infoPage
+    from dashtools.dashboard.pages import createPage, deployPage, errorPage
 except ModuleNotFoundError:
-    from ..pages import createPage, deployPage, errorPage, infoPage
+    from ..pages import createPage, deployPage, errorPage
 
 
 def generate_callbacks(app: Dash):
@@ -16,11 +20,11 @@ def generate_callbacks(app: Dash):
     def render_page_content(pathname):
         if pathname == '/':
             # Setup url redirect to default page
-            return dcc.Location(id="url", pathname='/deploy')
+            return dcc.Location(id="url", pathname='/create')
         elif pathname == "/deploy":
             return deployPage.render()
-        elif pathname == "/info":
-            return infoPage.render()
+        elif pathname == "/explore":
+            return explorePage.render()
         elif pathname == "/create":
             return createPage.render()
         else:

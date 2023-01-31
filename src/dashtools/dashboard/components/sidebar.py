@@ -35,12 +35,12 @@ def render() -> html.Div:
                                         style={'margin-right': '5px'}),
                             "Deploy"
                         ], href="/deploy", active="exact"),
-                    # dbc.NavLink(  # TODO
-                    #     [
-                    #         DashIconify(icon='akar-icons:info',
-                    #                     style={'margin-right': '5px'}),
-                    #         "Info"
-                    #     ], href="/info", active="exact"),
+                    dbc.NavLink(
+                        [
+                            DashIconify(icon='akar-icons:info',
+                                        style={'margin-right': '5px'}),
+                            "Explore (Preview)"
+                        ], href="/explore", active="exact"),
                 ],
                 vertical=True,
                 pills=True,

@@ -54,14 +54,12 @@ app.layout = dmc.NotificationsProvider(
                     "padding": "2rem 1rem",
                     'overflow-x': "hidden",
                 }),
-            # terminal.render()
         ]))
 
 
 ### Generate necessary callbacks here ###
 deployPage_callbacks.generate_callbacks(app)
 createPage_callbacks.generate_callbacks(app)
-# terminal_callbacks.generate_callbacks(app)
 router.generate_callbacks(app)
 
 
