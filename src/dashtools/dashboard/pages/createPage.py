@@ -151,7 +151,7 @@ def create_box():
                                 data=sorted([
                                     {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
                                 ], key=lambda x: x['label']),
-                                style={"width": 150, "marginBottom": 10},
+                                style={"width": 180, "marginBottom": 10},
                             ),
                             dmc.Text(id="selected-value"),
                         ]
@@ -169,7 +169,7 @@ def create_box():
                         disabled=True,
                         style={'width': '200px', 'opacity': '1.0', 'float':'bottom'},
                     )
-                ], style={'padding-top':'28px', 'position':'relative', 'padding-right':'0px'}),
+                ], style={'padding-top':'28px', 'position':'relative', 'margin-right':'-20px'}),
             ], style={'width':'460px'}),
         ], style={
             'height': '220px',
@@ -191,7 +191,7 @@ def render():
             html.Div(id='create-app-successful-trigger', style={'display': 'none'}),
             html.Div(id='create-check-trigger', style={'display': 'none'}),
             html.Div(id='hidden-confetti-div', style={'display': 'none'}),
-            dbc.Row(preview_box()),
+            dbc.Row(preview_box(), style={'min-width':'640px'}),
             html.Div([
                 html.Div(create_box(), style={'display':'inline'}),
                 html.Div(terminal_box(), style={'display':'inline', 'width':'100%','margin-left':'30px'}),
