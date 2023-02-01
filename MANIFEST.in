@@ -4,6 +4,7 @@ global-include *.html
 global-include *.ini
 global-include *.ico
 global-include *.css
+global-include *.svg
 global-include *.csv
 global-include *.eot
 global-include *.tff
@@ -16,6 +17,7 @@ global-include *.c
 global-include *.h
 global-include *.sh
 global-include *.so
+global-include *.jpeg
 global-include *.map
 global-include *.js
 global-include *.ts

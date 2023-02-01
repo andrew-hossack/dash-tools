@@ -248,7 +248,7 @@ def main():
     """
     dashtools CLI entry point.
     """
-    ret : FunctionReturnProps
+    ret = FunctionReturnProps()
     args = parser.parse_args()
     if args.subcommand:
         ret = args.func(args)
