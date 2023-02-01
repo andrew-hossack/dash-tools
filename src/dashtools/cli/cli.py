@@ -42,7 +42,7 @@ class MyArgumentParser(argparse.ArgumentParser):
 
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
-        {'--no-update-check':<25}Do not check for pypi updates on create
+        {'--no-update-check':<25}Do not check for PyPi updates on create
 
     {'run':<29}Run the app (experimental)
         {'--set-py-cmd <command>':<25}Set the python shell command

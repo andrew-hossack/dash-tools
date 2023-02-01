@@ -43,8 +43,9 @@ app.layout = dmc.NotificationsProvider(
                         "backgroundColor": "#202020",
                         "color": "white",
                         "text-align": "center",
-                    })
-            ], class_name='white-link', fixed=True, height=0),
+                        'padding-top':'4px',
+                    }, className='padded-bottom')
+            ], class_name='white-link', fixed=True, height=0, ),
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
             html.Div(id="notifications-container-app-preview"),

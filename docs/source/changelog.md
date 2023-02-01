@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0] - 2023-2-01
+
+### Added
+
+- Added create page, and the ability to explore between different template previews
+- Create templated apps using the `dashtools gui`
+- Lots of style changes
+- Added links to bottom of screen
+- Added github star link
+- Fixed some issues with os path not being normalized
+- Added `--no-update-check` flag to `dashtools init` to skip PyPi version checking
+
 ## [1.10.8] - 2023-1-29
 
 ### Added
