@@ -74,7 +74,7 @@ def terminal_box():
                           style={
                               "width": "100%",
                               "margin-top":"-4px",
-                              "height": "260px",
+                              "height": "217px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',
@@ -91,8 +91,8 @@ def preview_box():
         html.Div(
             id='preview-output',
             children=buildApp.try_get_template_preview('default').object, 
-            style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'padding':'10px'}) # TODO need to figure out 'max-width':'575px'
-    ], style={'margin-bottom':'10px'})
+            style={'height': '520px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'padding':'10px'}) # TODO need to figure out 'max-width':'575px'
+    ], style={'margin-bottom':'20px'})
 
 
 def create_box():
@@ -139,34 +139,40 @@ def create_box():
                         ]),
                     style={'margin-top': '25px'})
             ]),
-            dmc.Group(
-                [
-                    dmc.Select(
-                        label="Template",
-                        placeholder="Select one",
-                        id='app-template-input-createpage',
-                        value="default",
-                        data=sorted([
-                            {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
-                        ], key=lambda x: x['label']),
-                        style={"width": 200, "marginBottom": 10},
+            dbc.Row([
+                dbc.Col([
+                    dmc.Group(
+                        [
+                            dmc.Select(
+                                label="Template",
+                                placeholder="Select one",
+                                id='app-template-input-createpage',
+                                value="default",
+                                data=sorted([
+                                    {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
+                                ], key=lambda x: x['label']),
+                                style={"width": 150, "marginBottom": 10},
+                            ),
+                            dmc.Text(id="selected-value"),
+                        ]
                     ),
-                    dmc.Text(id="selected-value"),
-                ]
-            ),
-            dmc.Button(
-                'Create',
-                id='create-button-createpage',
-                variant="gradient",
-                leftIcon=[
-                    DashIconify(icon='gridicons:create',
-                                width=20, color='light-gray')
-                ],
-                disabled=True,
-                style={'width': '200px', 'opacity': '1.0'},
-            )
+                ], style={'padding-right':'0px', 'margin-right':'-50px'}),
+                dbc.Col([
+                    dmc.Button(
+                        'Create',
+                        id='create-button-createpage',
+                        variant="gradient",
+                        leftIcon=[
+                            DashIconify(icon='gridicons:create',
+                                        width=20, color='light-gray')
+                        ],
+                        disabled=True,
+                        style={'width': '200px', 'opacity': '1.0', 'float':'bottom'},
+                    )
+                ], style={'padding-top':'28px', 'position':'relative', 'padding-right':'0px'}),
+            ], style={'width':'460px'}),
         ], style={
-            'height': '265px',
+            'height': '220px',
             'width': '100%',
             'border-radius': '10px',
             'border': '1px solid rgb(233, 236, 239)',
