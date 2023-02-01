@@ -4,6 +4,8 @@
 '''
 
 
+import os
+from dash_iconify import DashIconify
 import sys
 from dash import Dash, Input, Output, State, no_update, ctx, html
 import dash_mantine_components as dmc
@@ -63,7 +65,7 @@ def generate_callbacks(app: Dash):
         State('create-button-createpage', 'disabled'),
     )
     def button_state(appName, appLoc, appTmp, buttonIsDisabled):
-        if appName and appLoc and appTmp:
+        if appName and os.path.exists(appLoc) and appTmp:
             return 'False' if buttonIsDisabled else no_update
         return 'True' if not buttonIsDisabled else no_update
         
@@ -104,3 +106,59 @@ def generate_callbacks(app: Dash):
             ])
             alert = alerts.render('ModuleNotFound', props=template_preview) if template_preview.needs_module is not None else None
         return object, alert, title
+
+    @app.callback(
+        Output('app-settings-name-status', 'children'),
+        Input('app-name-input-createpage', 'value')
+    )
+    def save_app_name(app_name):
+        if app_name and ' ' not in app_name:
+            return [dmc.Tooltip(
+                label=f"Looks great! Your app with be created using this name.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:check-circle',
+                                width=30, color='green')
+                ])]
+        else:
+            return [dmc.Tooltip(
+                label="Enter an app name you would like to use. The name cannot contain spaces.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:three-dots',
+                                width=30, color='gray')
+                ])]
+
+    @app.callback(
+        Output('app-settings-location-status', 'children'),
+        Input('app-location-input-createpage', 'value')
+    )
+    def save_app_name(path):
+        if os.path.exists(path):
+            return [dmc.Tooltip(
+                label=f"Filepath found. Your application will be created here.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:check-circle',
+                                width=30, color='green')
+                ])]
+        else:
+            return [dmc.Tooltip(
+                label="Enter a valid directory to create your application at.",
+                placement="center",
+                withArrow=True,
+                wrapLines=True,
+                width=220,
+                children=[
+                    DashIconify(icon='bi:three-dots',
+                                width=30, color='gray')
+                ])]

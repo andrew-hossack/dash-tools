@@ -109,7 +109,8 @@ def create_box():
                     placeholder='App Filename; eg. MyApp'),
                 html.Div(
                     dmc.Tooltip(
-                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        id='app-settings-name-status',
+                        label="Enter an app name you would like to use. The name cannot contain spaces.",
                         placement="center",
                         withArrow=True,
                         wrapLines=True,
@@ -128,7 +129,8 @@ def create_box():
                     placeholder='App Path; eg. /Users/MyApp'),
                 html.Div(
                     dmc.Tooltip(
-                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        id='app-settings-location-status',
+                        label="Enter a valid directory to create your application at.",
                         placement="center",
                         withArrow=True,
                         wrapLines=True,
