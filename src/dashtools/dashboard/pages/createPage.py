@@ -182,7 +182,7 @@ def create_box():
             'padding-top':'10px',
             'min-width':'460px',
         })
-    ])
+    ], style={'max-width':'460px'})
 
 
 def render():
@@ -192,10 +192,10 @@ def render():
             html.Div(id='create-check-trigger', style={'display': 'none'}),
             html.Div(id='hidden-confetti-div', style={'display': 'none'}),
             dbc.Row(preview_box()),
-            dbc.Row([
-                dbc.Col(create_box()),
-                dbc.Col(terminal_box()),
-            ]),
+            html.Div([
+                html.Div(create_box(), style={'display':'inline'}),
+                html.Div(terminal_box(), style={'display':'inline', 'width':'100%','margin-left':'30px'}),
+            ], style={'display':'flex'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )

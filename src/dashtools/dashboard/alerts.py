@@ -4,7 +4,7 @@ from dash_iconify import DashIconify
 # NOTIFICATION_DURATION_SECONDS = 8
 
 
-def render(key: str, props: any):
+def render(key: str, props: any=None):
     if key == 'FileNotFoundError':
         return dmc.Notification(
             message="The file path you provided does not exist. Please check your filepath and try again.",
