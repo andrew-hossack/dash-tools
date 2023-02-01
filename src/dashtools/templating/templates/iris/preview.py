@@ -48,7 +48,7 @@ controls = dbc.Card(
 
 def make_graph(x='sepal length (cm)', y="sepal width (cm)", n_clusters=3):
         # minimal input validation, make sure there's at least one cluster
-        km = KMeans(n_clusters=max(n_clusters, 1))
+        km = KMeans(n_clusters=max(n_clusters, 1), n_init=10)
         df = iris.loc[:, [x, y]]
         km.fit(df.values)
         df["cluster"] = km.labels_

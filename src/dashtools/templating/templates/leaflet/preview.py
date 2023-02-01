@@ -9,11 +9,10 @@ def render():
     lats = [56, 56, 56]
     lons = [10, 11, 12]
     df = pd.DataFrame(columns=["lat", "lon"], data=np.column_stack((lats, lons)))
-
     # Create markers from data frame.
     markers = [dl.Marker(position=[row["lat"], row["lon"]])
             for i, row in df.iterrows()]
-
+    tiles = [dl.TileLayer(url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"), dl.LayerGroup(markers)]
     return html.Div([
         html.H1(children='Dash Leaflet App'),
 
@@ -23,7 +22,7 @@ def render():
 
         html.Hr(),
 
-        dl.Map(children=[dl.TileLayer(url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"), dl.LayerGroup(markers)],
+        dl.Map(children=tiles,
             style={'width': "100%", 'height': "100%"}, center=[56, 11], zoom=9, id="map"),
 
         dcc.Markdown(

@@ -53,7 +53,6 @@ def generate_callbacks(app: Dash):
         Output('create-button-createpage', 'disabled'),
         Input('create-check-trigger', 'children'),
         State('create-button-createpage', 'disabled'),
-        prevent_initial_call=True
     )
     def button_state(trigger, buttonDisabled):
         return not buttonDisabled
