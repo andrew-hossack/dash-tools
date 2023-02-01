@@ -87,16 +87,20 @@ def generate_callbacks(app: Dash):
     @app.callback(
         Output('preview-output', 'children'),
         Output('notifications-container-app-preview', 'children'),
+        Output('preview-tab-title', 'children'),
         Input('app-template-input-createpage', 'value'),
     )
     def preview_app(template:str):
         template_preview = buildApp.try_get_template_preview(template)
+        object = template_preview.object
+        alert = None
+        title = f"Preview - {template.capitalize()} Template"
         if not template_preview.object:
-            alert = alerts.render('ModuleNotFound', props=template_preview)
             if template_preview.needs_module:
                 createPage.terminal.writeln(f"$ You must install module '{template_preview.needs_module}' to preview app with the {template.capitalize()} template!")
-            return dmc.Center([
+            object = dmc.Center([
             html.H3("Preview Not Found", style={
                     'opacity': '10%', 'padding-top': '50px'})
-            ]), alert if template_preview.needs_module is not None else None
-        return template_preview.object, None
+            ])
+            alert = alerts.render('ModuleNotFound', props=template_preview) if template_preview.needs_module is not None else None
+        return object, alert, title

@@ -75,7 +75,8 @@ def terminal_box():
                           draggable='false',
                           style={
                               "width": "100%",
-                              "height": "160px",
+                              "margin-top":"-4px",
+                              "height": "260px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',
@@ -88,12 +89,12 @@ def terminal_box():
 
 def preview_box():
     return html.Div([
-        dmc.Text('Preview'),
+        dmc.Text('Preview', id='preview-tab-title'),
         html.Div(
             id='preview-output',
             children=buildApp.try_get_template_preview('default').object, 
             style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'padding':'10px'}) # TODO need to figure out 'max-width':'575px'
-    ])
+    ], style={'margin-bottom':'10px'})
 
 
 def create_box():
@@ -153,24 +154,19 @@ def create_box():
                     dmc.Text(id="selected-value"),
                 ]
             ),
-            dmc.Center(
-                [
-                    dmc.Button(
-                        'Create',
-                        id='create-button-createpage',
-                        variant="gradient",
-                        leftIcon=[
-                            DashIconify(icon='gridicons:create',
-                                        width=20, color='light-gray')
-                        ],
-                        disabled=True,
-                        style={'width': '200px', 'opacity': '1.0'},
-                    )
+            dmc.Button(
+                'Create',
+                id='create-button-createpage',
+                variant="gradient",
+                leftIcon=[
+                    DashIconify(icon='gridicons:create',
+                                width=20, color='light-gray')
                 ],
-                style={'margin-bottom': '-10px'}
-            ),
+                disabled=True,
+                style={'width': '200px', 'opacity': '1.0'},
+            )
         ], style={
-            'height': '460px',
+            'height': '265px',
             'width': '100%',
             'border-radius': '10px',
             'border': '1px solid rgb(233, 236, 239)',
@@ -187,11 +183,11 @@ def render():
     return html.Div(
         [
             html.Div(id='create-check-trigger', style={'display': 'none'}),
+            dbc.Row(preview_box()),
             dbc.Row([
-                dbc.Col(preview_box()),
                 dbc.Col(create_box()),
+                dbc.Col(terminal_box()),
             ]),
-            dbc.Row(terminal_box(), style={'padding-top': '20px'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )
