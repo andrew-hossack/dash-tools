@@ -28,6 +28,8 @@ app = Dash(
     prevent_initial_callbacks=True,
     assets_folder=Path(__file__).parent.absolute().joinpath('assets'),
     name=__name__,
+    external_scripts=[
+        "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"],
 )
 
 app.layout = dmc.NotificationsProvider(
@@ -46,6 +48,7 @@ app.layout = dmc.NotificationsProvider(
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
             html.Div(id="notifications-container-app-preview"),
+            html.Div(id="notifications-container-app-create"),
             dcc.Location(id="url"),
             sidebar.render(),
             html.Div(

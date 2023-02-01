@@ -5,9 +5,10 @@
 
 
 import os
+import pathlib
 from dash_iconify import DashIconify
 import sys
-from dash import Dash, Input, Output, State, no_update, ctx, html
+from dash import Dash, Input, Output, State, no_update, ctx, html, ClientsideFunction
 import dash_mantine_components as dmc
 try:
     from dashtools.dashboard.pages import createPage
@@ -52,6 +53,7 @@ def generate_callbacks(app: Dash):
         Output('create-button-createpage', 'disabled'),
         Input('create-check-trigger', 'children'),
         State('create-button-createpage', 'disabled'),
+        prevent_initial_call=True
     )
     def button_state(trigger, buttonDisabled):
         return not buttonDisabled
@@ -65,12 +67,22 @@ def generate_callbacks(app: Dash):
         State('create-button-createpage', 'disabled'),
     )
     def button_state(appName, appLoc, appTmp, buttonIsDisabled):
-        if appName and os.path.exists(appLoc) and appTmp:
-            return 'False' if buttonIsDisabled else no_update
+        if appLoc:
+            if appName and os.path.exists(appLoc) and appTmp:
+                return 'False' if buttonIsDisabled else no_update
         return 'True' if not buttonIsDisabled else no_update
         
+
+    app.clientside_callback(
+        ClientsideFunction(namespace="my_clientside_library",
+                        function_name="confetti_onclick"),
+        Output("hidden-confetti-div", "children"),
+        Input("create-app-successful-trigger", "children"),
+    )
+
     @app.callback(
-        Output('create-terminal-hidden-div2', 'children'),
+        Output('notifications-container-app-create', 'children'),
+        Output('create-app-successful-trigger', 'children'),
         Input('create-button-createpage', 'n_clicks'),
         State('app-name-input-createpage', 'value'),
         State('app-location-input-createpage', 'value'),
@@ -79,12 +91,18 @@ def generate_callbacks(app: Dash):
     def create_app(create_button, appName, appDir, appTemplate:str):
         button_clicked = ctx.triggered_id
         if button_clicked == 'create-button-createpage' and create_button:
+            app_path = pathlib.Path(appDir).joinpath(appName)
+            if os.path.exists(app_path):
+                class Error:
+                    filepath = app_path
+                return alerts.render('FileAlreadyExists', props=Error()), no_update
             def run():
                 import os
-                os.system(f"dashtools init {appName} {appTemplate} --dir {appDir}")
+                os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check")
             threading.Thread(target=run, daemon=True).run()
             createPage.terminal.writeln(f'$ Created new app {appName} at {appDir} with {appTemplate.capitalize()} template!')
-        return html.Div()
+            return no_update, html.Div('triggered')
+        return no_update, no_update
         
     @app.callback(
         Output('preview-output', 'children'),

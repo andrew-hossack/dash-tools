@@ -17,6 +17,9 @@ from dashtools.runtime import runtimeUtils
 from dashtools.templating import buildApp, buildAppUtils, createTemplate
 from dashtools.version import __version__
 
+class FunctionReturnProps:
+    """ Used for return props for argparse function calls """
+    no_update_check = False
 
 class MyArgumentParser(argparse.ArgumentParser):
     """Override default help message"""
@@ -39,6 +42,7 @@ class MyArgumentParser(argparse.ArgumentParser):
 
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
+        {'--no-update-check':<25}Do not check for pypi updates on create
 
     {'run':<29}Run the app (experimental)
         {'--set-py-cmd <command>':<25}Set the python shell command
@@ -142,7 +146,12 @@ def gui(args):
             help='Specify the directory to create the app in. Args: REQUIRED: <directory>',
             default=os.getcwd(),
             metavar='<directory>',
-            nargs='?')
+            nargs='?'),
+        argument(
+            '--no-update-check',
+            help='Do not check for PyPi updates if this flag is used.',
+            default=False,
+            action="store_true"),
     ])
 def init(args):
     """Initialize a new app."""
@@ -156,6 +165,9 @@ def init(args):
     print(
         f'dashtools: Run your app using the "python {os.path.join(args.init[0], "src", "app.py")}" command')
     print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
+    ret = FunctionReturnProps()
+    ret.no_update_check = args.no_update_check
+    return ret
 
 
 @ subcommand(
@@ -232,14 +244,14 @@ def run(args):
             print(e)
             exit('dashtools: run: Failed')
 
-
 def main():
     """
     dashtools CLI entry point.
     """
+    ret : FunctionReturnProps
     args = parser.parse_args()
     if args.subcommand:
-        args.func(args)
+        ret = args.func(args)
     elif args.report_issue:
         print('dashtools: Report an issue at: https://github.com/andrew-hossack/dash-tools/issues/new/choose')
         if input('dashtools: Open in browser? (y/n) > ') == 'y':
@@ -247,4 +259,5 @@ def main():
                 'https://github.com/andrew-hossack/dash-tools/issues/new/choose')
     else:
         parser.print_help()
-    update.check_for_updates()
+    if not ret.no_update_check:
+        update.check_for_updates()

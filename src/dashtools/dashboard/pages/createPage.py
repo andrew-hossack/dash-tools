@@ -33,8 +33,6 @@ def terminal_box():
         [
             html.Div(id='create-terminal-hidden-div',
                      style={'display': 'none'}),
-            html.Div(id='create-terminal-hidden-div2',
-                     style={'display': 'none'}),
             visdcc.Run_js(id='create-terminal-runjs', run=""),
             dcc.Interval(id='create-terminal-refresh-interval',
                          interval=500, n_intervals=0, disabled=False),
@@ -184,7 +182,9 @@ def create_box():
 def render():
     return html.Div(
         [
+            html.Div(id='create-app-successful-trigger', style={'display': 'none'}),
             html.Div(id='create-check-trigger', style={'display': 'none'}),
+            html.Div(id='hidden-confetti-div', style={'display': 'none'}),
             dbc.Row(preview_box()),
             dbc.Row([
                 dbc.Col(create_box()),

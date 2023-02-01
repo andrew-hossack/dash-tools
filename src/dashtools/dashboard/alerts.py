@@ -68,3 +68,12 @@ def render(key: str, props: any):
             action='show',
             id='error-permissions',
         )
+    elif key == 'FileAlreadyExists':
+        return dmc.Notification(
+            message=f"File {props.filepath} already exists at this location! Please change app name or create location and try again.",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            id='error-permissions',
+        )
