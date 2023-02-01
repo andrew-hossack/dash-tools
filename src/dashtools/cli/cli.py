@@ -248,10 +248,12 @@ def main():
     """
     dashtools CLI entry point.
     """
-    ret = FunctionReturnProps()
     args = parser.parse_args()
     if args.subcommand:
         ret = args.func(args)
+    if not ret:
+        # Overwrite return value with base interface if none found
+        ret = FunctionReturnProps()
     elif args.report_issue:
         print('dashtools: Report an issue at: https://github.com/andrew-hossack/dash-tools/issues/new/choose')
         if input('dashtools: Open in browser? (y/n) > ') == 'y':
