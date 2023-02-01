@@ -7,7 +7,6 @@
 import os
 import pathlib
 from dash_iconify import DashIconify
-import sys
 from dash import Dash, Input, Output, State, no_update, ctx, html, ClientsideFunction
 import dash_mantine_components as dmc
 try:
@@ -96,7 +95,6 @@ def generate_callbacks(app: Dash):
                     filepath = app_path
                 return alerts.render('FileAlreadyExists', props=Error()), no_update
             def run():
-                import os
                 os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check")
             threading.Thread(target=run, daemon=True).run()
             createPage.terminal.writeln(f'$ Created new app {appName} at {app_path} with {appTemplate.capitalize()} template!')

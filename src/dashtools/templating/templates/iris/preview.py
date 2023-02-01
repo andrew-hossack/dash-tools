@@ -1,9 +1,8 @@
 # Returns a preview of the template, used for dashtools UI
-import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.graph_objs as go
-from dash import Input, Output, dcc, html
+from dash import dcc, html
 from sklearn import datasets
 from sklearn.cluster import KMeans
 
@@ -82,13 +81,6 @@ def make_graph(x='sepal length (cm)', y="sepal width (cm)", n_clusters=3):
 
 
 def render():
-    def filter_options(v):
-        """Disable option v"""
-        return [
-            {"label": col, "value": col, "disabled": col == v}
-            for col in iris.columns
-        ]
-
     return dbc.Container(
     [
         html.H1("Iris k-means clustering"),
