@@ -91,8 +91,8 @@ def preview_box():
         dmc.Text('Preview'),
         html.Div(
             id='preview-output',
-            children=buildApp.try_get_template_preview('default'), 
-            style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
+            children=buildApp.try_get_template_preview('default').object, 
+            style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'padding':'10px'}) # TODO need to figure out 'max-width':'575px'
     ])
 
 

@@ -9,9 +9,11 @@ from dash import Dash, Input, Output, State, no_update, ctx, html
 import dash_mantine_components as dmc
 try:
     from dashtools.dashboard.pages import createPage
+    from dashtools.dashboard import alerts
     from dashtools.templating import buildApp
 except ModuleNotFoundError:
     from ..pages import createPage
+    from .. import alerts
 import threading
 
 
@@ -84,13 +86,17 @@ def generate_callbacks(app: Dash):
         
     @app.callback(
         Output('preview-output', 'children'),
+        Output('notifications-container-app-preview', 'children'),
         Input('app-template-input-createpage', 'value'),
     )
-    def preview_app(template):
+    def preview_app(template:str):
         template_preview = buildApp.try_get_template_preview(template)
-        if not template_preview:
+        if not template_preview.object:
+            alert = alerts.render('ModuleNotFound', props=template_preview)
+            if template_preview.needs_module:
+                createPage.terminal.writeln(f"$ You must install module '{template_preview.needs_module}' to preview app with the {template.capitalize()} template!")
             return dmc.Center([
             html.H3("Preview Not Found", style={
                     'opacity': '10%', 'padding-top': '50px'})
-            ])
-        return template_preview
+            ]), alert if template_preview.needs_module is not None else None
+        return template_preview.object, None

@@ -45,6 +45,7 @@ app.layout = dmc.NotificationsProvider(
             ], class_name='white-link', fixed=True, height=0),
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
+            html.Div(id="notifications-container-app-preview"),
             dcc.Location(id="url"),
             sidebar.render(),
             html.Div(

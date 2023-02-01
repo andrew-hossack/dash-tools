@@ -91,13 +91,21 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
         f'dashtools: init: Created new app {app_name} at {os.path.join(target_dir, app_name)} with {template.name} template')
 
 
-def try_get_template_preview(template_value:str) -> Union[html.Div, None]:
+class TemplatePreviewResponse:
+    object: Union[html.Div, None] = None
+    needs_module: Union[str, None] = None
+
+def try_get_template_preview(template_value:str) -> TemplatePreviewResponse:
+    response = TemplatePreviewResponse()
     temp_path = get_template_path(Templates.Template(template_value).value)
     sys.path.append(temp_path)
     try:
         import preview
         sys.path.remove(temp_path)
         del sys.modules["preview"]
-        return preview.render()
-    except ModuleNotFoundError:
-        return None
+        response.object=preview.render()
+    except ModuleNotFoundError as e:
+        sys.path.remove(temp_path)
+        missing_mod = e.msg.split("'")[1]
+        response.needs_module=missing_mod.replace('_','-') if missing_mod != "preview" else None
+    return response
