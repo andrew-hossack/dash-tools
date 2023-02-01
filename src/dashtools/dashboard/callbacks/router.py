@@ -10,9 +10,9 @@ from dashtools.dashboard.pages import explorePage
 from ..pages import explorePage
 
 try:
-    from dashtools.dashboard.pages import createPage, deployPage, errorPage
+    from dashtools.dashboard.pages import createPage, deployPage, helpPage
 except ModuleNotFoundError:
-    from ..pages import createPage, deployPage, errorPage
+    from ..pages import createPage, deployPage, helpPage
 
 
 def generate_callbacks(app: Dash):
@@ -27,6 +27,8 @@ def generate_callbacks(app: Dash):
             return explorePage.render()
         elif pathname == "/create":
             return createPage.render()
+        elif pathname == "/help":
+            return helpPage.render()
         else:
             # Can also implement custom error page here
             return dcc.Location(id="url", pathname='/')

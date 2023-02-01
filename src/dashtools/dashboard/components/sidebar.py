@@ -37,10 +37,16 @@ def render() -> html.Div:
                         ], href="/deploy", active="exact"),
                     dbc.NavLink(
                         [
-                            DashIconify(icon='akar-icons:info',
+                            DashIconify(icon='akar-icons:telescope',
                                         style={'margin-right': '5px'}),
                             "Explore (Preview)"
-                        ], href="/explore", active="exact"),
+                        ], href="/explore", active="exact", disabled=True),
+                    dbc.NavLink(
+                        [
+                            DashIconify(icon='akar-icons:question',
+                                        style={'margin-right': '5px'}),
+                            "Help"
+                        ], href="/help", active="exact"),
                 ],
                 vertical=True,
                 pills=True,
