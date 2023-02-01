@@ -99,7 +99,7 @@ def generate_callbacks(app: Dash):
             if template_preview.needs_module:
                 createPage.terminal.writeln(f"$ You must install module '{template_preview.needs_module}' to preview app with the {template.capitalize()} template!")
             object = dmc.Center([
-            html.H3("Preview Not Found", style={
+            html.H3("No Preview Available", style={
                     'opacity': '10%', 'padding-top': '50px'})
             ])
             alert = alerts.render('ModuleNotFound', props=template_preview) if template_preview.needs_module is not None else None
