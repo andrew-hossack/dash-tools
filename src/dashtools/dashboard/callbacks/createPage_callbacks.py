@@ -90,7 +90,7 @@ def generate_callbacks(app: Dash):
     def create_app(create_button, appName, appDir, appTemplate:str):
         button_clicked = ctx.triggered_id
         if button_clicked == 'create-button-createpage' and create_button:
-            app_path = pathlib.Path(appDir).joinpath(appName)
+            app_path = pathlib.Path(appDir).joinpath(appName).resolve()
             if os.path.exists(app_path):
                 class Error:
                     filepath = app_path
@@ -99,7 +99,7 @@ def generate_callbacks(app: Dash):
                 import os
                 os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check")
             threading.Thread(target=run, daemon=True).run()
-            createPage.terminal.writeln(f'$ Created new app {appName} at {appDir} with {appTemplate.capitalize()} template!')
+            createPage.terminal.writeln(f'$ Created new app {appName} at {app_path} with {appTemplate.capitalize()} template!')
             return no_update, html.Div('triggered')
         return no_update, no_update
         

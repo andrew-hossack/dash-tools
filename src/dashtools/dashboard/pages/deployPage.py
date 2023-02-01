@@ -388,7 +388,7 @@ def terminal_box():
                           draggable='false',
                           style={
                               "width": "100%",
-                              "height": "160px",
+                              "height": "230px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',

@@ -185,6 +185,7 @@ def generate_callbacks(app: Dash):
     )
     def file_explorer_callback(n, force_tree_update, filepath: os.PathLike):
         # Initial callbacks
+        trigger_id = ctx.triggered_id
         empty_div = dmc.Center([
             html.H3("Open a File to Continue", style={
                     'opacity': '10%', 'padding-top': '50px'})
@@ -196,7 +197,8 @@ def generate_callbacks(app: Dash):
             if os.path.isdir(filepath):
                 try:
                     deployPage.fileExplorerInstance.root = filepath
-                    deployPage.terminal.writeln(f'$ Selected file {filepath}')
+                    if trigger_id == "file-explorer-button":
+                        deployPage.terminal.writeln(f'$ Selected file {filepath}')
                     alerts_list = []
                     if not gitUtils.git_is_installed():
                         deployPage.terminal.writeln(
