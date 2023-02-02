@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1] - 2023-2-01
+
+### Fixed
+
+- `_get_cwd()` for Create Location input field loses app attribute. Use the `os.getcwd()` method instead
+
 ## [1.11.0] - 2023-2-01
 
 ### Added & Changed

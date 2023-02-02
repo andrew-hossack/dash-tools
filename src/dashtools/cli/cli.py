@@ -145,7 +145,7 @@ def docker(args):
 def gui(args):
     """Initialize a new app."""
     print('dashtools: Dashboard started on http://127.0.0.1:8050/\ndashtools: Press Ctrl+C to stop')
-    dashboard.start_dashboard(cwd=os.getcwd())
+    dashboard.start_dashboard()
 
 
 @ subcommand(
