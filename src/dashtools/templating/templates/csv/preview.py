@@ -1,6 +1,6 @@
 # Returns a preview of the template, used for dashtools UI
 import pathlib
-from dash import dcc, html, get_app
+from dash import dcc, html
 import plotly.express as px
 import pandas as pd
 
