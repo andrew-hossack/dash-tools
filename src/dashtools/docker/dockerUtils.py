@@ -86,7 +86,8 @@ def create_image(image_name: str, cwd: os.PathLike) -> None:
         if prompt_user_choice('dashtools: Create a Dockerfile?'):
             _write_dockerfile(cwd, cwd)
         else:
-            exit('dashtools: docker: error: Dockerfile needed to create image')
+            print('dashtools: docker: error: Dockerfile needed to create image')
+            exit(1)
 
     # 4. Build image
     print(f'dashtools: docker: init: Building image {image_name}')
@@ -97,7 +98,8 @@ def create_image(image_name: str, cwd: os.PathLike) -> None:
             check=True)
     except subprocess.CalledProcessError as e:
         print(e)
-        exit('dashtools: docker: error: Failed to build image')
+        print('dashtools: docker: error: Failed to build image')
+        exit(1)
 
     print(f'dashtools: docker: init: Image {image_name} created!')
     print(

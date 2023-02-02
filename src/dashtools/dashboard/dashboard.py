@@ -1,12 +1,14 @@
 '''
  # @ Create Time: 2022-10-04 15:30:29.442976
 '''
+
 import logging
 import os
 import sys
 import webbrowser
 from contextlib import contextmanager
 from pathlib import Path
+
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import Dash, dcc, html
@@ -16,7 +18,7 @@ try:
                                                deployPage_callbacks, router)
     from dashtools.dashboard.components import sidebar
 except ModuleNotFoundError:
-    from callbacks import (createPage_callbacks, deployPage_callbacks, router)
+    from callbacks import createPage_callbacks, deployPage_callbacks, router
     from components import sidebar
 
 
@@ -88,6 +90,7 @@ def start_dashboard(**args):
     """
     with silent_stdout():
         webbrowser.open('http://127.0.0.1:8050/')
+        setattr(app, 'dashtools_gui_cwd', args.pop('cwd'))
         app.run_server(**args)
 
 

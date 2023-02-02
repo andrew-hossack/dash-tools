@@ -1,9 +1,9 @@
-from dash import html, dcc, Dash
+from dash import html, dcc, Dash, get_app
 import dash_bootstrap_components as dbc
 import visdcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-
+from pathlib import Path
 from dashtools.templating import Templates, buildApp
 
 class Terminal():
@@ -95,6 +95,9 @@ def preview_box():
     ], style={'margin-bottom':'20px'})
 
 
+def _get_cwd() -> str:
+    return str(Path(getattr(get_app(),'dashtools_gui_cwd')).resolve())
+
 def create_box():
     return html.Div([
         dmc.Text('App Settings'),
@@ -124,7 +127,8 @@ def create_box():
                     label="Create Location",
                     id='app-location-input-createpage',
                     style={"width": '360px', 'margin-right': '10px'},
-                    placeholder='App Path; eg. /Users/MyApp'),
+                    placeholder='App Path; eg. /Users/MyApp',
+                    value=_get_cwd()),
                 html.Div(
                     dmc.Tooltip(
                         id='app-settings-location-status',

@@ -95,7 +95,7 @@ def generate_callbacks(app: Dash):
                     filepath = app_path
                 return alerts.render('FileAlreadyExists', props=Error()), no_update
             def run():
-                os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check")
+                os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check --silent")
             threading.Thread(target=run, daemon=True).run()
             createPage.terminal.writeln(f'$ Created new app {appName} at {app_path} with {appTemplate.capitalize()} template!')
             return no_update, html.Div('triggered')
@@ -152,7 +152,8 @@ def generate_callbacks(app: Dash):
 
     @app.callback(
         Output('app-settings-location-status', 'children'),
-        Input('app-location-input-createpage', 'value')
+        Input('app-location-input-createpage', 'value'),
+        prevent_initial_call=False
     )
     def save_app_name(path):
         if os.path.exists(path):

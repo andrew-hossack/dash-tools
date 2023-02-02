@@ -3,13 +3,92 @@
  # @ Create Time: 2022-04-01 13:57:48
  # Build dash apps with dashtools
 '''
-import sys
-from dash import html
 import datetime
 import os
 import shutil
+import subprocess
+import sys
 from typing import Union
-from dashtools.templating import Templates, buildAppUtils, pipUtils
+
+import pkg_resources
+from dash import html
+
+from dashtools.deploy import deployHeroku
+from dashtools.templating import Templates, buildApp, buildAppUtils
+
+
+def _check_pip_installed() -> bool:
+    """
+    Check if pip is installed
+    """
+    try:
+        subprocess.check_output(
+            'pip --version',
+            shell=True,
+            stderr=subprocess.DEVNULL)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
+def _install_pip_requirement(requirement: str):
+    '''
+    Install a pip requirement
+    '''
+    print(f'dashtools: Installing {requirement}')
+    os.system(f'pip install {requirement}')
+
+
+def _check_pip_requirement_installed(requirement: str) -> bool:
+    '''
+    Check if a pip requirement is installed
+    '''
+    try:
+        pkg_resources.get_distribution(requirement)
+    except pkg_resources.DistributionNotFound:
+        return False
+    except pkg_resources.VersionConflict:
+        return False
+    return True
+
+
+def _check_pip_requirements(requirements: list, template_value: str):
+    '''
+    Check if pip requirements are installed
+    '''
+    for req in requirements:
+        if not _check_pip_requirement_installed(req):
+            print(
+                f'dashtools: Template {template_value} requires pip module {req}, which is not installed')
+            if _check_pip_installed():
+                if deployHeroku.prompt_user_choice(f'dashtools: Install {req}?'):
+                    _install_pip_requirement(req)
+                    print()
+            else:
+                print(f'dashtools: Please install {req} manually')
+
+
+def _get_template_required_packages(template_value: str) -> list:
+    """
+    Looks for 'packages' file in template directory. If one is found,
+    return a list of pip requirements.
+    """
+    packages_file = os.path.join(
+        buildApp.get_template_path(template_value), 'packages.txt')
+    if os.path.exists(packages_file):
+        with open(packages_file, 'r') as f:
+            return f.read().splitlines()
+    return []
+
+
+def handle_template_requirements(template_value: str):
+    """
+    Handle pip requirements for template
+    """
+    _check_pip_requirements(_get_template_required_packages(
+        template_value), template_value)
+
+
 
 
 def _format_file(name: os.PathLike, app_name: str, dest: os.PathLike):
@@ -52,7 +131,8 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
     if not buildAppUtils.check_write_permission(target_dir):
         print(
             f'dashtools: init: No write permissions for {target_dir}')
-        exit(f'dashtools: init: Failed')
+        print(f'dashtools: init: Failed')
+        exit(1)
 
     # Copy files from template directory
     template_base_path = get_template_path(template.value)
@@ -84,7 +164,7 @@ def create_app(target_dir: os.PathLike, app_name: str, template: buildAppUtils.T
             _format_file(name, app_name, dest)
 
     # Handle pip requirements
-    pipUtils.handle_template_requirements(template.value)
+    handle_template_requirements(template.value)
     print(
         f'dashtools: init: Created new app {app_name} at {os.path.join(target_dir, app_name)} with {template.name} template')
 
