@@ -66,7 +66,8 @@ def _python_shell_cmd() -> str:
         else:
             print('dashtools: run: error: None of the following commands were found on your system: python, python.exe, python3, python3.exe')
             print('dashtools: run: Please set the python shell command with "dashtools run --set-python-shell-cmd <command>", or fall back to running your app from the app.py file')
-            exit('dashtools: View Troubleshooting docs for more info')
+            print('dashtools: View Troubleshooting docs for more info')
+            exit(1)
     return command
 
 
@@ -77,7 +78,8 @@ def _run_from_app(root_path: os.PathLike):
     # Find app.py file in the root_path director
     root = fileUtils.app_root_path(root_path)
     if not root:
-        exit('dashtools: run: No app.py file found')
+        print('dashtools: run: No app.py file found')
+        exit(1)
     try:
         print(
             f'dashtools: Running From {root + "/" if root else ""}app.py')

@@ -112,7 +112,8 @@ def create_requirements_txt(root_path: os.PathLike, destination: os.PathLike = N
         print(e)
         print('dashtools: Error creating requirements.txt')
         print('dashtools: Are you in a valid dash app directory?')
-        exit('dashtools: Exiting')
+        print('dashtools: Exiting')
+        exit(1)
 
     # Add requirements that might not be in requirements.txt
     for req in ['gunicorn', 'pandas', 'dash-tools']:
@@ -144,7 +145,8 @@ def app_root_path(root_path: os.PathLike) -> Union[os.PathLike, None]:
             break
     if app_path is None:
         print('dashtools: Error: No app.py file found! An app.py file is needed for this operation.')
-        exit('dashtools: Exiting')
+        print('dashtools: Exiting')
+        exit(1)
     return app_path
 
 

@@ -4,10 +4,11 @@
  # Thanks to https://mike.depalatis.net/blog/simplifying-argparse.html
 '''
 import argparse
+import logging
 import os
 import sys
-import threading
 import webbrowser
+from contextlib import contextmanager, nullcontext, redirect_stderr, redirect_stdout
 
 from dashtools.cli import update
 from dashtools.dashboard import dashboard
@@ -16,6 +17,21 @@ from dashtools.docker import dockerUtils
 from dashtools.runtime import runtimeUtils
 from dashtools.templating import buildApp, buildAppUtils, createTemplate
 from dashtools.version import __version__
+
+
+@contextmanager
+def silent_stdout_stderr():
+    # Set above max level, even failures will not be logged here
+    logging.getLogger(__name__).disabled = True
+    old_stdout = sys.stdout
+    old_stderr = sys.stderr
+    try:
+        with open(os.devnull, "w") as fnull:
+            with redirect_stderr(fnull) as err, redirect_stdout(fnull) as out:
+                yield (err,out)
+    finally:
+        sys.stdout = old_stdout
+        sys.stderr = old_stderr
 
 
 class MyArgumentParser(argparse.ArgumentParser):
@@ -39,6 +55,8 @@ class MyArgumentParser(argparse.ArgumentParser):
 
     {'init <app name> [template]':<29}Create a new app
         {'--dir, -d':<25}Specify alternative create location
+        {'--no-update-check':<25}Do not check for PyPi updates on create
+        {'--silent':<25}Do not display anything to console
 
     {'run':<29}Run the app (experimental)
         {'--set-py-cmd <command>':<25}Set the python shell command
@@ -119,14 +137,15 @@ def docker(args):
             cwd=os.getcwd())
     else:
         print('dashtools: docker: error: Too few arguments')
-        exit('dashtools: Available docker options: --init [--dir, -d]')
+        print('dashtools: Available docker options: --init [--dir, -d]')
+        exit(1)
 
 
 @ subcommand()
 def gui(args):
     """Initialize a new app."""
     print('dashtools: Dashboard started on http://127.0.0.1:8050/\ndashtools: Press Ctrl+C to stop')
-    threading.Thread(target=dashboard.start_dashboard).start()
+    dashboard.start_dashboard(cwd=os.getcwd())
 
 
 @ subcommand(
@@ -142,20 +161,32 @@ def gui(args):
             help='Specify the directory to create the app in. Args: REQUIRED: <directory>',
             default=os.getcwd(),
             metavar='<directory>',
-            nargs='?')
+            nargs='?'),
+        argument(
+            '--no-update-check',
+            help='Do not check for PyPi updates if this flag is used.',
+            default=False,
+            action="store_true"),
+        argument(
+            '--silent',
+            help='Do not check for PyPi updates if this flag is used.',
+            default=False,
+            action="store_true"),
     ])
 def init(args):
     """Initialize a new app."""
-    if args.dir is None:
-        print('dashtools: init: No directory specified. Usage Example: dashtools init MyDashApp -d ~/Desktop')
-        exit('dashtools: init: Failed')
-    buildApp.create_app(
-        target_dir=args.dir,
-        app_name=args.init[0],
-        template=buildAppUtils.get_template_from_args(args))
-    print(
-        f'dashtools: Run your app using the "python {os.path.join(args.init[0], "src", "app.py")}" command')
-    print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
+    with silent_stdout_stderr() if args.silent else nullcontext():
+        if args.dir is None:
+            print('dashtools: init: No directory specified. Usage Example: dashtools init MyDashApp -d ~/Desktop')
+            print('dashtools: init: Failed')
+            exit(1)
+        buildApp.create_app(
+            target_dir=args.dir,
+            app_name=args.init[0],
+            template=buildAppUtils.get_template_from_args(args))
+        print(
+            f'dashtools: Run your app using the "python {os.path.join(args.init[0], "src", "app.py")}" command')
+        print(f'dashtools: For an in-depth guide on configuring your app, see https://dash.plotly.com/layout')
 
 
 @ subcommand(
@@ -180,7 +211,8 @@ def templates(args):
         createTemplate.create_template(src=args.init[0], dest=os.getcwd())
     else:
         print('dashtools: templates error: too few arguments')
-        exit('dashtools: Available templates options: --list, --init')
+        print('dashtools: Available templates options: --list, --init')
+        exit(1)
 
 
 @ subcommand(
@@ -206,8 +238,8 @@ def heroku(args):
         deployHeroku.update_heroku_app(os.getcwd(), remote=args.update)
     else:
         print('dashtools: heroku error: too few arguments')
-        exit('dashtools: Available heroku options: --deploy, --update')
-
+        print('dashtools: Available heroku options: --deploy, --update')
+        exit(1)
 
 @ subcommand(
     [
@@ -230,8 +262,8 @@ def run(args):
             runtimeUtils.run_app(os.getcwd())
         except RuntimeError as e:
             print(e)
-            exit('dashtools: run: Failed')
-
+            print('dashtools: run: Failed')
+            exit(1)
 
 def main():
     """
@@ -247,4 +279,8 @@ def main():
                 'https://github.com/andrew-hossack/dash-tools/issues/new/choose')
     else:
         parser.print_help()
-    update.check_for_updates()
+    try:
+        if not args.no_update_check:
+            update.check_for_updates()
+    except AttributeError: # --no-update-check not found, this is a workaround
+        update.check_for_updates()

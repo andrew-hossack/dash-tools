@@ -9,6 +9,8 @@ import os
 from dashtools.templating.Templates import Template
 
 
+
+
 def check_write_permission(path: os.PathLike) -> bool:
     """
     Check for write permission in directory/
@@ -36,7 +38,8 @@ def check_create_app_args(base_dir, app_name):
         print(f'dashtools: init: App {app_dir} already exists.')
         print(
             f'dashtools: init: Please change the "{app_dir}" name or delete the {app_dir} directory!')
-        exit(f'dashtools: init: Failed')
+        print(f'dashtools: init: Failed')
+        exit(1)
 
 
 def get_templates_data_path(data_dir: os.PathLike) -> os.PathLike:
@@ -67,3 +70,5 @@ def _convert_to_template_or_error(value) -> Template:
         print('Valid templates are:')
         print_templates()
         exit(1)
+
+

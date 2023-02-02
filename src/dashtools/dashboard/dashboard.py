@@ -1,6 +1,7 @@
 '''
  # @ Create Time: 2022-10-04 15:30:29.442976
 '''
+
 import logging
 import os
 import sys
@@ -13,11 +14,13 @@ import dash_mantine_components as dmc
 from dash import Dash, dcc, html
 
 try:
+    from dashtools.dashboard.callbacks import (createPage_callbacks,
+                                               deployPage_callbacks, router)
+    from dashtools.dashboard.components import sidebar
+except ModuleNotFoundError:
     from callbacks import createPage_callbacks, deployPage_callbacks, router
     from components import sidebar
-except ModuleNotFoundError:
-    from .callbacks import createPage_callbacks, deployPage_callbacks, router
-    from .components import sidebar
+
 
 app = Dash(
     title="DashTools - Application Dashboard",
@@ -26,7 +29,9 @@ app = Dash(
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=True,
     assets_folder=Path(__file__).parent.absolute().joinpath('assets'),
-    name=__name__
+    name=__name__,
+    external_scripts=[
+        "https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"],
 )
 
 app.layout = dmc.NotificationsProvider(
@@ -40,18 +45,23 @@ app.layout = dmc.NotificationsProvider(
                         "backgroundColor": "#202020",
                         "color": "white",
                         "text-align": "center",
-                    })
-            ], class_name='white-link', fixed=True, height=0),
+                        'padding-top':'4px',
+                    }, className='padded-bottom')
+            ], class_name='white-link', fixed=True, height=0, ),
             html.Div(id="notifications-container-file-explorer"),
             html.Div(id="notifications-container-file-generator"),
+            html.Div(id="notifications-container-app-preview"),
+            html.Div(id="notifications-container-app-create"),
             dcc.Location(id="url"),
             sidebar.render(),
             html.Div(
                 id="page-content", style={
+                    "margin-top": "10px",
                     "margin-left": "22rem",
                     "margin-right": "2rem",
                     "padding": "2rem 1rem",
-                })
+                    'overflow-x': "hidden",
+                }),
         ]))
 
 
@@ -80,6 +90,7 @@ def start_dashboard(**args):
     """
     with silent_stdout():
         webbrowser.open('http://127.0.0.1:8050/')
+        setattr(app, 'dashtools_gui_cwd', args.pop('cwd'))
         app.run_server(**args)
 
 

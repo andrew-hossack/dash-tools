@@ -8,3 +8,7 @@ code {
 .white-link a{
     color: white;
 }
+
+.padded-bottom p{
+    padding-bottom: 4px
+}
