@@ -90,7 +90,6 @@ def start_dashboard(**args):
     """
     with silent_stdout():
         webbrowser.open('http://127.0.0.1:8050/')
-        setattr(app, 'dashtools_gui_cwd', args.pop('cwd'))
         app.run_server(**args)
 
 
