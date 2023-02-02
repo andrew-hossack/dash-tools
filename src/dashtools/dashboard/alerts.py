@@ -4,7 +4,7 @@ from dash_iconify import DashIconify
 # NOTIFICATION_DURATION_SECONDS = 8
 
 
-def render(key: str):
+def render(key: str, props: any=None) -> dmc.Notification:
     if key == 'FileNotFoundError':
         return dmc.Notification(
             message="The file path you provided does not exist. Please check your filepath and try again.",
@@ -58,4 +58,31 @@ def render(key: str):
             icon=[DashIconify(icon="ep:warning")],
             action='show',
             id='error-permissions'
+        )
+    elif key == 'ModuleNotFound':
+        return dmc.Notification(
+            message=f"You must install module '{props.needs_module}' to preview this app!",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            id='error-permissions',
+        )
+    elif key == 'FileAlreadyExists':
+        return dmc.Notification(
+            message=f"File {props.filepath} already exists at this location! Please change app name or create location and try again.",
+            title="Warning",
+            color='red',
+            icon=[DashIconify(icon="ep:warning")],
+            action='show',
+            id='error-permissions',
+        )
+    elif key == 'AppCreateSuccess':
+        return dmc.Notification(
+            message=f"App created successfully!",
+            title="Success",
+            color='green',
+            icon=[DashIconify(icon="ep:success-filled")],
+            action='show',
+            id='error-permissions',
         )

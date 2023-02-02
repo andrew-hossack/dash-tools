@@ -19,7 +19,8 @@ def create_template(src: os.PathLike, dest: os.PathLike):
 
     if not os.path.exists(src):
         print(f"dashtools: templates: init: Source file {src} does not exist")
-        exit('dashtools: templates: init: Failed')
+        print('dashtools: templates: init: Failed')
+        exit(1)
 
     # Check for file write permissions in the base directory (command invoke directory)
     if not buildAppUtils.check_write_permission(dest):

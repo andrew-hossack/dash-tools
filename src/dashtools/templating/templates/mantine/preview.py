@@ -1,17 +1,10 @@
-'''
- # @ Create Time: {createTime}
-'''
-
-from dash import html, Dash
+# Returns a preview of the template, used for dashtools UI
+from dash import html
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 
-app = Dash(__name__, title="{appName}")
-
-# Declare server for Heroku deployment. Needed for Procfile.
-server = app.server
-
-app.layout = html.Div([
+def render():
+    return html.Div([
         dmc.Alert(
         [
             "Hi from Dash Mantine Components. You can create some great looking dashboards using me!"
@@ -53,6 +46,3 @@ app.layout = html.Div([
         ),
         dmc.Text('Visit https://www.dash-mantine-components.com/getting-started for more information!')
     ])
-
-if __name__ == "__main__":
-    app.run_server(debug=True)

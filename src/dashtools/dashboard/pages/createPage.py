@@ -1,13 +1,14 @@
-from dash import html, dcc, Dash
+from dash import html, dcc, Dash, get_app
 import dash_bootstrap_components as dbc
 import visdcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-
+from pathlib import Path
+from dashtools.templating import Templates, buildApp
 
 class Terminal():
     def __init__(self) -> None:
-        self.value = ''
+        self.value = '$ Create a new dash application. Choose app name, template and location to create your project ...'
 
     def read(self):
         return self.value
@@ -72,26 +73,30 @@ def terminal_box():
                           draggable='false',
                           style={
                               "width": "100%",
-                              "height": "160px",
+                              "margin-top":"-4px",
+                              "height": "217px",
                               "resize": "none",
                               'font-size': '14px',
                               'font-family': 'Courier Bold',
                               'background-color': '#000000',
                               'color': '#ffffff',
                           })
-        ]
+        ],
     )
 
 
 def preview_box():
     return html.Div([
-        dmc.Text('Preview'),
-        html.Div([
-            dmc.Group("Foo"),
-            dmc.Group("Bar"),
-        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
-    ])
+        dmc.Text('Preview', id='preview-tab-title'),
+        html.Div(
+            id='preview-output',
+            children=buildApp.try_get_template_preview('default').object, 
+            style={'height': '520px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip', 'padding':'10px'}) # TODO need to figure out 'max-width':'575px'
+    ], style={'margin-bottom':'20px'})
 
+
+def _get_cwd() -> str:
+    return str(Path(getattr(get_app(),'dashtools_gui_cwd')).resolve())
 
 def create_box():
     return html.Div([
@@ -99,12 +104,14 @@ def create_box():
         html.Div([
             dmc.Group([
                 dmc.TextInput(
+                    id='app-name-input-createpage',
                     label="App Name",
                     style={"width": '360px', 'margin-right': '10px'},
-                    placeholder='App Filename; eg. my-app'),
+                    placeholder='App Filename; eg. MyApp'),
                 html.Div(
                     dmc.Tooltip(
-                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        id='app-settings-name-status',
+                        label="Enter an app name you would like to use. The name cannot contain spaces.",
                         placement="center",
                         withArrow=True,
                         wrapLines=True,
@@ -117,12 +124,15 @@ def create_box():
             ]),
             dmc.Group([
                 dmc.TextInput(
-                    label="File Location",
+                    label="Create Location",
+                    id='app-location-input-createpage',
                     style={"width": '360px', 'margin-right': '10px'},
-                    placeholder='Location To Create App; eg. ~/Desktop'),
+                    placeholder='App Path; eg. /Users/MyApp',
+                    value=_get_cwd()),
                 html.Div(
                     dmc.Tooltip(
-                        label="Enter an app name you would like to use. Render may change this name if it is not unique.",
+                        id='app-settings-location-status',
+                        label="Enter a valid directory to create your application at.",
                         placement="center",
                         withArrow=True,
                         wrapLines=True,
@@ -133,70 +143,63 @@ def create_box():
                         ]),
                     style={'margin-top': '25px'})
             ]),
-            dmc.Group(
-                [
-                    dmc.Select(
-                        label="Template",
-                        placeholder="Select one",
-                        id="framework-select",
-                        value="ng",
-                        data=[
-                            {"value": "react", "label": "React"},
-                            {"value": "ng", "label": "Angular"},
-                            {"value": "svelte", "label": "Svelte"},
-                            {"value": "vue", "label": "Vue"},
-                        ],
-                        style={"width": 200, "marginBottom": 10},
+            dbc.Row([
+                dbc.Col([
+                    dmc.Group(
+                        [
+                            dmc.Select(
+                                label="Template",
+                                placeholder="Select one",
+                                id='app-template-input-createpage',
+                                value="default",
+                                data=sorted([
+                                    {"value": template.value, "label": str.capitalize(template.value)} for template in Templates.Template
+                                ], key=lambda x: x['label']),
+                                style={"width": 180, "marginBottom": 10},
+                            ),
+                            dmc.Text(id="selected-value"),
+                        ]
                     ),
-                    dmc.Text(id="selected-value"),
-                ]
-            ),
-            dmc.Center(
-                [
+                ], style={'padding-right':'0px', 'margin-right':'-50px'}),
+                dbc.Col([
                     dmc.Button(
                         'Create',
+                        id='create-button-createpage',
                         variant="gradient",
                         leftIcon=[
                             DashIconify(icon='gridicons:create',
                                         width=20, color='light-gray')
                         ],
                         disabled=True,
-                        style={'width': '200px', 'opacity': '1.0'},
+                        style={'width': '200px', 'opacity': '1.0', 'float':'bottom'},
                     )
-                ],
-                style={'margin-bottom': '-10px'}
-            ),
-        ], style={'height': '460px', 'width': '100%', 'border-radius': '10px', 'border': '1px solid rgb(233, 236, 239)', 'overflow': 'clip'})
-    ])
+                ], style={'padding-top':'28px', 'position':'relative', 'margin-right':'-20px'}),
+            ], style={'width':'460px'}),
+        ], style={
+            'height': '220px',
+            'width': '100%',
+            'border-radius': '10px',
+            'border': '1px solid rgb(233, 236, 239)',
+            'overflow': 'clip',
+            'padding-left':'20px',
+            'padding-right':'20px',
+            'padding-top':'10px',
+            'min-width':'460px',
+        })
+    ], style={'max-width':'460px'})
 
 
 def render():
-    terminal.writeln('$ Create a new Dash Application')
     return html.Div(
         [
-            dmc.Center([
-                DashIconify(icon='emojione:hammer-and-wrench',
-                            width=35, color='light-gray', style={'margin-right': '20px'}),
-                dmc.Title(["Under Construction"], order=1),
-                DashIconify(icon='emojione:hammer-and-wrench',
-                            width=35, color='light-gray', style={'margin-left': '20px'})
-            ], style={'margin-top':'30px'}),
+            html.Div(id='create-app-successful-trigger', style={'display': 'none'}),
+            html.Div(id='create-check-trigger', style={'display': 'none'}),
+            html.Div(id='hidden-confetti-div', style={'display': 'none'}),
+            dbc.Row(preview_box(), style={'min-width':'640px'}),
             html.Div([
-                dmc.Text([""]),
-                dcc.Markdown(
-                    'Developers wanted! Please check out [https://github.com/andrew-hossack/dash-tools/pull/77](https://github.com/andrew-hossack/dash-tools/pull/77) for more details.',
-                    link_target="_blank",
-                    style={
-                        "color": "black",
-                        "text-align": "center",
-                    })
-                    ],
-            ),
-            # dbc.Row([
-            #     dbc.Col(preview_box()),
-            #     dbc.Col(create_box()),
-            # ]),
-            # dbc.Row(terminal_box(), style={'padding-top': '20px'}),
+                html.Div(create_box(), style={'display':'inline'}),
+                html.Div(terminal_box(), style={'display':'inline', 'width':'100%','margin-left':'30px'}),
+            ], style={'display':'flex'}),
         ],
         style={"height": "90vh", "padding": "10px"}
     )
