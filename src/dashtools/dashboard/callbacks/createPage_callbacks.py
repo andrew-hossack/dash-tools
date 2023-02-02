@@ -98,7 +98,7 @@ def generate_callbacks(app: Dash):
                 os.system(f"dashtools init {appName} {appTemplate} --dir {appDir} --no-update-check --silent")
             threading.Thread(target=run, daemon=True).run()
             createPage.terminal.writeln(f'$ Created new app {appName} at {app_path} with {appTemplate.capitalize()} template!')
-            return no_update, html.Div('triggered')
+            return alerts.render('AppCreateSuccess'), html.Div('triggered')
         return no_update, no_update
         
     @app.callback(

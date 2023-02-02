@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Added `--no-update-check` flag to `dashtools init` to skip PyPi version checking
 - Silenced output for gui
 - Removed gui threading, seems like this is no longer needed since the start script is fixed (does not run twice)
+- Confetti and success notifications
 
 ## [1.10.8] - 2023-1-29
 

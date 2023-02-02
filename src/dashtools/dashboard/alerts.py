@@ -77,3 +77,12 @@ def render(key: str, props: any=None) -> dmc.Notification:
             action='show',
             id='error-permissions',
         )
+    elif key == 'AppCreateSuccess':
+        return dmc.Notification(
+            message=f"App created successfully!",
+            title="Success",
+            color='green',
+            icon=[DashIconify(icon="ep:success-filled")],
+            action='show',
+            id='error-permissions',
+        )
