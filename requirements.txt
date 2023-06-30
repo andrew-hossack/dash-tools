@@ -3,7 +3,7 @@ dash-bootstrap-components
 Flask
 gunicorn
 packaging==21.0
-pipreqs==0.4.11
+pipreqs==0.4.12
 pre-commit==2.16.0
 pytest==6.2.5
 pandas
