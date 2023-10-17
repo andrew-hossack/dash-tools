@@ -34,7 +34,7 @@ Run the dashboard with:
 
 .. code-block:: bash
 
-   dashtools run
+   dashtools gui
 
 Create projects with:
 
