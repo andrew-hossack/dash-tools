@@ -36,7 +36,7 @@ pip install dash-tools
 Run the dashboard with:
 
 ```bash
-dashtools run
+dashtools gui
 ```
 
 Create projects with:
