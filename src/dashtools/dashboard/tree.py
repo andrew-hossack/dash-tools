@@ -11,10 +11,10 @@ class FileTree:
 
     def render(self) -> dmc.Accordion:
         return dmc.Accordion(
-            self.build_tree(self.filepath, isRoot=True),
-            iconPosition='right',
-            state=self.state,
-            multiple=True,
+            children=self.build_tree(self.filepath, isRoot=True),
+            value=self.build_tree(self.filepath),
+            disableChevronRotation=True,
+            chevronPosition='right',
             id='filetree-accordion-id')
 
     def flatten(self, l):
@@ -34,21 +34,49 @@ class FileTree:
             children = self.flatten([self.build_tree(os.path.join(path, x))
                                     for x in os.listdir(path)])
             if isRoot:
+                print(f'Root Folder: {os.path.basename(path)}')
                 d.append(
                     dmc.AccordionItem(
                         children=children,
-                        label=self.make_folder(os.path.basename(path)))
+                        value=self.make_folder(os.path.basename(path)),
+                    )
                 )
             else:
+                print(f'Folder: {os.path.basename(path)}')
                 d.append(
-                    dmc.Accordion(children=[
-                        dmc.AccordionItem(
-                            children=children,
-                            label=self.make_folder(os.path.basename(path)))
-                    ],
-                        iconPosition='right',
-                        multiple=True)
+                    dmc.AccordionItem(
+                        children=[
+                            dmc.AccordionControl(
+                                os.path.basename(path),
+                                icon=[
+                                    DashIconify(
+                                        icon="akar-icons:folder",
+                                        width=20
+                                    ),
+                                ]
+                            ),
+                            dmc.AccordionPanel(children=children)
+                        ],
+                        value=os.path.basename(path)
+                    )
                 )
         else:
-            d.append(self.make_file(os.path.basename(path)))
+            print(f'file: {os.path.basename(path)}')
+            d.append(
+                dmc.AccordionItem(
+                    children=[
+                        dmc.AccordionControl(
+                            os.path.basename(path),
+                            chevron=' ',
+                            icon=[
+                                DashIconify(
+                                    icon="akar-icons:file",
+                                    width=20
+                                ),
+                            ]
+                        ),
+                    ],
+                    value=os.path.basename(path)
+                )
+            )
         return d

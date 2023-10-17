@@ -66,9 +66,8 @@ def generate_callbacks(app: Dash):
             deployPage.fileExplorerInstance.appName = app_name
             return [dmc.Tooltip(
                 label=f"Looks great! Render may change this name if it is not unique.",
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 width=220,
                 children=[
                     DashIconify(icon='bi:check-circle',
@@ -78,9 +77,8 @@ def generate_callbacks(app: Dash):
             deployPage.fileExplorerInstance.appName = None
             return [dmc.Tooltip(
                 label="Enter an app name you would like to use. Render may change this name if it is not unique.",
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 width=220,
                 children=[
                     DashIconify(icon='bi:three-dots',

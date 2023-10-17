@@ -27,7 +27,7 @@ def _new_version_available() -> Union[str, None]:
             shell=True,
             stderr=subprocess.DEVNULL)
         version = re.search(regex, response.decode('utf-8'))
-        return version.group(0) if version else None
+        return version.group(0) if version.group(0).strip('(').strip(')') != __version__ else None
     except subprocess.CalledProcessError:
         # Problem with checking for updates; fail gracefully
         cprint(

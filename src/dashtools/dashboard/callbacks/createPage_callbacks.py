@@ -130,9 +130,8 @@ def generate_callbacks(app: Dash):
         if app_name and ' ' not in app_name:
             return [dmc.Tooltip(
                 label=f"Looks great! Your app with be created using this name.",
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 width=220,
                 children=[
                     DashIconify(icon='bi:check-circle',
@@ -141,9 +140,9 @@ def generate_callbacks(app: Dash):
         else:
             return [dmc.Tooltip(
                 label="Enter an app name you would like to use. The name cannot contain spaces.",
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
+
                 width=220,
                 children=[
                     DashIconify(icon='bi:three-dots',
@@ -159,9 +158,9 @@ def generate_callbacks(app: Dash):
         if os.path.exists(path):
             return [dmc.Tooltip(
                 label=f"Filepath found. Your application will be created here.",
-                placement="center",
+
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 width=220,
                 children=[
                     DashIconify(icon='bi:check-circle',
@@ -170,9 +169,8 @@ def generate_callbacks(app: Dash):
         else:
             return [dmc.Tooltip(
                 label="Enter a valid directory to create your application at.",
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 width=220,
                 children=[
                     DashIconify(icon='bi:three-dots',

@@ -171,9 +171,8 @@ class FileGenerator():
         return html.Div(
             dmc.Tooltip(
                 label=self._tooltip_lbl,
-                placement="center",
                 withArrow=True,
-                wrapLines=True,
+                multiline=True,
                 children=html.Button(
                     DashIconify(icon='ci:refresh',
                                 width=16, color='black', style={'margin-bottom': '5px'}),
@@ -223,15 +222,14 @@ class ReadinessStatus():
 def build_checkbox(status: str, text: str, tooltip: str, tooltip_id: str, text_margin_l='10px', tooltip_pos='left') -> html.Div:
     """ status: 'PASS' or 'FAIL' or 'PENDING' """
     return html.Div([
-        dmc.Tooltip(
+        html.Div(dmc.Tooltip(
             id=tooltip_id,
-            children=ReadinessStatus(status).get(),
+            children=html.Div(ReadinessStatus(status).get()),
             label=tooltip,
             position=tooltip_pos,
-            placement="center",
             withArrow=True,
-            wrapLines=True,
-            width=220),
+            multiline=True,
+            width=220), style={'display':'inline-block'}),
         dcc.Markdown(text, style={'margin-bottom': '2px',
                                   'margin-left': text_margin_l, 'display': 'inline-block'}),
     ])
@@ -295,9 +293,8 @@ def deploy_info():
                         html.Div(
                             dmc.Tooltip(
                                 label="Generate random name",
-                                placement="center",
                                 withArrow=True,
-                                wrapLines=True,
+                                multiline=True,
                                 children=[
                                     html.Button(
                                         DashIconify(icon='ci:refresh',
@@ -327,9 +324,8 @@ def deploy_info():
                         html.Div(
                             dmc.Tooltip(
                                 label="Enter an app name you would like to use. Render may change this name if it is not unique.",
-                                placement="center",
                                 withArrow=True,
-                                wrapLines=True,
+                                multiline=True,
                                 width=220,
                                 children=[
                                     DashIconify(icon='bi:three-dots',
@@ -357,9 +353,8 @@ def terminal_box():
                     html.Div(
                         dmc.Tooltip(
                             label="Clear",
-                            placement="center",
                             withArrow=True,
-                            wrapLines=True,
+                            multiline=True,
                             children=[
                                 html.Button(
                                     DashIconify(icon='codicon:clear-all',
