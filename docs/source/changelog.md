@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0] - 2023-10-16
+
+### Fixed
+
+- Updated to use latest dash mantine components
+- Updated version check
+
 ## [1.11.1] - 2023-2-01
 
 ### Fixed

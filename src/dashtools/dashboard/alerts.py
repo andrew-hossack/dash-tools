@@ -61,7 +61,7 @@ def render(key: str, props: any=None) -> dmc.Notification:
         )
     elif key == 'ModuleNotFound':
         return dmc.Notification(
-            message=f"You must install module '{props.needs_module}' to preview this app!",
+            message=f"You must pip install module '{props.needs_module}' to preview this app! Try: 'pip install {props.needs_module}'",
             title="Warning",
             color='red',
             icon=[DashIconify(icon="ep:warning")],
@@ -80,6 +80,7 @@ def render(key: str, props: any=None) -> dmc.Notification:
     elif key == 'AppCreateSuccess':
         return dmc.Notification(
             message=f"App created successfully!",
+            autoClose=10,
             title="Success",
             color='green',
             icon=[DashIconify(icon="ep:success-filled")],

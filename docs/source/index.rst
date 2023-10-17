@@ -24,6 +24,23 @@ Getting started
 --------
 To get started using dashtools, check out the :doc:`Getting Started <getting started>` page.
 
+Install with:
+
+.. code-block:: bash
+   
+   pip install dash-tools
+
+Run the dashboard with:
+
+.. code-block:: bash
+
+   dashtools run
+
+Create projects with:
+
+.. code-block:: bash
+
+   dashtools init <app name>
 
 Pages
 -------

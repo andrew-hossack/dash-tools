@@ -43,9 +43,8 @@ def terminal_box():
                     html.Div(
                         dmc.Tooltip(
                             label="Clear",
-                            placement="center",
                             withArrow=True,
-                            wrapLines=True,
+                            multiline=True,
                             children=[
                                 html.Button(
                                     DashIconify(icon='codicon:clear-all',
@@ -110,9 +109,8 @@ def create_box():
                     dmc.Tooltip(
                         id='app-settings-name-status',
                         label="Enter an app name you would like to use. The name cannot contain spaces.",
-                        placement="center",
                         withArrow=True,
-                        wrapLines=True,
+                        multiline=True,
                         width=220,
                         children=[
                             DashIconify(icon='bi:three-dots',
@@ -131,9 +129,8 @@ def create_box():
                     dmc.Tooltip(
                         id='app-settings-location-status',
                         label="Enter a valid directory to create your application at.",
-                        placement="center",
                         withArrow=True,
-                        wrapLines=True,
+                        multiline=True,
                         width=220,
                         children=[
                             DashIconify(icon='bi:three-dots',
