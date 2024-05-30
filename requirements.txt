@@ -2,8 +2,8 @@ dash>=2.5.1
 dash-bootstrap-components
 Flask
 gunicorn
-packaging==21.3
-pipreqs==0.4.12
+packaging
+pipreqs
 pre-commit==2.16.0
 pytest==6.2.5
 pandas
@@ -13,4 +13,4 @@ visdcc==0.0.50
 dash-mantine-components==0.12.0
 dash-iconify==0.1.2
 ruamel.yaml==0.17.21
-setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools

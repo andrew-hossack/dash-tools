@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0] - 2024-05-30
+
+### Fixed
+
+- Updated package requirements
+
 ## [1.12.0] - 2023-10-16
 
 ### Fixed
