@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.1] - 2024-05-30
+
+### Fixed
+
+- Updated git actions versions
+
 ## [1.13.0] - 2024-05-30
 
 ### Fixed
